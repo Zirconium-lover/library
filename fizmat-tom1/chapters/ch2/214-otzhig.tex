@@ -360,12 +360,12 @@ $\d P/\d T$ имеет вид пика (рис.~\ref{fig:const-rate}).
 \begin{figure}[ht]
 \centering
 \begin{tikzpicture}
-\begin{axis}[name=left, width=0.46\textwidth, height=4.6cm, xmin=200, xmax=400, ymin=0, ymax=1.1,
+\begin{axis}[name=left, width=0.42\textwidth, height=4.6cm, xmin=200, xmax=400, ymin=0, ymax=1.1,
   xlabel={$T$}, ylabel={$P$}, xtick={300}, xticklabels={$T_a$}, ytick=\empty]
   \addplot[fmBlue, very thick, domain=200:400, samples=120]
     {exp(-1e12*x*x/9284*exp(-9284/x))};
 \end{axis}
-\begin{axis}[at={(left.east)}, anchor=west, xshift=12mm, width=0.46\textwidth, height=4.6cm,
+\begin{axis}[at={(left.east)}, anchor=west, xshift=9mm, width=0.42\textwidth, height=4.6cm,
   xmin=200, xmax=400, ymin=0, xlabel={$T$}, ylabel={$-\d P/\d T$}, xtick={300}, xticklabels={$T_a$}, ytick=\empty]
   \addplot[fmRed, very thick, domain=200:400, samples=200]
     {1e12*exp(-9284/x)*exp(-1e12*x*x/9284*exp(-9284/x))};

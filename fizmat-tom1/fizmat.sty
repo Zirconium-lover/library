@@ -42,6 +42,11 @@
 \setlength{\parskip}{0.25ex plus 0.2ex}
 \frenchspacing
 \RequirePackage{microtype}
+% мягче разбиваем строки с длинными русскими словами и формулами
+\setlength{\emergencystretch}{3em}
+\tolerance=600
+\binoppenalty=600
+\relpenalty=400
 
 % десятичная запятая в формулах: 0,5 без лишнего пробела
 \RequirePackage{icomma}
@@ -113,7 +118,7 @@
 
 % ---------------------------------------------------------------- заголовки
 \titleformat{\chapter}[display]
-  {\sffamily\bfseries\color{fmHead}}
+  {\sffamily\bfseries\color{fmHead}\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000}
   {\Large\MakeUppercase{\chaptertitlename}~\thechapter}
   {1ex}
   {\Huge}
@@ -121,15 +126,15 @@
 \titlespacing*{\chapter}{0pt}{-10pt}{24pt}
 
 \titleformat{\section}
-  {\sffamily\bfseries\Large\color{fmHead}}{\thesection}{0.7em}{}
+  {\sffamily\bfseries\Large\color{fmHead}\raggedright\hyphenpenalty=10000}{\thesection}{0.7em}{}
 \titlespacing*{\section}{0pt}{3.2ex plus 1ex minus .2ex}{1.6ex plus .2ex}
 
 \titleformat{\subsection}
-  {\sffamily\bfseries\large\color{fmHead}}{\thesubsection}{0.7em}{}
+  {\sffamily\bfseries\large\color{fmHead}\raggedright\hyphenpenalty=10000}{\thesubsection}{0.7em}{}
 \titlespacing*{\subsection}{0pt}{2.8ex plus 1ex minus .2ex}{1.2ex plus .2ex}
 
 \titleformat{\subsubsection}
-  {\sffamily\bfseries\color{fmHead}}{}{0pt}{}
+  {\sffamily\bfseries\color{fmHead}\raggedright\hyphenpenalty=10000}{}{0pt}{}
 \titlespacing*{\subsubsection}{0pt}{2.4ex plus .8ex minus .2ex}{0.8ex plus .2ex}
 \titleformat{\paragraph}[runin]
   {\sffamily\bfseries\small\color{fmHead}}{}{0pt}{}[.]
@@ -405,19 +410,29 @@
   \fill[atomA, draw=atomLine, line width=0.4pt] (L\i_\j) circle (\edgeAtomR);}}%
 \end{scope}}
 
-% План винтовой дислокации: атомные ряды непосредственно над (○) и под (●)
-% плоскостью скольжения, вид на плоскость скольжения сверху.
-% Линия дислокации вертикальна (вдоль z), x — поперёк линии.
+% План винтовой дислокации: атомы в слоях непосредственно над (○) и под (●)
+% плоскостью скольжения; вид на плоскость скольжения сверху.
+% Линия дислокации вертикальна (вдоль z), x — поперёк линии; ядро при x = 0.
 %   \ScrewDislPlan[опции]{N}{M}: x = -N..N, z = 0..M
+% Смещения вдоль линии: u = (1/2π)·atan2(±w, x), w = \screwW (полуширина ядра).
+\def\screwW{1.0}
 \newcommand{\ScrewDislPlan}[3][]{%
 \begin{scope}[#1]
-\foreach \i in {-#2,...,#2}{%
-  \pgfmathsetmacro{\wu}{atan2(0.5,\i)/360}%
-  \pgfmathsetmacro{\wd}{atan2(-0.5,\i)/360}%
-  \foreach \k in {0,...,#3}{%
-    \fill[atomLine] (\i,\k+\wd) circle (0.13);
-    \draw[atomLine, fill=white, line width=0.5pt, fill opacity=0.6] (\i,\k+\wu) circle (0.2);
+\foreach \k in {0,...,#3}{%
+  \foreach \i in {-#2,...,#2}{%
+    \pgfmathsetmacro{\sdUp}{atan2(\screwW,\i)/360}%
+    \pgfmathsetmacro{\sdDn}{atan2(-\screwW,\i)/360}%
+    \coordinate (SU\i_\k) at (\i,\k+\sdUp);
+    \coordinate (SD\i_\k) at (\i,\k+\sdDn);
   }}%
+\pgfmathtruncatemacro{\snm}{#2-1}%
+\foreach \k in {0,...,#3}{\foreach \i in {-#2,...,\snm}{%
+  \pgfmathtruncatemacro{\ip}{\i+1}%
+  \draw[atomLine!70, line width=0.5pt] (SD\i_\k) -- (SD\ip_\k);
+  \draw[fmBlue!70, line width=0.5pt, densely dashed] (SU\i_\k) -- (SU\ip_\k);}}%
+\foreach \k in {0,...,#3}{\foreach \i in {-#2,...,#2}{%
+  \fill[atomLine] (SD\i_\k) circle (0.12);
+  \draw[fmBlue, fill=white, fill opacity=0.55, line width=0.6pt] (SU\i_\k) circle (0.22);}}%
 \end{scope}}
 
 % Косоугольная проекция для объёмных рисунков элементарных ячеек:

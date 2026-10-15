@@ -1,0 +1,14 @@
+% !TEX program = xelatex
+% Полный том (все готовые главы):  latexmk main.tex   (или make all)
+\documentclass[12pt,twoside,openright]{book}
+\usepackage{fizmat}
+\def\fmSubtitle{Глава 2. Дефекты кристаллической решётки}
+\begin{document}
+\frontmatter
+\input{frontmatter}
+\tableofcontents
+\mainmatter
+% Глава 1 будет добавлена позже
+\setcounter{chapter}{1}
+\input{chapters/ch2/ch2}
+\end{document}

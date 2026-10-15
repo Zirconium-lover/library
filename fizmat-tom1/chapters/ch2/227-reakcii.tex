@@ -1,1 +1,396 @@
-% TODO
+% ----------------------------------------------------------------------
+%  2.2.7. Дислокационные реакции
+% ----------------------------------------------------------------------
+\subsection{Дислокационные реакции}\label{ssec:disl-reactions}
+
+\begin{orientir}
+В ГЦК-решётке много разных дислокаций (полные, Шокли, Франка), и
+следить за их векторами Бюргерса в индексах Миллера утомительно. Для
+этого придуман наглядный инструмент~— \textbf{тетраэдр Томпсона}. С его
+помощью мы разберём основные реакции, включая образование барьера
+\textbf{Ломер--Коттрелла}, важного для деформационного упрочнения. Затем
+кратко~— аналогичные построения для ГПУ и реакции в ОЦК.
+\end{orientir}
+
+\subsubsection{Тетраэдр Томпсона и реакции в ГЦК-решётке}
+
+\begin{opredelenie}
+\term{Стандартный тетраэдр Томпсона}~— правильный тетраэдр $ABCD$,
+вершины которого~— четыре соседних узла ГЦК-решётки
+(рис.~\ref{fig:thompson}). Его грани~— четыре плоскости $\plfam{111}$,
+рёбра направлены вдоль $\nfam{110}$. Центры граней, противолежащих
+вершинам $A$, $B$, $C$, $D$, обозначают $\alpha$, $\beta$, $\gamma$,
+$\delta$.
+\end{opredelenie}
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[b]{0.48\textwidth}\centering
+\begin{tikzpicture}[cubeproj, scale=6.0, line join=round]
+  \coordinate (D) at (0,0,0); \coordinate (A) at (0,0.5,0.5);
+  \coordinate (B) at (0.5,0,0.5); \coordinate (C) at (0.5,0.5,0);
+  \coordinate (al) at (0.3333,0.1667,0.1667); \coordinate (be) at (0.1667,0.3333,0.1667);
+  \coordinate (ga) at (0.1667,0.1667,0.3333); \coordinate (de) at (0.3333,0.3333,0.3333);
+  \draw[atomLine!40, dashed] (0,0,0)--(0,0.5,0)--(0.5,0.5,0) (0,0.5,0)--(0,0.5,0.5);
+  \draw[atomLine!40] (0,0,0)--(0.5,0,0)--(0.5,0,0.5)--(0,0,0.5)--cycle (0.5,0,0)--(0.5,0.5,0)--(0.5,0.5,0.5)--(0.5,0,0.5) (0,0,0.5)--(0,0.5,0.5)--(0.5,0.5,0.5);
+  \fill[fmBlue!12, opacity=0.8] (A)--(B)--(C)--cycle;
+  \draw[fmBlue, line width=1pt] (A)--(B)--(C)--cycle;
+  \draw[fmBlue, line width=1pt] (D)--(B) (D)--(C);
+  \draw[fmBlue, line width=1pt, dashed] (D)--(A);
+  \foreach \p/\pos in {A/above left, B/below, C/right, D/below left}{\fill (\p) circle (0.5pt); \node[\pos, font=\small] at (\p) {$\p$};}
+  \fill[fmRed] (de) circle (0.45pt); \node[font=\small, fmRed, above] at (de) {$\delta$};
+  \draw[-{Stealth[length=1.6mm]}, fmGreen, line width=0.9pt] (A) -- (de);
+  \draw[-{Stealth[length=1.6mm]}, fmRed, line width=0.9pt, dashed] (D) -- (de);
+\end{tikzpicture}
+\caption{}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.48\textwidth}\centering
+\begin{tikzpicture}[scale=1.25, line join=round]
+  \coordinate (A) at (0,0); \coordinate (B) at (2,0); \coordinate (C) at (1,1.732);
+  \coordinate (D1) at (1,-1.732); \coordinate (D2) at (3,1.732); \coordinate (D3) at (-1,1.732);
+  \fill[fmBlue!12] (A)--(B)--(C)--cycle;
+  \draw[line width=0.8pt] (A)--(B)--(C)--cycle (A)--(D1)--(B) (B)--(D2)--(C) (C)--(D3)--(A);
+  \node[below left, font=\small] at (A) {$A$}; \node[below right, font=\small] at (B) {$B$};
+  \node[above, font=\small] at (C) {$C$};
+  \foreach \d in {D1,D2,D3}{\node[font=\small] at ($(\d)!-0.12!(barycentric cs:A=1,B=1,C=1)$) {$D$};}
+  \node[font=\small, fmRed] at (barycentric cs:A=1,B=1,C=1) {$\delta$};
+  \node[font=\footnotesize] at ($(barycentric cs:A=1,B=1,C=1)+(0,-0.3)$) {$(111)$};
+  \node[font=\small, fmRed] at (barycentric cs:A=1,B=1,D1=1) {$\gamma$};
+  \node[font=\footnotesize] at ($(barycentric cs:A=1,B=1,D1=1)+(0,-0.3)$) {$(11\br1)$};
+  \node[font=\small, fmRed] at (barycentric cs:B=1,C=1,D2=1) {$\alpha$};
+  \node[font=\footnotesize] at ($(barycentric cs:B=1,C=1,D2=1)+(0,-0.3)$) {$(\br111)$};
+  \node[font=\small, fmRed] at (barycentric cs:C=1,A=1,D3=1) {$\beta$};
+  \node[font=\footnotesize] at ($(barycentric cs:C=1,A=1,D3=1)+(0,-0.3)$) {$(1\br11)$};
+\end{tikzpicture}
+\caption{}
+\end{subfigure}
+\caption{Тетраэдр Томпсона: \textit{а}~— в элементарной ячейке ГЦК (одна
+восьмая куба; $D$~— начало координат, $A=\frac a2[011]$, $B=\frac a2[101]$,
+$C=\frac a2[110]$); зелёная стрелка~— вектор Шокли $A\delta$, красная
+пунктирная~— вектор Франка $D\delta$; \textit{б}~— развёртка тетраэдра:
+четыре грани~— плоскости скольжения $\plfam{111}$ с центрами $\alpha$,
+$\beta$, $\gamma$, $\delta$}
+\label{fig:thompson}
+\end{figure}
+
+\paragraph{Как читать обозначения}
+\begin{itemize}
+\item Ребро (две латинские буквы: $AB$, $BC$, \ldots, всего шесть)~—
+вектор Бюргерса полной дислокации $\frac a2\nfam{110}$; грань~— её
+плоскость скольжения.
+\item Отрезок «вершина~— центр \emph{другой} грани» (латинская и греческая
+буквы, разные: $A\delta$, $\delta C$, $B\alpha$, \ldots)~— вектор Шокли
+$\frac a6\nfam{112}$, лежащий в этой грани.
+\item Отрезок «вершина~— центр \emph{противолежащей} грани» ($A\alpha$,
+$B\beta$, $C\gamma$, $D\delta$)~— вектор Франка $\frac a3\nfam{111}$,
+перпендикулярный грани.
+\item Отрезок между центрами двух граней (две греческие буквы:
+$\beta\delta$, \ldots)~— вектор вершинной дислокации $\frac a6\nfam{110}$.
+\end{itemize}
+Переход к индексам Миллера удобно делать по развёртке
+(рис.~\ref{fig:thompson},\,б) и координатам вершин.
+
+\paragraph{Расщепление полной дислокации на частичные Шокли}
+В плоскости $ABC=(111)$:
+\begin{equation}\label{eq:thompson-split}
+AB=A\delta+\delta B:\qquad \tfrac a2[1\br10]=\tfrac a6[2\br1\br1]+\tfrac a6[1\br21] .
+\end{equation}
+Проверка: $\frac a6(2+1,\,-1-2,\,-1+1)=\frac a6(3,-3,0)=\frac a2[1\br10]$.
+Аналогично $AC=A\delta+\delta C$ и т.\,д.
+
+\paragraph{Полная = Франк + Шокли}
+\[
+AB=A\alpha+\alpha B:\qquad \tfrac a2[1\br10]=\tfrac a3[1\br1\br1]+\tfrac a6[1\br12] .
+\]
+Здесь критерий Франка ответа не даёт: $a^2/2=a^2/3+a^2/6$. Но при
+расщеплении возник бы дефект упаковки, поэтому выгодна \emph{обратная}
+реакция~— объединение дислокаций Франка и Шокли в полную с устранением
+дефекта упаковки. Обратите внимание: $AB$, $A\alpha$, $\alpha B$~— векторы
+Бюргерса, а не линии. Линии дислокаций Франка $A\alpha$ и Шокли $\alpha
+B$ вместе с дефектом упаковки лежат в плоскости $DBC$.
+
+\paragraph{Полная + Шокли = Франк}
+\[
+DA+A\delta=D\delta:\qquad \tfrac a2[011]+\tfrac a6[2\br1\br1]=\tfrac a3[111] .
+\]
+Полная дислокация $DA$ скользит в плоскости $ADB$ или $ADC$, а дислокация
+Шокли $A\delta$ (с дефектом упаковки)~— в плоскости $ABC$. Реакция вдвое
+снижает энергию: $a^2/2+a^2/6=2a^2/3>a^2/3$. Если дислокация Шокли была
+частью растянутой дислокации, то в результате получается растянутая
+дислокация «Шокли--Франк».
+
+\subsubsection{Барьер Ломер--Коттрелла}
+
+Пусть в двух пересекающихся плоскостях скольжения движутся две
+расщеплённые дислокации:
+\begin{itemize}
+\item в плоскости $ACD=(1\br11)$~— дислокация $DA=D\beta+\beta A$;
+\item в плоскости $ABC=(111)$~— дислокация $AC=A\delta+\delta C$.
+\end{itemize}
+Плоскости пересекаются по прямой $[\br101]$. Головные частичные
+дислокации $\beta A$ и $A\delta$ встречаются на линии пересечения и
+объединяются:
+\begin{keyeq}\label{eq:lomer-cottrell}
+\beta A+A\delta=\beta\delta:\qquad \tfrac a6[\br112]+\tfrac a6[2\br1\br1]=\tfrac a6[101] .
+\end{keyeq}
+Выигрыш энергии большой: $a^2/6+a^2/6=a^2/3>a^2/18$.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[scale=0.85]
+  \def\angA{125.26}\def\angB{54.74}
+  \begin{scope}
+    \draw[fmGray] (0,0) -- (\angA:3.6) (0,0) -- (\angB:3.6) (0,0) -- (\angA+180:1.2) (0,0) -- (\angB+180:1.2);
+    \draw[sf, line width=4pt] (\angA:1.6) -- (\angA:2.8);
+    \draw[sf, line width=4pt] (\angB:1.6) -- (\angB:2.8);
+    \foreach \a in {\angA,\angB}{\fill[fmBlue] (\a:1.6) circle (2.2pt); \fill[fmBlue] (\a:2.8) circle (2.2pt);}
+    \draw[arr, fmRed] (\angA:1.45) -- (\angA:0.75);
+    \draw[arr, fmRed] (\angB:1.45) -- (\angB:0.75);
+    \node[slbl] at (\angA:3.9) {$(1\br11)$};
+    \node[slbl] at (\angB:3.9) {$(111)$};
+    \node[slbl, left] at (\angA:1.6) {$\beta A$};
+    \node[slbl, left] at (\angA:2.8) {$D\beta$};
+    \node[slbl, right] at (\angB:1.6) {$A\delta$};
+    \node[slbl, right] at (\angB:2.8) {$\delta C$};
+    \node[lbl] at (0,-1.6) {а};
+  \end{scope}
+  \begin{scope}[shift={(7,0)}]
+    \draw[fmGray] (0,0) -- (\angA:3.6) (0,0) -- (\angB:3.6) (0,0) -- (\angA+180:1.2) (0,0) -- (\angB+180:1.2);
+    \draw[sf, line width=4pt] (0,0) -- (\angA:1.2);
+    \draw[sf, line width=4pt] (0,0) -- (\angB:1.2);
+    \fill[fmRed] (0,0) circle (2.6pt);
+    \foreach \a in {\angA,\angB}{\fill[fmBlue] (\a:1.2) circle (2.2pt);}
+    \node[slbl, below] at (0,-0.1) {$\beta\delta$ (вершинная)};
+    \node[slbl, left] at (\angA:1.2) {$D\beta$};
+    \node[slbl, right] at (\angB:1.2) {$\delta C$};
+    \node[lbl] at (0,-1.6) {б};
+  \end{scope}
+\end{tikzpicture}
+\caption{Образование дислокации Ломер--Коттрелла (сечение,
+перпендикулярное линии пересечения плоскостей скольжения $[\br101]$;
+синие точки~— частичные дислокации Шокли, полосы~— дефекты упаковки):
+\textit{а}~— две расщеплённые дислокации приближаются к линии
+пересечения; \textit{б}~— головные частичные дислокации объединились в
+вершинную $\beta\delta=\frac a6[101]$; дефект упаковки изогнут клином}
+\label{fig:lomer-cottrell}
+\end{figure}
+
+Получившаяся дислокация с вектором $\frac a6[101]$ тоже частичная. Её
+линия идёт вдоль $[\br101]$~— в вершине двугранного угла, образованного
+встретившимися дефектами упаковки,~— поэтому её называют
+\term{вершинной} (англ.\ \emph{stair-rod}). Вектор $\frac a6[101]$
+перпендикулярен линии $[\br101]$, так что вершинная дислокация~— чисто
+краевая. Её вектор Бюргерса не лежит ни в одной из плоскостей
+$\plfam{111}$, содержащих линию, поэтому она скользить не может.
+
+\begin{opredelenie}
+\term{Дислокация (барьер) Ломер--Коттрелла}~— совокупность трёх частичных
+дислокаций (вершинной $\beta\delta$ и двух Шокли $D\beta$ и $\delta C$) и
+клиновидного дефекта упаковки между ними (рис.~\ref{fig:lomer-cottrell},\,б).
+Она неподвижна.
+\end{opredelenie}
+
+\begin{glavnoe}
+Барьеры Ломер--Коттрелла~— неподвижные препятствия, образующиеся при
+пересечении скольжения в двух системах. У них скапливаются дислокации,
+что вносит большой вклад в деформационное упрочнение ГЦК-металлов.
+\end{glavnoe}
+
+Сводка характерных дислокаций ГЦК-решётки приведена в
+табл.~\ref{tab:fcc-disl}\ispr{В табл.~2.7 оригинала для полной дислокации
+$a\nfam{110}$ указано $b^2=a^2$; правильно $2a^2$ (длина вектора $a\sqrt2$).}.
+
+\begin{table}[ht]
+\centering
+\caption{Характерные дислокации в ГЦК-структуре}
+\label{tab:fcc-disl}
+\small
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+ & \multicolumn{2}{c}{Полные} & \multicolumn{3}{c}{Частичные} \\
+\cmidrule(lr){2-3}\cmidrule(l){4-6}
+ & & & Шокли & Франка & вершинные \\
+\midrule
+Вектор Бюргерса & $\frac a2\nfam{110}$ & $a\nfam{110}$ & $\frac a6\nfam{112}$ & $\frac a3\nfam{111}$ & $\frac a6\nfam{110}$ \\[2pt]
+$b^2$ & $a^2/2$ & $2a^2$ & $a^2/6$ & $a^2/3$ & $a^2/18$ \\
+Тетраэдр Томпсона & $AB$ & --- & $A\delta$ & $D\delta$ & $\beta\delta$ \\
+Подвижность & скользящая & скользящая & скользящая & сидячая & сидячая \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Стандартная бипирамида и реакции в ГПУ-решётке}
+
+Для ГПУ-решётки аналогичную роль играет \term{стандартная бипирамида}
+(рис.~\ref{fig:bipyramid}). В её основании~— равносторонний треугольник
+$ABC$ из атомов базисной плоскости, $\sigma$~— его центр; $S$ и $T$~—
+точки над и под $\sigma$ на расстоянии $c/2$ (положения атомов в соседних
+базисных слоях).
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[scale=1.5, line join=round,
+   x={(1cm,0cm)}, y={(0.45cm,0.32cm)}, z={(0cm,1cm)}]
+  \coordinate (A) at (0,0,0); \coordinate (B) at (2,0,0); \coordinate (C) at (1,1.732,0);
+  \coordinate (sig) at (1,0.5773,0); \coordinate (S) at (1,0.5773,1.633); \coordinate (T) at (1,0.5773,-1.633);
+  \draw[atomLine!50, dashed] (A)--(C)--(B) (C)--(S) (C)--(T);
+  \fill[fmBlue!10, opacity=0.7] (A)--(B)--(C)--cycle;
+  \draw[atomLine] (A)--(B) (A)--(S)--(B) (A)--(T)--(B);
+  \draw[fmRed, line width=1pt, -{Stealth[length=2mm]}] (S)--(T) node[pos=0.25, right, font=\small]{$c$};
+  \draw[fmGreen, line width=1pt, -{Stealth[length=2mm]}] (A)--(sig) node[midway, below, font=\small]{$p$};
+  \foreach \p/\pos in {A/left, B/right, C/above right, S/above, T/below}{\fill (\p) circle (1pt); \node[\pos, font=\small] at (\p) {$\p$};}
+  \fill (sig) circle (1pt); \node[right, font=\small] at (sig) {$\sigma$};
+\end{tikzpicture}
+\caption{Стандартная бипирамида ГПУ-решётки: $ABC$~— треугольник в
+базисной плоскости, $\sigma$~— его центр, $S$ и $T$~— точки соседних
+базисных слоёв над и под $\sigma$}
+\label{fig:bipyramid}
+\end{figure}
+
+Характерные дислокации ГПУ-структуры:
+\begin{enumerate}[label=\arabic*)]
+\item полные $AB$, $BC$, $CA$~— \term{$a$-дислокации}, $\frac13\nfam{11\br20}$;
+\item полные $ST$~— \term{$c$-дислокации}, $\nfam{0001}$, перпендикулярные
+базису;
+\item полные \term{$(c+a)$-дислокации} $\frac13\nfam{11\br23}$~— сумма
+векторов $c$ и $a$ (например, $ST+AB$), лежат в призматических и
+пирамидальных плоскостях;
+\item частичные скользящие дислокации Шокли $A\sigma$, $B\sigma$,
+$C\sigma$~— \term{$p$-дислокации}, $\frac13\nfam{1\br100}$, в базисной
+плоскости;
+\item частичные сидячие дислокации Франка $\sigma S$, $\sigma T$~—
+$\frac12\nfam{0001}$ ($c/2$), перпендикулярные базису;
+\item частичные сидячие дислокации Франка $AS$, $BS$, $CS$, $AT$, \ldots~—
+$(c/2+p)$-дислокации, $\frac16\nfam{20\br23}$. Точки $A$ и $S$~— узлы
+соседних слоёв, но структурно неэквивалентные, поэтому $AS$~— не вектор
+трансляции.
+\end{enumerate}
+
+\paragraph{Примеры реакций}
+Расщепление $a$-дислокации в базисной плоскости на две частичные Шокли
+мы уже видели: $AB=A\sigma+\sigma B$. $(c+a)$-дислокация может
+диссоциировать на две сидячие дислокации Франка типа $(c/2+p)$:
+\[
+\tfrac13[\br12\br13]=\tfrac16[02\br23]+\tfrac16[\br2203],\qquad
+\frac{11a^2}{3}>a^2+a^2 .
+\]
+Реакция выгодна и \emph{закрепляет} скользящую дислокацию\ispr{В
+оригинале (с.~301) сумма векторов в правой части этой реакции не равна
+левой; приведён исправленный вариант. Квадраты векторов: $(c+a)^2=a^2+c^2
+=11a^2/3$, $(c/2+p)^2=c^2/4+a^2/3=a^2$ при $c/a=\sqrt{8/3}$.}.
+
+\begin{table}[ht]
+\centering
+\caption{Характерные дислокации в ГПУ-структуре ($c/a=\sqrt{8/3}\approx1{,}633$)}
+\label{tab:hcp-disl}
+\small
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+ & \multicolumn{3}{c}{Полные} & \multicolumn{3}{c}{Частичные} \\
+\cmidrule(lr){2-4}\cmidrule(l){5-7}
+ & $a$ & $c$ & $c+a$ & Шокли ($p$) & Франка ($c/2$) & Франка ($c/2+p$) \\
+\midrule
+Вектор & $\frac13\nfam{11\br20}$ & $\nfam{0001}$ & $\frac13\nfam{11\br23}$ & $\frac13\nfam{1\br100}$ & $\frac12\nfam{0001}$ & $\frac16\nfam{20\br23}$ \\[2pt]
+$b^2$ & $a^2$ & $8a^2/3$ & $11a^2/3$ & $a^2/3$ & $2a^2/3$ & $a^2$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Дислокационные реакции в ОЦК-решётке}
+
+Для ОЦК-структуры нет простого наглядного построения, аналогичного
+тетраэдру Томпсона. Дислокации здесь скользят в плоскостях $\plfam{110}$ и
+$\plfam{112}$. Рассмотрим реакции полных дислокаций $\frac a2\nfam{111}$ в
+плоскостях $\plfam{110}$ (рис.~\ref{fig:bcc-reaction}). При встрече они
+могут объединиться в полную дислокацию $a\nfam{100}$; это выгодно:
+$\frac{3a^2}4+\frac{3a^2}4=\frac{3a^2}{2}>a^2$.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[cubeproj, scale=2.4, line join=round]
+  \CubeEdges
+  \foreach \p in {(0,1,0),(1,1,0),(0,1,1),(1,1,1)} \node[atom=3.4mm] at \p {};
+  \node[atom=3.4mm] at (0.5,0.5,0.5) {};
+  \foreach \p in {(0,0,0),(1,0,0),(0,0,1),(1,0,1)} \node[atom=3.4mm] at \p {};
+  \draw[-{Stealth[length=2.2mm]}, fmBlue, line width=1.1pt] (1,1,0) -- (0.53,0.53,0.47);
+  \draw[-{Stealth[length=2.2mm]}, fmGreen, line width=1.1pt] (0,0,0) -- (0.47,0.47,0.47);
+  \draw[-{Stealth[length=2.2mm]}, fmRed, line width=1.4pt] (0,0,0) -- (0,0,0.97);
+  \node[font=\footnotesize, fmBlue, right] at (0.8,0.8,0.25) {$\frac a2[\br1\br11]$};
+  \node[font=\footnotesize, fmGreen, below right] at (0.25,0.25,0.2) {$\frac a2[111]$};
+  \node[font=\footnotesize, fmRed, left] at (0,0,0.5) {$a[001]$};
+\end{tikzpicture}
+\caption{Векторы Бюргерса полных дислокаций $\frac a2\nfam{111}$ и
+$a\nfam{100}$ в ОЦК-решётке: $\frac a2[\br1\br11]+\frac a2[111]=a[001]$}
+\label{fig:bcc-reaction}
+\end{figure}
+
+\begin{itemize}
+\item \emph{Дислокации скользят в одной плоскости.} Тогда образующаяся
+дислокация $a\nfam{100}$ может скользить в той же плоскости:
+\[
+\tfrac a2[\br1\br11]_{(1\br10)}+\tfrac a2[111]_{(1\br10)}=a[001]_{(1\br10)} .
+\]
+\item \emph{Дислокации скользят во взаимно перпендикулярных плоскостях
+$\plfam{110}$.} Например, $\frac a2[\br1\br11]$ в плоскости $(1\br10)$ и
+$\frac a2[\br11\br1]$ в плоскости $(110)$. Встретиться они могут только на
+линии пересечения этих плоскостей~— прямой $[001]$:
+\[
+\tfrac a2[\br1\br11]+\tfrac a2[\br11\br1]=a[\br100] .
+\]
+Вектор $a[\br100]$ перпендикулярен линии $[001]$: дислокация краевая.
+Скользить она может только в плоскости $(010)$, содержащей $\vb b$ и
+линию, т.\,е. не в тех плоскостях $\plfam{110}$, где движутся исходные
+дислокации. Поэтому она служит эффективным \emph{барьером} для
+дислокаций $\frac a2\nfam{111}$, скользящих в плоскостях $(1\br10)$ и
+$(110)$.
+\end{itemize}
+
+\begin{table}[ht]
+\centering
+\caption{Характерные полные дислокации в ОЦК-структуре}
+\label{tab:bcc-full}
+\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Вектор Бюргерса & $\frac a2\nfam{111}$ & $a\nfam{100}$ & $a\nfam{110}$ \\
+$b^2$ & $3a^2/4$ & $a^2$ & $2a^2$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Характерные частичные дислокации в ОЦК-структуре}
+\label{tab:bcc-partial}
+\small
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+Вектор Бюргерса & $\frac a8\nfam{110}$ & $\frac a6\nfam{111}$ & $\frac a4\nfam{111}$ & $\frac a3\nfam{111}$ & $\frac a4\nfam{112}$ & $\frac a3\nfam{112}$ \\
+$b^2$ & $a^2/32$ & $a^2/12$ & $3a^2/16$ & $a^2/3$ & $3a^2/8$ & $2a^2/3$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{itogi}
+\begin{itemize}
+\item Тетраэдр Томпсона $ABCD$: рёбра~— полные $\frac a2\nfam{110}$, грани~—
+плоскости $\plfam{111}$; «вершина~— центр другой грани»~— Шокли,
+«вершина~— центр противолежащей грани»~— Франк, «центр~— центр»~—
+вершинная $\frac a6\nfam{110}$.
+\item Встреча головных Шокли из пересекающихся плоскостей даёт сидячую
+вершинную дислокацию~— барьер Ломер--Коттрелла (упрочнение).
+\item ГПУ: бипирамида; $a$-, $c$-, $(c+a)$-дислокации; Шокли $p$; Франка
+$c/2$ и $c/2+p$.
+\item ОЦК: $\frac a2\nfam{111}+\frac a2\nfam{111}\to a\nfam{100}$; из
+перпендикулярных плоскостей $\plfam{110}$ получается сидячий барьер.
+\end{itemize}
+\end{itogi}
+
+\begin{proverka}
+\item Найдите по тетраэдру Томпсона вектор, на который расщепляется
+дислокация $AC$ в плоскости $ABC$, и запишите реакцию в индексах.
+\item Почему дислокация Ломер--Коттрелла неподвижна?
+\item Проверьте по критерию Франка реакцию
+$\frac a2[\br1\br11]+\frac a2[111]=a[001]$.
+\item Какие дислокации в ГПУ обеспечивают деформацию вдоль оси $c$?
+\end{proverka}
