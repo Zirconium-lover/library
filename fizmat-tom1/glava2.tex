@@ -1,0 +1,13 @@
+% !TEX program = xelatex
+% Отдельная сборка главы 2:  latexmk glava2.tex   (или make glava2)
+\documentclass[12pt,twoside,openright]{book}
+\usepackage{fizmat}
+\def\fmSubtitle{Глава 2. Дефекты кристаллической решётки}
+\begin{document}
+\frontmatter
+\input{frontmatter}
+\tableofcontents
+\mainmatter
+\setcounter{chapter}{1}
+\input{chapters/ch2/ch2}
+\end{document}

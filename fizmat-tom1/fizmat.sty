@@ -1,0 +1,439 @@
+% ======================================================================
+%  fizmat.sty — оформление переработанного учебника
+%  «Физическое материаловедение. Том 1. Физика твёрдого тела»
+%  Компилировать XeLaTeX (см. latexmkrc / Makefile).
+% ======================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{fizmat}[2026/10/15 Fizmat textbook style]
+
+% ---------------------------------------------------------------- геометрия
+\RequirePackage[a4paper,
+  textwidth=150mm, textheight=235mm,
+  inner=27mm, top=28mm, headsep=8mm, footskip=12mm,
+  marginparwidth=22mm, marginparsep=4mm, headheight=15pt]{geometry}
+
+% ---------------------------------------------------------------- язык, шрифты
+\RequirePackage{amsmath}
+\RequirePackage{fontspec}
+\RequirePackage{polyglossia}
+\setdefaultlanguage{russian}
+\setotherlanguage{english}
+\RequirePackage[math-style=TeX, bold-style=TeX]{unicode-math}
+
+\setmainfont{LibertinusSerif}[
+  Extension=.otf,
+  UprightFont=*-Regular, BoldFont=*-Semibold,
+  ItalicFont=*-Italic, BoldItalicFont=*-SemiboldItalic]
+\setsansfont{LibertinusSans}[
+  Extension=.otf,
+  UprightFont=*-Regular, BoldFont=*-Bold, ItalicFont=*-Italic]
+\setmathfont{LibertinusMath-Regular.otf}
+% кириллица внутри формул (индексы «пл», «сд» и т.п.) — из текстового шрифта
+\setmathfont{LibertinusSerif-Regular.otf}[range={"0400-"04FF}]
+\newfontfamily\cyrillicfont{LibertinusSerif}[
+  Extension=.otf,
+  UprightFont=*-Regular, BoldFont=*-Semibold,
+  ItalicFont=*-Italic, BoldItalicFont=*-SemiboldItalic]
+\newfontfamily\cyrillicfontsf{LibertinusSans}[
+  Extension=.otf,
+  UprightFont=*-Regular, BoldFont=*-Bold, ItalicFont=*-Italic]
+
+\linespread{1.07}
+\setlength{\parskip}{0.25ex plus 0.2ex}
+\frenchspacing
+\RequirePackage{microtype}
+
+% десятичная запятая в формулах: 0,5 без лишнего пробела
+\RequirePackage{icomma}
+
+% ---------------------------------------------------------------- пакеты
+\RequirePackage{xcolor}
+\RequirePackage{graphicx}
+\RequirePackage{booktabs, array, tabularx, multirow}
+\RequirePackage{enumitem}
+\RequirePackage{caption}
+\RequirePackage{subcaption}
+\RequirePackage{titlesec}
+\RequirePackage{titletoc}
+\RequirePackage{fancyhdr}
+\RequirePackage{footmisc}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{tikz}
+\RequirePackage{pgfplots}
+\RequirePackage{tikz-3dplot}
+\RequirePackage{xparse}
+\RequirePackage{calc}
+\RequirePackage{wrapfig}
+
+\usetikzlibrary{arrows.meta, calc, positioning, patterns, patterns.meta,
+  decorations.pathmorphing, decorations.markings, decorations.pathreplacing,
+  shapes.geometric, shapes.misc, backgrounds, fit, intersections,
+  3d, perspective, shadings, fadings}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{
+  /pgf/number format/use comma,
+  /pgf/number format/1000 sep={\,},
+  every axis/.append style={
+    font=\small,
+    axis lines=left,
+    tick align=outside,
+    every axis label/.append style={font=\small},
+    legend style={font=\footnotesize, draw=none, fill=white, fill opacity=0.85, text opacity=1},
+  },
+}
+
+% ---------------------------------------------------------------- цвета
+\definecolor{fmBlue}{HTML}{1F5FA8}
+\definecolor{fmBlueBg}{HTML}{EEF4FB}
+\definecolor{fmAmber}{HTML}{C9771A}
+\definecolor{fmAmberBg}{HTML}{FDF5E9}
+\definecolor{fmGreen}{HTML}{2E7D32}
+\definecolor{fmGreenBg}{HTML}{EFF7EF}
+\definecolor{fmRed}{HTML}{B03A2E}
+\definecolor{fmRedBg}{HTML}{FBEFED}
+\definecolor{fmTeal}{HTML}{00796B}
+\definecolor{fmTealBg}{HTML}{E9F5F3}
+\definecolor{fmGray}{HTML}{5F6B73}
+\definecolor{fmGrayBg}{HTML}{F3F4F5}
+\definecolor{fmPurple}{HTML}{5E4B8B}
+\definecolor{fmPurpleBg}{HTML}{F3F0F8}
+\definecolor{fmHead}{HTML}{1B3A5C}
+
+% цвета для рисунков
+\definecolor{atomA}{HTML}{9DB8D9}   % обычный атом
+\definecolor{atomB}{HTML}{E8A33D}   % примесь / выделенный атом
+\definecolor{atomI}{HTML}{D2553F}   % межузельный атом
+\definecolor{atomLine}{HTML}{3A4A5A}
+\definecolor{plane}{HTML}{D8E4F2}
+\definecolor{sf}{HTML}{F2D0A4}      % дефект упаковки
+
+\RequirePackage[colorlinks=true, linkcolor=fmBlue, citecolor=fmGreen,
+  urlcolor=fmBlue, bookmarksnumbered=true, unicode=true]{hyperref}
+
+% ---------------------------------------------------------------- заголовки
+\titleformat{\chapter}[display]
+  {\sffamily\bfseries\color{fmHead}}
+  {\Large\MakeUppercase{\chaptertitlename}~\thechapter}
+  {1ex}
+  {\Huge}
+  [\vspace{1ex}{\color{fmBlue}\titlerule[1.2pt]}]
+\titlespacing*{\chapter}{0pt}{-10pt}{24pt}
+
+\titleformat{\section}
+  {\sffamily\bfseries\Large\color{fmHead}}{\thesection}{0.7em}{}
+\titlespacing*{\section}{0pt}{3.2ex plus 1ex minus .2ex}{1.6ex plus .2ex}
+
+\titleformat{\subsection}
+  {\sffamily\bfseries\large\color{fmHead}}{\thesubsection}{0.7em}{}
+\titlespacing*{\subsection}{0pt}{2.8ex plus 1ex minus .2ex}{1.2ex plus .2ex}
+
+\titleformat{\subsubsection}
+  {\sffamily\bfseries\color{fmHead}}{}{0pt}{}
+\titlespacing*{\subsubsection}{0pt}{2.4ex plus .8ex minus .2ex}{0.8ex plus .2ex}
+\titleformat{\paragraph}[runin]
+  {\sffamily\bfseries\small\color{fmHead}}{}{0pt}{}[.]
+\titlespacing*{\paragraph}{0pt}{1.4ex plus .5ex minus .2ex}{0.6em}
+
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+
+% ---------------------------------------------------------------- колонтитулы
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.~#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection.~#1}}
+\fancyhead[LE]{\sffamily\small\color{fmGray}\leftmark}
+\fancyhead[RO]{\sffamily\small\color{fmGray}\rightmark}
+\fancyfoot[LE,RO]{\sffamily\small\thepage}
+\fancypagestyle{plain}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}%
+  \fancyfoot[LE,RO]{\sffamily\small\thepage}}
+
+% ---------------------------------------------------------------- подписи
+\captionsetup{font=small, labelfont={bf,sf}, labelsep=period,
+  margin=6mm, skip=6pt}
+\captionsetup[sub]{font=small, labelfont={bf,sf}, labelformat=simple}
+\renewcommand{\thesubfigure}{\asbuk{subfigure}}
+\renewcommand{\thefigure}{\thechapter.\arabic{figure}}
+\renewcommand{\thetable}{\thechapter.\arabic{table}}
+\renewcommand{\theequation}{\thechapter.\arabic{equation}}
+
+% ---------------------------------------------------------------- списки
+\setlist{itemsep=0.25ex, topsep=0.6ex, parsep=0.2ex, leftmargin=*, labelindent=0.5em}
+\setlist[itemize,1]{label={\color{fmBlue}\textbullet}}
+\setlist[itemize,2]{label={\color{fmBlue}\textendash}}
+\makeatletter
+\AddEnumerateCounter{\asbuk}{\russian@asbuk@alph}{ю}
+\makeatother
+\newlist{shagi}{enumerate}{1}
+\setlist[shagi]{label={\sffamily\bfseries\color{fmHead}Шаг \arabic*.}, align=left,
+  leftmargin=0pt, labelwidth=!, itemindent=*, labelsep=0.5em, itemsep=0.8ex}
+
+% ---------------------------------------------------------------- рамки
+\tcbset{
+  fmbase/.style={
+    enhanced, breakable,
+    boxrule=0pt, arc=1.5pt, outer arc=1.5pt,
+    left=9pt, right=9pt, top=6pt, bottom=6pt,
+    before skip=11pt plus 2pt, after skip=11pt plus 2pt,
+    fonttitle=\sffamily\bfseries,
+    parbox=false,
+  },
+  fminline/.style 2 args={
+    fmbase,
+    colback=#2, colframe=#1, leftrule=3pt, coltitle=#1,
+    detach title,
+    before upper={\textcolor{#1}{\sffamily\bfseries\tcbtitle.}\enspace},
+  },
+}
+
+% Определение: \begin{opredelenie} ... \end{opredelenie}
+%   или \begin{opredelenie}[Вакансия] — заголовок «Определение (Вакансия)»
+\NewDocumentEnvironment{opredelenie}{o}
+  {\begin{tcolorbox}[fminline={fmBlue}{fmBlueBg},
+     title={Определение\IfValueT{#1}{ (#1)}}]}
+  {\end{tcolorbox}}
+
+\NewDocumentEnvironment{glavnoe}{o}
+  {\begin{tcolorbox}[fminline={fmAmber}{fmAmberBg},
+     title={\IfValueTF{#1}{#1}{Главная мысль}}]}
+  {\end{tcolorbox}}
+
+\NewDocumentEnvironment{smysl}{o}
+  {\begin{tcolorbox}[fminline={fmTeal}{fmTealBg},
+     title={\IfValueTF{#1}{#1}{Физический смысл}}]}
+  {\end{tcolorbox}}
+
+\NewDocumentEnvironment{vnimanie}{o}
+  {\begin{tcolorbox}[fminline={fmRed}{fmRedBg},
+     title={\IfValueTF{#1}{#1}{Осторожно}}]}
+  {\end{tcolorbox}}
+
+% Пример с решением (заголовок-полоса)
+\newcounter{primer}[chapter]
+\renewcommand{\theprimer}{\thechapter.\arabic{primer}}
+\NewDocumentEnvironment{primer}{o}
+  {\refstepcounter{primer}%
+   \begin{tcolorbox}[fmbase, colback=fmGreenBg, colframe=fmGreen,
+     leftrule=3pt, toptitle=2pt, bottomtitle=2pt,
+     colbacktitle=fmGreenBg, coltitle=fmGreen,
+     title={Пример \theprimer\IfValueT{#1}{. #1}},
+     titlerule=0.4pt, titlerule style={fmGreen!40}]}
+  {\end{tcolorbox}}
+
+% Пример без номера
+\NewDocumentEnvironment{primer*}{o}
+  {\begin{tcolorbox}[fmbase, colback=fmGreenBg, colframe=fmGreen,
+     leftrule=3pt, toptitle=2pt, bottomtitle=2pt,
+     colbacktitle=fmGreenBg, coltitle=fmGreen,
+     title={Пример\IfValueT{#1}{. #1}},
+     titlerule=0.4pt, titlerule style={fmGreen!40}]}
+  {\end{tcolorbox}}
+
+% Необязательный материал «для углублённого изучения»
+\NewDocumentEnvironment{podrobnee}{o}
+  {\begin{tcolorbox}[fmbase, colback=fmGrayBg, colframe=fmGray,
+     leftrule=3pt, toptitle=2pt, bottomtitle=2pt,
+     colbacktitle=fmGrayBg, coltitle=fmGray,
+     fontupper=\small,
+     title={$\star$\ Подробнее\IfValueT{#1}{: #1}},
+     titlerule=0.4pt, titlerule style={fmGray!40}]}
+  {\end{tcolorbox}}
+
+% Ориентир в начале раздела
+\NewDocumentEnvironment{orientir}{}
+  {\begin{tcolorbox}[fmbase, colback=white, colframe=fmBlue!60,
+     boxrule=0.6pt, leftrule=0.6pt, arc=3pt, outer arc=3pt,
+     fontupper=\small, toptitle=2pt, bottomtitle=2pt,
+     colbacktitle=fmBlue!8, coltitle=fmHead,
+     title={О чём этот раздел}]}
+  {\end{tcolorbox}}
+
+% Итоги раздела
+\NewDocumentEnvironment{itogi}{o}
+  {\begin{tcolorbox}[fmbase, colback=fmPurpleBg, colframe=fmPurple,
+     boxrule=0pt, leftrule=3pt, toptitle=3pt, bottomtitle=3pt,
+     colbacktitle=fmPurple, coltitle=white,
+     title={\IfValueTF{#1}{#1}{Коротко о главном}}]}
+  {\end{tcolorbox}}
+
+% Ключевая формула — выделенное нумерованное уравнение
+\newtcolorbox{keyeq}[1][]{enhanced, ams equation,
+  colback=fmAmberBg, colframe=fmAmber, boxrule=0.6pt, arc=2pt,
+  left=4pt, right=4pt, top=1pt, bottom=1pt,
+  before skip=8pt, after skip=8pt, #1}
+\newtcolorbox{keyeq*}[1][]{enhanced, ams equation*,
+  colback=fmAmberBg, colframe=fmAmber, boxrule=0.6pt, arc=2pt,
+  left=4pt, right=4pt, top=1pt, bottom=1pt,
+  before skip=8pt, after skip=8pt, #1}
+
+% Вопросы для самопроверки в конце раздела
+\NewDocumentEnvironment{proverka}{}
+  {\begin{tcolorbox}[fmbase, colback=white, colframe=fmTeal,
+     boxrule=0.6pt, leftrule=0.6pt, arc=3pt, outer arc=3pt,
+     toptitle=2pt, bottomtitle=2pt,
+     colbacktitle=fmTealBg, coltitle=fmTeal,
+     title={Проверьте себя}]
+   \begin{enumerate}[label={\sffamily\bfseries\color{fmTeal}\arabic*.}]}
+  {\end{enumerate}\end{tcolorbox}}
+
+% ---------------------------------------------------------------- макросы текста
+\newcommand{\term}[1]{\textbf{\color{fmHead}#1}}          % вводимый термин
+\newcommand{\vazhno}[1]{\textbf{#1}}                     % смысловое выделение
+\newcommand{\eng}[1]{\textit{(англ.~\foreignlanguage{english}{#1})}}
+
+% Сноска об исправлении ошибки исходного учебника
+\newcommand{\ispr}[1]{\footnote{\textcolor{fmRed}{\sffamily\bfseries Исправление.}~#1}}
+% Ссылка на страницу исходного учебника
+\newcommand{\orig}[1]{\textsf{[ориг.~с.~#1]}}
+
+% ---------------------------------------------------------------- макросы формул
+\newcommand{\vb}[1]{\symbf{#1}}                          % вектор
+\newcommand{\tn}[1]{\symbf{#1}}                          % тензор
+\renewcommand{\d}{\mathop{}\!\mathrm{d}}                  % дифференциал
+\newcommand{\Ex}[1]{\exp\!\left(#1\right)}
+\newcommand{\kT}{k T}
+\newcommand{\eV}{\,\text{эВ}}
+\newcommand{\txt}[1]{\text{#1}}
+\newcommand{\Tpl}{T_{\text{пл}}}
+% энергии точечных дефектов
+\newcommand{\EvF}{E_{v}^{\mathrm{F}}}
+\newcommand{\Evm}{E_{v}^{\mathrm{m}}}
+\newcommand{\EiF}{E_{i}^{\mathrm{F}}}
+\newcommand{\Eim}{E_{i}^{\mathrm{m}}}
+\newcommand{\Ecd}{Q_{\text{сд}}}
+% кристаллографические символы
+\newcommand{\napr}[1]{[#1]}                 % направление [uvw]
+\newcommand{\nfam}[1]{\langle #1\rangle}    % семейство направлений <uvw>
+\newcommand{\pl}[1]{(#1)}                   % плоскость (hkl)
+\newcommand{\plfam}[1]{\{#1\}}              % семейство плоскостей {hkl}
+\newcommand{\br}[1]{\bar{#1}}               % черта над индексом
+\newcommand{\uzel}[1]{[\![#1]\!]}           % координаты узла [[uvw]]
+
+% ---------------------------------------------------------------- стили TikZ
+\tikzset{
+  atom/.style={circle, draw=atomLine, line width=0.4pt, fill=atomA,
+    minimum size=#1, inner sep=0pt},
+  atom/.default={4.2mm},
+  atomB/.style={atom=#1, fill=atomB},
+  atomB/.default={4.2mm},
+  atomI/.style={atom=#1, fill=atomI},
+  atomI/.default={4.2mm},
+  vac/.style={circle, draw=atomLine, dashed, line width=0.5pt, fill=white,
+    minimum size=#1, inner sep=0pt},
+  vac/.default={4.2mm},
+  arr/.style={-{Stealth[length=2.2mm]}, line width=0.7pt},
+  arrB/.style={-{Stealth[length=2.6mm]}, line width=1.1pt, fmRed},
+  lbl/.style={font=\small},
+  slbl/.style={font=\footnotesize},
+  dimline/.style={{Stealth[length=1.6mm]}-{Stealth[length=1.6mm]}, line width=0.4pt},
+  bvec/.style={-{Stealth[length=2.6mm]}, line width=1.2pt, fmRed},
+  disl/.style={line width=1.4pt, fmBlue},
+}
+% символ краевой дислокации ⊥ в TikZ: \dislT{(x,y)}{угол}
+\newcommand{\dislT}[3][fmRed]{%
+  \begin{scope}[shift={#2}, rotate=#3]
+    \draw[#1, line width=1.3pt] (-0.22,0) -- (0.22,0) (0,0) -- (0,0.3);
+  \end{scope}}
+% символ ⊥ в тексте
+\newcommand{\perpd}{\ensuremath{\perp}}
+\newcommand{\perpdneg}{\ensuremath{\top}}
+
+% ---------------------------------------------------------------- генераторы рисунков
+% Решётка с краевой дислокацией в точке (0,0). Положения атомов =
+% идеальная решётка + поле смещений краевой дислокации (изотропная
+% упругость, ν = 0,3); период решётки = 1, вектор Бюргерса = 1.
+%   \EdgeDislLattice[опции]{N}{Nверх}{Nниз}
+% колонны i = -N..N (сверху) и -N+1/2..N-1/2 (снизу);
+% экстраплоскость (верхняя колонна i = 0) окрашена цветом \edgeExtraColor.
+\def\edgeExtraColor{atomB}
+\def\edgeAtomR{0.2}
+\newcommand{\EdgeDislLattice}[4][]{%
+\begin{scope}[#1]
+\pgfmathtruncatemacro{\edN}{#2}%
+\pgfmathtruncatemacro{\edNm}{#2-1}%
+\pgfmathtruncatemacro{\edU}{#3-1}%
+\pgfmathtruncatemacro{\edUm}{#3-2}%
+\pgfmathtruncatemacro{\edD}{-#4}%
+% --- координаты атомов: верхняя половина (x = i, y = j + 1/2)
+\foreach \j in {0,...,\edU}{%
+  \foreach \i in {-\edN,...,\edN}{%
+    \pgfmathsetmacro{\xo}{\i}%
+    \pgfmathsetmacro{\yo}{\j+0.5}%
+    \pgfmathsetmacro{\rr}{\xo*\xo+\yo*\yo}%
+    \pgfmathsetmacro{\th}{atan2(\yo,\xo)*pi/180}%
+    \pgfmathsetmacro{\ux}{(\th+\xo*\yo/(1.4*\rr))/(2*pi)-0.25}%
+    \pgfmathsetmacro{\uy}{-(0.142857*ln(\rr)+(\xo*\xo-\yo*\yo)/(2.8*\rr))/(2*pi)}%
+    \coordinate (U\i_\j) at (\xo+\ux,\yo+\uy);
+  }}%
+% --- нижняя половина (x = i + 1/2, y = j + 1/2), j < 0
+\foreach \j in {-1,...,\edD}{%
+  \foreach \i in {-\edN,...,\edNm}{%
+    \pgfmathsetmacro{\xo}{\i+0.5}%
+    \pgfmathsetmacro{\yo}{\j+0.5}%
+    \pgfmathsetmacro{\rr}{\xo*\xo+\yo*\yo}%
+    \pgfmathsetmacro{\th}{atan2(\yo,\xo)*pi/180}%
+    \pgfmathsetmacro{\ux}{(\th+\xo*\yo/(1.4*\rr))/(2*pi)+0.25}%
+    \pgfmathsetmacro{\uy}{-(0.142857*ln(\rr)+(\xo*\xo-\yo*\yo)/(2.8*\rr))/(2*pi)}%
+    \coordinate (L\i_\j) at (\xo+\ux,\yo+\uy);
+  }}%
+% --- связи
+\begin{scope}[line width=0.5pt, draw=atomLine!55]
+\foreach \j in {0,...,\edU}{\foreach \i in {-\edN,...,\edNm}{%
+  \pgfmathtruncatemacro{\ip}{\i+1}\draw (U\i_\j) -- (U\ip_\j);}}%
+\ifnum\edU>0
+\foreach \j in {0,...,\edUm}{\foreach \i in {-\edN,...,\edN}{%
+  \pgfmathtruncatemacro{\jp}{\j+1}\draw (U\i_\j) -- (U\i_\jp);}}%
+\fi
+\pgfmathtruncatemacro{\edNmm}{#2-2}%
+\foreach \j in {-1,...,\edD}{\foreach \i in {-\edN,...,\edNmm}{%
+  \pgfmathtruncatemacro{\ip}{\i+1}\draw (L\i_\j) -- (L\ip_\j);}}%
+\ifnum\edD<-1
+\pgfmathtruncatemacro{\edDp}{\edD+1}%
+\foreach \j in {\edDp,...,-1}{\foreach \i in {-\edN,...,\edNm}{%
+  \pgfmathtruncatemacro{\jm}{\j-1}\draw (L\i_\j) -- (L\i_\jm);}}%
+\fi
+\foreach \i in {1,...,\edN}{\pgfmathtruncatemacro{\k}{\i-1}\draw (U\i_0) -- (L\k_-1);}%
+\foreach \i in {-\edN,...,-1}{\draw (U\i_0) -- (L\i_-1);}%
+\end{scope}
+% --- атомы
+\foreach \j in {0,...,\edU}{\foreach \i in {-\edN,...,\edN}{%
+  \ifnum\i=0 \fill[\edgeExtraColor, draw=atomLine, line width=0.4pt] (U\i_\j) circle (\edgeAtomR);
+  \else \fill[atomA, draw=atomLine, line width=0.4pt] (U\i_\j) circle (\edgeAtomR);\fi}}%
+\foreach \j in {-1,...,\edD}{\foreach \i in {-\edN,...,\edNm}{%
+  \fill[atomA, draw=atomLine, line width=0.4pt] (L\i_\j) circle (\edgeAtomR);}}%
+\end{scope}}
+
+% План винтовой дислокации: атомные ряды непосредственно над (○) и под (●)
+% плоскостью скольжения, вид на плоскость скольжения сверху.
+% Линия дислокации вертикальна (вдоль z), x — поперёк линии.
+%   \ScrewDislPlan[опции]{N}{M}: x = -N..N, z = 0..M
+\newcommand{\ScrewDislPlan}[3][]{%
+\begin{scope}[#1]
+\foreach \i in {-#2,...,#2}{%
+  \pgfmathsetmacro{\wu}{atan2(0.5,\i)/360}%
+  \pgfmathsetmacro{\wd}{atan2(-0.5,\i)/360}%
+  \foreach \k in {0,...,#3}{%
+    \fill[atomLine] (\i,\k+\wd) circle (0.13);
+    \draw[atomLine, fill=white, line width=0.5pt, fill opacity=0.6] (\i,\k+\wu) circle (0.2);
+  }}%
+\end{scope}}
+
+% Косоугольная проекция для объёмных рисунков элементарных ячеек:
+% x — вправо, y — «в глубину» (вправо-вверх), z — вверх.
+\tikzset{cubeproj/.style={x={(1cm,0cm)}, y={(0.42cm,0.30cm)}, z={(0cm,1cm)}}}
+% Рёбра единичного куба (невидимые — пунктиром)
+\newcommand{\CubeEdges}[1][]{%
+  \draw[atomLine!80, line width=0.5pt, dashed, #1] (0,0,0)--(0,1,0)--(1,1,0) (0,1,0)--(0,1,1);
+  \draw[atomLine, line width=0.6pt, #1] (0,0,0)--(1,0,0)--(1,0,1)--(0,0,1)--cycle
+    (1,0,0)--(1,1,0)--(1,1,1)--(1,0,1) (0,0,1)--(0,1,1)--(1,1,1);}
+% Атомы ГЦК-ячейки по слоям (задний, средний, передний), #1 — размер
+\newcommand{\FCCback}[1][3.4mm]{%
+  \foreach \p in {(0,1,0),(1,1,0),(0,1,1),(1,1,1),(0.5,1,0.5)} \node[atom=#1] at \p {};}
+\newcommand{\FCCmid}[1][3.4mm]{%
+  \foreach \p in {(0,0.5,0.5),(1,0.5,0.5),(0.5,0.5,0),(0.5,0.5,1)} \node[atom=#1] at \p {};}
+\newcommand{\FCCfront}[1][3.4mm]{%
+  \foreach \p in {(0,0,0),(1,0,0),(0,0,1),(1,0,1),(0.5,0,0.5)} \node[atom=#1] at \p {};}
+
+\endinput

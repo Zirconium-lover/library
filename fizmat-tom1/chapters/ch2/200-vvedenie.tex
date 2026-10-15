@@ -1,0 +1,146 @@
+% ----------------------------------------------------------------------
+%  Введение к главе 2
+% ----------------------------------------------------------------------
+В главе~1 кристалл был идеальным: атомы стоят строго в узлах решётки,
+и картина бесконечно повторяется. Реальный кристалл устроен иначе~— в
+нём всегда есть нарушения порядка, \term{дефекты}. Их немного: даже в
+сильно деформированном металле в дефектных местах находится лишь малая
+доля атомов. Но именно дефекты определяют многие важнейшие свойства
+материала.
+
+\begin{glavnoe}[Зачем изучать дефекты]
+Свойства кристалла делятся на две группы.
+\emph{Структурно-нечувствительные} (плотность, упругие модули, температура
+плавления) почти не зависят от дефектов~— их можно рассчитать для
+идеальной решётки. \emph{Структурно-чувствительные} (прочность и
+пластичность, скорость диффузии, остаточное электросопротивление,
+поведение под облучением) определяются именно дефектами. Поэтому
+материаловед управляет свойствами, управляя дефектами.
+\end{glavnoe}
+
+\subsubsection*{Классификация дефектов по размерности}
+
+Дефекты удобно различать по тому, во скольких измерениях они протяжённы
+(рис.~\ref{fig:defect-zoo}, табл.~\ref{tab:defect-classes}).
+
+\begin{table}[ht]
+\centering
+\caption{Геометрическая классификация дефектов кристаллического строения}
+\label{tab:defect-classes}
+\small
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Класс} & \textbf{Размеры} & \textbf{Примеры} \\
+\midrule
+Точечные (0D) & порядка межатомного расстояния во всех трёх
+  направлениях & вакансия, межузельный атом, примесный атом, их
+  комплексы \\
+Линейные (1D) & малы в двух направлениях, а в третьем сравнимы с
+  размером кристалла & дислокации, дисклинации, цепочки вакансий \\
+Поверхностные (2D) & малы только в одном направлении &
+  поверхность кристалла, границы зёрен и фаз, двойниковые границы,
+  дефекты упаковки, антифазные границы \\
+Объёмные (3D) & велики во всех трёх направлениях & поры, трещины,
+  включения и выделения второй фазы \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[b]{0.24\textwidth}\centering
+\begin{tikzpicture}[scale=0.42]
+  \foreach \x in {0,...,6}{\foreach \y in {0,...,6}{
+    \pgfmathtruncatemacro{\code}{10*\x+\y}
+    \ifnum\code=24 \node[vac=3.4mm] at (\x,\y) {};
+    \else\ifnum\code=42 \node[atomB=4.4mm] at (\x,\y) {};
+    \else \node[atom=3.4mm] at (\x,\y) {};\fi\fi}}
+  \node[atomI=3.0mm] at (4.5,4.5) {};
+  \node[atom=2.0mm, fill=atomLine!70] at (1.5,0.5) {};
+\end{tikzpicture}
+\caption{точечные}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.24\textwidth}\centering
+\begin{tikzpicture}[scale=0.42]
+  \def\edgeAtomR{0.17}
+  \begin{scope}\clip (-3.3,-3.3) rectangle (3.3,3.3);
+  \EdgeDislLattice{4}{4}{4}\end{scope}
+  \dislT{(0,-0.05)}{0}
+\end{tikzpicture}
+\caption{линейный}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.24\textwidth}\centering
+\begin{tikzpicture}[scale=0.42]
+  \begin{scope}
+    \clip (-3.3,-3.3) rectangle (0,3.3);
+    \begin{scope}[rotate=14]
+      \foreach \x in {-6,...,2}{\foreach \y in {-6,...,6}{
+        \node[atom=3.2mm] at (\x,\y) {};}}
+    \end{scope}
+  \end{scope}
+  \begin{scope}
+    \clip (0,-3.3) rectangle (3.3,3.3);
+    \begin{scope}[rotate=-14]
+      \foreach \x in {-2,...,6}{\foreach \y in {-6,...,6}{
+        \node[atom=3.2mm, fill=atomA!55] at (\x,\y) {};}}
+    \end{scope}
+  \end{scope}
+  \draw[fmRed, dashed, line width=0.8pt] (0,-3.4) -- (0,3.4);
+\end{tikzpicture}
+\caption{поверхностный}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.24\textwidth}\centering
+\begin{tikzpicture}[scale=0.42]
+  \foreach \x in {-3,...,3}{\foreach \y in {-3,...,3}{
+    \pgfmathsetmacro{\rr}{(\x-0.3)^2+(\y-0.2)^2}
+    \pgfmathparse{\rr<3.5 ? 1 : 0}
+    \ifnum\pgfmathresult=0 \node[atom=3.4mm] at (\x,\y) {};\fi}}
+  \draw[atomLine, dashed] (0.3,0.2) circle (1.95);
+\end{tikzpicture}
+\caption{объёмный}
+\end{subfigure}
+\caption{Дефекты разной размерности в двумерной модели кристалла:
+\textit{а}~— вакансия (пунктир), межузельный атом (красный),
+крупный атом замещения (оранжевый) и мелкий атом внедрения (тёмный);
+\textit{б}~— краевая дислокация (оранжевым выделена «лишняя» атомная
+полуплоскость, значок $\perp$~— линия дислокации);
+\textit{в}~— граница между двумя зёрнами с разной ориентацией;
+\textit{г}~— пора}
+\label{fig:defect-zoo}
+\end{figure}
+
+Особое место занимают \term{дислокации}. Это не просто «ещё один»
+линейный дефект: с их помощью объясняются пластическая деформация и
+упрочнение металлов, рост кристаллов, многие фазовые превращения. Поэтому
+дислокациям отведена бо́льшая часть главы.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+  box/.style={draw=#1, fill=#1!8, rounded corners=2pt, align=left,
+    font=\small, inner sep=5pt, text width=60mm, line width=0.6pt},
+  hdr/.style={font=\sffamily\bfseries\small, text=#1},
+  flow/.style={-{Stealth[length=2mm]}, line width=0.6pt, fmGray}]
+\node[box=fmBlue] (p) {
+\textbf{2.1.1}~Вакансии и межузельные атомы\\
+\textbf{2.1.2}~Энергия образования, концентрация, подвижность\\
+\textbf{2.1.3}~Комплексы точечных дефектов\\
+\textbf{2.1.4}~Источники, стоки, отжиг\\
+\textbf{2.1.5}~Как получить много дефектов\\
+\textbf{2.1.6}~Как дефекты измеряют};
+\node[hdr=fmBlue, above=1pt of p.north west, anchor=south west] {2.1. Точечные дефекты};
+\node[box=fmAmber, right=17mm of p] (d) {
+\textbf{2.2.1}~Краевая и винтовая дислокации\\
+\textbf{2.2.2}~Скольжение и переползание\\
+\textbf{2.2.3}~Поле напряжений, энергия, силы\\
+\textbf{2.2.4}~Откуда берутся дислокации\\
+\textbf{2.2.5}~Скопления и стенки\\
+\textbf{2.2.6--2.2.7}~Дислокации в ГЦК, ОЦК, ГПУ};
+\node[hdr=fmAmber, above=1pt of d.north west, anchor=south west] {2.2. Дислокации};
+\draw[flow, {Stealth[length=2mm]}-{Stealth[length=2mm]}] (p.east) -- node[above, font=\scriptsize, text=fmGray, align=center]{взаимо-\\действие} (d.west);
+\end{tikzpicture}
+\caption{Карта главы. Точечные дефекты и дислокации взаимодействуют:
+вакансии позволяют дислокациям переползать, примеси тормозят дислокации,
+а движение дислокаций само порождает точечные дефекты}
+\label{fig:ch2-map}
+\end{figure}
