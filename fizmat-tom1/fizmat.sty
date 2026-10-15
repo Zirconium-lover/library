@@ -31,11 +31,11 @@
 % кириллица внутри формул (индексы «пл», «сд» и т.п.) — из текстового шрифта
 \setmathfont{LibertinusSerif-Regular.otf}[range={"0400-"04FF}]
 \newfontfamily\cyrillicfont{LibertinusSerif}[
-  Extension=.otf,
+  Extension=.otf, Ligatures=TeX,
   UprightFont=*-Regular, BoldFont=*-Semibold,
   ItalicFont=*-Italic, BoldItalicFont=*-SemiboldItalic]
 \newfontfamily\cyrillicfontsf{LibertinusSans}[
-  Extension=.otf,
+  Extension=.otf, Ligatures=TeX,
   UprightFont=*-Regular, BoldFont=*-Bold, ItalicFont=*-Italic]
 
 \linespread{1.07}
@@ -450,5 +450,11 @@
   \foreach \p in {(0,0.5,0.5),(1,0.5,0.5),(0.5,0.5,0),(0.5,0.5,1)} \node[atom=#1] at \p {};}
 \newcommand{\FCCfront}[1][3.4mm]{%
   \foreach \p in {(0,0,0),(1,0,0),(0,0,1),(1,0,1),(0.5,0,0.5)} \node[atom=#1] at \p {};}
+
+% Ионные кристаллы: анионы (голубые, крупные) и катионы (оранжевые),
+% линии связей; размеры можно переопределить в опциях рисунка
+\tikzset{anion/.style={atom=4.4mm}, cation/.style={atomB=3mm},
+  bondline/.style={atomLine!35, line width=0.5pt},
+  bondthick/.style={atomLine!70, line width=1.2pt}}
 
 \endinput

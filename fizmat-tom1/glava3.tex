@@ -1,0 +1,13 @@
+% !TEX program = xelatex
+% Отдельная сборка главы 3:  latexmk glava3.tex   (или make glava3)
+\documentclass[12pt,twoside,openright]{book}
+\usepackage{fizmat}
+\def\fmSubtitle{Глава 3. Физика твёрдого тела}
+\begin{document}
+\frontmatter
+\input{frontmatter}
+\tableofcontents
+\mainmatter
+\setcounter{chapter}{2}
+\input{chapters/ch3/ch3}
+\end{document}
