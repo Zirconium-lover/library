@@ -1,0 +1,911 @@
+% ----------------------------------------------------------------------
+%  3.2.2. Зонная теория
+% ----------------------------------------------------------------------
+\tikzset{
+  bzfront/.style={atomLine, line width=0.7pt, line join=round},
+  bzback/.style={atomLine!55, line width=0.4pt, dashed},
+  bzpt/.style={circle, fill=fmRed, inner sep=0pt, minimum size=3pt},
+}
+\subsection{Зонная теория}\label{ssec:bands}
+
+В реальном кристалле ионы расположены периодически, и электроны движутся
+не в ровном «ящике», а в периодически меняющемся поле решётки. Зонная
+теория, в отличие от теории свободных электронов, учитывает это поле.
+Итог окажется простым и важным: разрешённые энергии электрона
+группируются в \emph{зоны}, разделённые \emph{запрещёнными промежутками}.
+Именно расположение и заполнение зон решает, будет ли кристалл металлом,
+полупроводником или изолятором.
+
+\paragraph{Периодический потенциал}
+Поле отдельного иона в металле действует на меньших расстояниях, чем
+кулоновское поле такого же изолированного иона: коллективизированные
+валентные электроны \emph{экранируют} заряд иона. Истинный потенциал
+$U(\vb r)$, в котором движется электрон,~— периодическое повторение
+экранированных потенциалов ионов (рис.~\ref{fig:periodic-pot},\,\textit{а}).
+Движение электрона описывает уравнение Шрёдингера
+\begin{equation}\label{eq:schr-crystal}
+\left[-\frac{\hbar^2}{2m}\nabla^2+U(\vb r)\right]\psi=E\psi,
+\qquad U(\vb r+\vb a)=U(\vb r),
+\end{equation}
+где $\vb a=n_1\vb a_1+n_2\vb a_2+n_3\vb a_3$~— любой вектор трансляции
+решётки ($n_i$~— целые).
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=1cm, y=1cm]
+  % а — экранированные потенциалы ионов
+  \begin{scope}
+    \draw[-{Stealth[length=2mm]}, fmGray] (-0.3,0) -- (6.6,0) node[right, font=\small]{$x$};
+    \draw[fmBlue, thick, smooth, samples=160, domain=-0.2:6.2] plot (\x,
+      {-0.35/(abs(\x-0.5)+0.12)-0.35/(abs(\x-2)+0.12)-0.35/(abs(\x-3.5)+0.12)-0.35/(abs(\x-5)+0.12)});
+    \foreach \x in {0.5,2,3.5,5}{\node[atom=2.6mm] at (\x,0.45) {};}
+    \node[font=\small, fmBlue] at (6.2,-1.1) {$U(x)$};
+    \node[font=\small] at (3,-3.8) {\textit{а}};
+  \end{scope}
+  % б — потенциал Кронига–Пенни
+  \begin{scope}[shift={(7.6,0)}]
+    \draw[-{Stealth[length=2mm]}, fmGray] (-0.3,-2.6) -- (6.4,-2.6) node[right, font=\small]{$x$};
+    \draw[fmBlue, thick] (-0.2,-2.6) -- (0,-2.6) -- (0,-0.6) -- (0.4,-0.6) -- (0.4,-2.6) -- (1.6,-2.6) -- (1.6,-0.6)
+      -- (2,-0.6) -- (2,-2.6) -- (3.2,-2.6) -- (3.2,-0.6) -- (3.6,-0.6) -- (3.6,-2.6) -- (4.8,-2.6) -- (4.8,-0.6)
+      -- (5.2,-0.6) -- (5.2,-2.6) -- (5.9,-2.6);
+    \draw[dimline] (0.4,-3.0) -- node[below, font=\small]{$a$} (1.6,-3.0);
+    \draw[dimline] (1.6,-3.0) -- node[below, font=\small]{$b$} (2.0,-3.0);
+    \draw[dimline] (2.3,-2.6) -- node[right, font=\small]{$U_0$} (2.3,-0.6);
+    \draw[fmRed, dashed] (-0.2,-1.7) -- (5.9,-1.7) node[right, font=\small]{$E$};
+    \node[font=\small] at (3,-3.8) {\textit{б}};
+  \end{scope}
+\end{tikzpicture}
+\caption{Потенциальная энергия электрона вдоль ряда ионов:
+\textit{а}~— реальный периодический потенциал (ямы у ионов);
+\textit{б}~— упрощённая модель Кронига--Пенни: прямоугольные ямы шириной
+$a$, разделённые барьерами высотой $U_0>E$ и шириной $b$}
+\label{fig:periodic-pot}
+\end{figure}
+
+\paragraph{Теорема Блоха}
+Раз потенциал периодичен, то и вероятность найти электрон должна быть
+периодичной: $|\psi(\vb r+\vb a)|^2=|\psi(\vb r)|^2$~— поведение
+электрона в одной ячейке ничем не отличается от поведения в любой
+другой. Отсюда следует (это общее следствие трансляционной симметрии,
+п.~1.2) \term{теорема Блоха}: волновая функция электрона в кристалле
+имеет вид
+\begin{keyeq}\label{eq:bloch}
+\psi_{\vb k}(\vb r)=u_{\vb k}(\vb r)\,e^{i\vb k\vb r},\qquad
+u_{\vb k}(\vb r+\vb a)=u_{\vb k}(\vb r).
+\end{keyeq}
+Это плоская бегущая волна, как у свободного электрона, но
+«промодулированная» периодической функцией $u_{\vb k}$ с периодом
+решётки. Такие функции называют \term{функциями Блоха}.
+
+\begin{glavnoe}
+Электрон Блоха с одинаковой вероятностью находится в эквивалентных
+точках \emph{каждой} элементарной ячейки: он не привязан к одному иону,
+а принадлежит кристаллу в целом. Блоховская волна проходит через
+\emph{идеальную} решётку, не рассеиваясь. Это и есть ответ на загадку,
+с которой начался раздел: идеальный кристалл «прозрачен» для
+электронов. Сопротивление металла создают только отклонения от
+идеальной периодичности~— тепловые колебания атомов, примеси, дефекты
+(п.~3.5).
+\end{glavnoe}
+
+\paragraph{Модель Кронига--Пенни}
+Найти энергии электрона в произвольном периодическом поле трудно. Но
+главные черты видны уже на простейшей одномерной модели Кронига и
+Пенни (рис.~\ref{fig:periodic-pot},\,\textit{б}): ямы шириной $a$ с
+нулевой потенциальной энергией чередуются с барьерами высотой $U_0>E$ и
+шириной $b$.
+\begin{shagi}
+\item Внутри ямы решение~— сумма волн $e^{\pm i\alpha x}$, где
+$\alpha=\sqrt{2mE}/\hbar$; внутри барьера~— сумма экспонент $e^{\pm\beta
+x}$, $\beta=\sqrt{2m(U_0-E)}/\hbar$.
+\item Функция и её производная должны быть непрерывны на границах ям и
+барьеров, а решение в целом~— иметь вид Блоха. Это четыре линейных
+однородных уравнения для четырёх коэффициентов.
+\item Ненулевое решение существует, если определитель системы равен
+нулю. Это даёт связь энергии $E$ (через $\alpha$ и $\beta$) с волновым
+числом $k$.
+\end{shagi}
+
+\begin{podrobnee}[условие разрешимости]
+Определитель обращается в нуль при
+\[
+\frac{\beta^2-\alpha^2}{2\alpha\beta}\,\operatorname{sh}(\beta b)\sin(\alpha a)+
+\operatorname{ch}(\beta b)\cos(\alpha a)=\cos\bigl[k(a+b)\bigr].
+\]
+Упростим, перейдя к пределу узких и высоких барьеров: $b\to0$,
+$U_0\to\infty$ при постоянной «мощности» барьера $U_0b$. Тогда
+$\operatorname{ch}(\beta b)\to1$, $\operatorname{sh}(\beta b)\to\beta b$,
+$\beta^2\gg\alpha^2$, и условие принимает вид \eqref{eq:kp}.
+\end{podrobnee}
+
+В пределе тонких высоких барьеров получается уравнение Кронига--Пенни:
+\begin{keyeq}\label{eq:kp}
+P\,\frac{\sin\alpha a}{\alpha a}+\cos\alpha a=\cos ka,\qquad
+P=\frac{mabU_0}{\hbar^2}.
+\end{keyeq}
+Параметр $P$ характеризует «непрозрачность» барьеров: при $P=0$
+барьеров нет и электроны свободны, при $P\to\infty$ ямы полностью
+изолированы друг от друга (как атомы, удалённые на большое расстояние).
+
+\paragraph{Разрешённые и запрещённые энергии}
+Правая часть \eqref{eq:kp}, $\cos ka$, лежит между $-1$ и $+1$. Значит,
+решения существуют только при тех $\alpha a$, при которых левая часть,
+$f(\alpha a)$, тоже не выходит за эти пределы. Построим $f(\alpha a)$
+(рис.~\ref{fig:kp-f}): там, где $|f|>1$, уравнение Шрёдингера решений не
+имеет~— это \term{запрещённые зоны}; отрезки $\Delta_1,\Delta_2,\ldots$,
+где $|f|\le1$,~— \term{разрешённые зоны}. Так как $\alpha a$ однозначно
+связано с энергией ($E=\hbar^2\alpha^2/2m$), каждая разрешённая полоса
+$\alpha a$ даёт полосу разрешённых энергий.
+
+\input{figures/kp-data}
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.92\textwidth, height=5.8cm, xmin=0, xmax=12.9, ymin=-2, ymax=4.2,
+  xlabel={$\alpha a$}, ylabel={$f(\alpha a)$},
+  xtick={3.14159,6.28319,9.42478,12.56637}, xticklabels={$\pi$,$2\pi$,$3\pi$,$4\pi$},
+  ytick={-1,0,1}, axis lines=left, clip=true]
+  \fill[fmGreen!14] (axis cs:\KPloA,-2) rectangle (axis cs:\KPhiA,4.2);
+  \fill[fmGreen!14] (axis cs:\KPloB,-2) rectangle (axis cs:\KPhiB,4.2);
+  \fill[fmGreen!14] (axis cs:\KPloC,-2) rectangle (axis cs:\KPhiC,4.2);
+  \fill[fmGreen!14] (axis cs:\KPloD,-2) rectangle (axis cs:\KPhiD,4.2);
+  \draw[fmGray, dashed] (axis cs:0,1) -- (axis cs:12.9,1);
+  \draw[fmGray, dashed] (axis cs:0,-1) -- (axis cs:12.9,-1);
+  \draw[fmGray] (axis cs:0,0) -- (axis cs:12.9,0);
+  \addplot[fmBlue, thick] table {figures/kp-f.dat};
+  \draw[fmGreen!60!black, line width=2.4pt] (axis cs:\KPloA,0) -- (axis cs:\KPhiA,0);
+  \draw[fmGreen!60!black, line width=2.4pt] (axis cs:\KPloB,0) -- (axis cs:\KPhiB,0);
+  \draw[fmGreen!60!black, line width=2.4pt] (axis cs:\KPloC,0) -- (axis cs:\KPhiC,0);
+  \draw[fmGreen!60!black, line width=2.4pt] (axis cs:\KPloD,0) -- (axis cs:\KPhiD,0);
+  \node[font=\small, fmGreen!50!black] at (axis cs:2.7,-1.6) {$\Delta_1$};
+  \node[font=\small, fmGreen!50!black] at (axis cs:5.5,-1.6) {$\Delta_2$};
+  \node[font=\small, fmGreen!50!black] at (axis cs:8.4,-1.6) {$\Delta_3$};
+  \node[font=\small, fmGreen!50!black] at (axis cs:11.4,-1.6) {$\Delta_4$};
+\end{axis}
+\end{tikzpicture}
+\caption{Графическое решение уравнения Кронига--Пенни при $P=3\pi/2$.
+Решения есть только там, где $|f(\alpha a)|\le1$ (зелёные полосы
+$\Delta_1\ldots\Delta_4$~— разрешённые зоны); между ними~— запрещённые
+зоны. С ростом энергии разрешённые зоны расширяются, а запрещённые
+сужаются}
+\label{fig:kp-f}
+\end{figure}
+
+\paragraph{Закон дисперсии $E(k)$}
+Внутри первой разрешённой зоны $\cos ka$ меняется от $+1$ до $-1$, т.\,е.
+$k$ пробегает значения от 0 до $\pm\pi/a$. Внутри второй зоны $\cos ka$
+снова проходит от $-1$ до $+1$~— этому соответствуют $\pi/a<|k|<2\pi/a$,
+и так далее. В результате кривая $E(k)$ состоит из кусков, близких к
+параболе свободного электрона $E=\hbar^2k^2/2m$, но \emph{разорванных}
+при
+\begin{keyeq}\label{eq:gap-k}
+k=\frac{n\pi}{a},\qquad n=\pm1,\pm2,\ldots
+\end{keyeq}
+(рис.~\ref{fig:kp-ek}). Вблизи разрывов кривая отклоняется от параболы
+и подходит к границе \emph{горизонтально}: групповая скорость электрона
+$v=\hbar^{-1}\d E/\d k$ обращается в нуль~— решётка «тормозит» волну.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.86\textwidth, height=7.4cm, xmin=-4.2, xmax=4.2, ymin=0, ymax=165,
+  xlabel={$k$}, ylabel={$E$, ед. $\hbar^2/2ma^2$},
+  xtick={-4,-3,-2,-1,0,1,2,3,4},
+  xticklabels={$-\frac{4\pi}a$,$-\frac{3\pi}a$,$-\frac{2\pi}a$,$-\frac\pi a$,0,$\frac\pi a$,$\frac{2\pi}a$,$\frac{3\pi}a$,$\frac{4\pi}a$},
+  ytick=\empty, axis lines=left, clip=false]
+  \fill[fmRed!8] (axis cs:-4.2,9.87) rectangle (axis cs:4.2,22.2);
+  \fill[fmRed!8] (axis cs:-4.2,39.48) rectangle (axis cs:4.2,54.99);
+  \fill[fmRed!8] (axis cs:-4.2,88.83) rectangle (axis cs:4.2,105.8);
+  \addplot[fmGray, dashed, domain=-4.1:4.1, samples=100] {(pi*x)^2};
+  \addplot[fmBlue, very thick] table {figures/kp-band1.dat};
+  \addplot[fmBlue, very thick] table {figures/kp-band1m.dat};
+  \addplot[fmBlue, very thick] table {figures/kp-band2.dat};
+  \addplot[fmBlue, very thick] table {figures/kp-band2m.dat};
+  \addplot[fmBlue, very thick] table {figures/kp-band3.dat};
+  \addplot[fmBlue, very thick] table {figures/kp-band3m.dat};
+  \addplot[fmBlue, very thick] table {figures/kp-band4.dat};
+  \addplot[fmBlue, very thick] table {figures/kp-band4m.dat};
+  \pgfplotsinvokeforeach{-3,-2,-1,1,2,3}{\draw[fmGray!60, dotted] (axis cs:#1,0) -- (axis cs:#1,165);}
+  \node[font=\scriptsize, fmRed, anchor=west, align=left] at (axis cs:4.25,47) {запрещённые\\зоны};
+  \node[font=\scriptsize, fmGray] at (axis cs:0,140) {пунктир: $E=\hbar^2k^2/2m$};
+\end{axis}
+\end{tikzpicture}
+\caption{Энергия электрона в модели Кронига--Пенни ($P=3\pi/2$, расчёт).
+Синие кривые~— разрешённые зоны, красные полосы~— запрещённые; пунктир~—
+парабола свободного электрона. Разрывы возникают при $k=n\pi/a$}
+\label{fig:kp-ek}
+\end{figure}
+
+\paragraph{Почему возникают разрывы: брэгговское отражение}
+Электрон на уровне Ферми ($E\sim5$~эВ) имеет длину волны
+$\lambda=2\pi\hbar/\sqrt{2mE}\approx0{,}55$~нм~— того же порядка, что и
+межатомные расстояния (0,2--0,3~нм). Кристалл служит для электронной
+волны дифракционной решёткой. Подставим $k=2\pi/\lambda$ в условие
+\eqref{eq:gap-k}: $n\lambda=2a$. Это \emph{условие Вульфа--Брэгга}
+$n\lambda=2d\sin\theta$ для волны, падающей перпендикулярно отражающим
+плоскостям ($\theta=90^\circ$, $d=a$).
+
+Такая волна отражается назад, а падающая и отражённая волны дают
+\emph{стоячую} волну. Их можно сложить двумя способами
+(рис.~\ref{fig:standing}):
+\[
+\psi_+\propto\cos\frac{\pi x}a,\qquad \psi_-\propto\sin\frac{\pi x}a .
+\]
+В состоянии $\psi_+$ электронная плотность $|\psi_+|^2$ сосредоточена на
+ионах, где потенциальная энергия наиболее низка; в состоянии $\psi_-$~—
+между ионами. Энергии двух состояний различаются на $\Delta E$~— это и
+есть ширина запрещённой зоны. Электроны с волновыми числами,
+удовлетворяющими условию Брэгга, не могут бежать сквозь решётку.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.86\textwidth, height=5.4cm, xmin=-0.3, xmax=3.3, ymin=-1.9, ymax=2.35,
+  axis lines=none, clip=false]
+  \addplot[fmGray, thin, domain=-0.3:3.3, samples=200]
+    {max(-1.85,-0.12/(abs(x)+0.06)-0.12/(abs(x-1)+0.06)-0.12/(abs(x-2)+0.06)-0.12/(abs(x-3)+0.06))};
+  \addplot[fmBlue, thick, domain=-0.3:3.3, samples=200] {2*cos(deg(pi*x))^2};
+  \addplot[fmRed, thick, domain=-0.3:3.3, samples=200] {2*sin(deg(pi*x))^2};
+  \addplot[black, dashed, domain=-0.3:3.3] {1};
+  \pgfplotsinvokeforeach{0,1,2,3}{\node[atom=2.6mm] at (axis cs:#1,-0.2) {};}
+  \node[font=\small, fmBlue, anchor=west] at (axis cs:3.32,1.95) {$|\psi_+|^2$};
+  \node[font=\small, fmRed, anchor=west] at (axis cs:3.32,0.3) {$|\psi_-|^2$};
+  \node[font=\small, anchor=west] at (axis cs:3.32,1.0) {бегущая волна};
+  \node[font=\small, fmGray, anchor=west] at (axis cs:3.32,-1.4) {$U(x)$};
+  \draw[dimline] (axis cs:0,2.25) -- node[above, font=\small]{$a$} (axis cs:1,2.25);
+\end{axis}
+\end{tikzpicture}
+\caption{Две стоячие волны на границе зоны ($k=\pi/a$): у $\psi_+$
+электронная плотность скапливается на ионах (энергия ниже), у
+$\psi_-$~— между ионами (энергия выше). У бегущей волны плотность
+одинакова везде (пунктир)}
+\label{fig:standing}
+\end{figure}
+
+\begin{smysl}[Второй взгляд: от атомных уровней к зонам]
+К зонам можно прийти и с другой стороны~— от изолированных атомов. Пока
+$N$ атомов далеко друг от друга, каждый их уровень повторяется $N$ раз.
+При сближении волновые функции соседей перекрываются, и уровень
+расщепляется на $N$ близких подуровней~— образуется зона
+(рис.~\ref{fig:levels-bands}). Чем сильнее перекрытие, тем шире зона:
+внутренние оболочки почти не перекрываются и дают узкие зоны, внешние
+(валентные) уровни расплываются в широкие зоны, которые могут даже
+перекрываться. Это предел $P\to\infty$ модели Кронига--Пенни, когда ямы
+почти изолированы.
+\end{smysl}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=2.2cm, y=0.55cm]
+  \draw[-{Stealth[length=2mm]}] (0.6,-9.2) -- (4.3,-9.2) node[right, font=\small]{$r$};
+  \draw[-{Stealth[length=2mm]}] (0.6,-9.2) -- (0.6,1.2) node[above, font=\small]{$E$};
+  \fill[fmBlue!20] plot[domain=0.75:4, samples=40] (\x,{-1.5+2.0*exp(-(\x-1)/0.6)})
+     -- plot[domain=4:0.75, samples=40] (\x,{-1.5-2.0*exp(-(\x-1)/0.6)}) -- cycle;
+  \fill[fmGreen!25] plot[domain=0.75:4, samples=40] (\x,{-3.6+1.4*exp(-(\x-1)/0.5)})
+     -- plot[domain=4:0.75, samples=40] (\x,{-3.6-1.4*exp(-(\x-1)/0.5)}) -- cycle;
+  \fill[fmAmber!35] plot[domain=0.75:4, samples=40] (\x,{-7.5+0.9*exp(-(\x-0.75)/0.2)})
+     -- plot[domain=4:0.75, samples=40] (\x,{-7.5-0.9*exp(-(\x-0.75)/0.2)}) -- cycle;
+  \node[font=\small, anchor=west] at (4.02,-1.5) {$2p$};
+  \node[font=\small, anchor=west] at (4.02,-3.6) {$2s$};
+  \node[font=\small, anchor=west] at (4.02,-7.5) {$1s$};
+  \draw[fmRed, dashed] (1.25,-9.2) -- (1.25,0.6) node[above, font=\small]{$r_0$};
+  \node[font=\scriptsize, fmGray, align=center] at (3.3,0.4) {изолированные\\атомы};
+  \node[font=\scriptsize, fmGray, align=center] at (1.0,-8.7) {кристалл};
+\end{tikzpicture}
+\caption{Расщепление атомных уровней в зоны при сближении атомов
+(схема). При равновесном расстоянии $r_0$ уровни $2s$ и $2p$
+превратились в широкие перекрывающиеся зоны, а глубокий уровень $1s$
+почти не уширился}
+\label{fig:levels-bands}
+\end{figure}
+
+\paragraph{Двумерная решётка}
+В двумерной квадратной решётке с периодом $a$ роль отражающих
+«плоскостей» играют семейства параллельных прямых (рис.~\ref{fig:2d-families}).
+Пусть волна бежит вдоль оси $x$.
+\begin{itemize}
+\item Семейство I (прямые $\perp x$): $d=a$, $\theta=90^\circ$, отражение
+при $\lambda=2a$, т.\,е. $k_x=\pi/a$.
+\item Семейство II (диагонали): $d=a/\sqrt2$, $\theta=45^\circ$,
+$\lambda=2\cdot\frac{a}{\sqrt2}\cdot\frac{\sqrt2}{2}=a$, т.\,е. $k_x=2\pi/a$.
+\item Семейство III: $d=a/\sqrt5$, $\sin\theta=2/\sqrt5$, $\lambda=4a/5$,
+т.\,е. $k_x=5\pi/2a$.
+\end{itemize}
+Для волны, бегущей под углом $45^\circ$ к оси $x$, семейства I и II дают
+разрывы при одном и том же $k=\sqrt2\,\pi/a$. Точки разрыва, таким
+образом, зависят от направления движения электрона.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[scale=0.62]
+  % семейство I
+  \begin{scope}
+    \begin{scope}\clip (-0.5,-0.5) rectangle (4.5,4.5);
+      \foreach \x in {0,...,4}{\draw[fmBlue, line width=0.7pt] (\x,-1) -- (\x,5);}
+    \end{scope}
+    \foreach \x in {0,...,4}{\foreach \y in {0,...,4}{\fill[atomLine] (\x,\y) circle (0.09);}}
+    \node[font=\small] at (2,-1.1) {I: $d=a$};
+  \end{scope}
+  % семейство II
+  \begin{scope}[shift={(6.2,0)}]
+    \begin{scope}\clip (-0.5,-0.5) rectangle (4.5,4.5);
+      \foreach \c in {-4,...,8}{\draw[fmGreen!70!black, line width=0.7pt] (\c,0) -- ++(-5,5) (\c,0) -- ++(5,-5);}
+    \end{scope}
+    \foreach \x in {0,...,4}{\foreach \y in {0,...,4}{\fill[atomLine] (\x,\y) circle (0.09);}}
+    \node[font=\small] at (2,-1.1) {II: $d=a/\sqrt2$};
+  \end{scope}
+  % семейство III: прямые 2x + y = n
+  \begin{scope}[shift={(12.4,0)}]
+    \begin{scope}\clip (-0.5,-0.5) rectangle (4.5,4.5);
+      \foreach \c in {-6,...,14}{\draw[fmRed, line width=0.7pt] ({\c/2},0) -- ++(-3,6) ({\c/2},0) -- ++(3,-6);}
+    \end{scope}
+    \foreach \x in {0,...,4}{\foreach \y in {0,...,4}{\fill[atomLine] (\x,\y) circle (0.09);}}
+    \node[font=\small] at (2,-1.1) {III: $d=a/\sqrt5$};
+  \end{scope}
+  \draw[arrB] (-0.6,5.0) -- (1.4,5.0) node[right, font=\small, black]{волна вдоль $x$};
+\end{tikzpicture}
+\caption{Три семейства отражающих прямых в двумерной квадратной решётке.
+Для волны, бегущей вдоль $x$, они вызывают разрывы $E(k)$ при
+$k_x=\pi/a$, $2\pi/a$ и $5\pi/2a$}
+\label{fig:2d-families}
+\end{figure}
+
+\paragraph{Зоны Бриллюэна}
+В трёхмерной решётке нужно найти все волновые векторы $\vb k$,
+удовлетворяющие условию Вульфа--Брэгга. Это удобно сделать с помощью
+обратной решётки (п.~1.2.4). Каждому семейству плоскостей $\{hkl\}$
+отвечает вектор обратной решётки $\vb G$, перпендикулярный плоскостям,
+длиной $G=2\pi/d$\footnote{В кристаллографии (и в оригинале) вектор
+обратной решётки определяют без множителя $2\pi$: $H=1/d$. Переход к
+пространству волновых векторов~— изменение масштаба в $2\pi$ раз по
+всем осям: $\vb G=2\pi\vb H$.}. Из закона Вульфа--Брэгга
+$2d\sin\theta=\lambda$ (порядок отражения учтён в $d$) следует
+\begin{keyeq}\label{eq:bragg-k}
+k\sin\theta=\frac G2 ,
+\end{keyeq}
+т.\,е. проекция $\vb k$ на направление $\vb G$ равна $G/2$. Значит,
+отражение испытывают те и только те $\vb k$, концы которых лежат на
+плоскости, \emph{перпендикулярной вектору $\vb G$ и делящей его
+пополам} (рис.~\ref{fig:bz-2d},\,\textit{а}). При пересечении такой
+\emph{брэгговской плоскости} энергия электрона меняется скачком.
+
+\begin{opredelenie}
+\term{Зона Бриллюэна}~— область $\vb k$-пространства, внутри которой
+энергия электрона меняется непрерывно, а на границах~— скачком.
+\term{Первая зона}~— все точки, которых можно достичь из начала
+координат, не пересекая ни одной брэгговской плоскости; \term{$n$-я
+зона}~— точки, для достижения которых нужно пересечь ровно $n-1$
+плоскостей. Форма и размеры зон полностью определяются кристаллической
+структурой и параметром решётки.
+\end{opredelenie}
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[b]{0.34\textwidth}\centering
+\begin{tikzpicture}[scale=0.72]
+  \draw[-{Stealth[length=2mm]}, fmGray] (-0.5,0) -- (3.6,0) node[right, font=\small]{$k_x$};
+  \draw[-{Stealth[length=2mm]}, fmGray] (0,-0.5) -- (0,3.4);
+  \draw[fmRed, line width=0.9pt] (1.5,-0.6) -- (1.5,3.2) node[above, font=\small]{MM};
+  \draw[fmRed, line width=0.9pt] (-1.5,-0.6) -- (-1.5,3.2) node[above, font=\small]{NN};
+  \draw[-{Stealth[length=2.4mm]}, line width=1.1pt] (0,0) -- (3,0);
+  \node[font=\small, below] at (2.6,0) {$\vb G$};
+  \draw[arr, fmBlue] (0,0) -- (1.5,2.2) node[midway, left, font=\small]{$\vb k$};
+  \draw[dimline] (0,-0.35) -- node[below, font=\scriptsize]{$G/2$} (1.5,-0.35);
+  \fill (0,0) circle (1.5pt);
+\end{tikzpicture}
+\caption{}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.6\textwidth}\centering
+\begin{tikzpicture}[scale=0.62]
+  % зона 3: восемь треугольников
+  \foreach \sx in {-1,1}{\foreach \sy in {-1,1}{
+    \fill[fmAmber!35] (2*\sx,0) -- (\sx,\sy) -- (2*\sx,\sy) -- cycle;
+    \fill[fmAmber!35] (0,2*\sy) -- (\sx,\sy) -- (\sx,2*\sy) -- cycle;}}
+  % зона 2: четыре треугольника
+  \fill[fmGreen!30] (1,-1) -- (2,0) -- (1,1) -- cycle;
+  \fill[fmGreen!30] (-1,-1) -- (-2,0) -- (-1,1) -- cycle;
+  \fill[fmGreen!30] (-1,1) -- (0,2) -- (1,1) -- cycle;
+  \fill[fmGreen!30] (-1,-1) -- (0,-2) -- (1,-1) -- cycle;
+  % зона 1
+  \fill[fmBlue!30] (-1,-1) rectangle (1,1);
+  % брэгговские прямые
+  \begin{scope}\clip (-2.6,-2.6) rectangle (2.6,2.6);
+    \foreach \c in {-2,-1,1,2}{\draw[atomLine, line width=0.4pt] (\c,-3) -- (\c,3) (-3,\c) -- (3,\c);}
+    \draw[atomLine, line width=0.4pt] (-3,1) -- (1,-3) (-1,3) -- (3,-1) (-3,-1) -- (1,3) (-1,-3) -- (3,1);
+  \end{scope}
+  \node[font=\small] at (0,0) {1};
+  \node[font=\small] at (1.4,0) {2}; \node[font=\small] at (-1.4,0) {2};
+  \node[font=\small] at (0,1.4) {2}; \node[font=\small] at (0,-1.4) {2};
+  \foreach \sx in {-1,1}{\foreach \sy in {-1,1}{
+    \node[font=\scriptsize] at (1.72*\sx,0.62*\sy) {3}; \node[font=\scriptsize] at (0.62*\sx,1.72*\sy) {3};}}
+  \draw[-{Stealth[length=2mm]}, fmGray] (-2.8,0) -- (3.0,0) node[right, font=\small]{$k_x$};
+  \draw[-{Stealth[length=2mm]}, fmGray] (0,-2.8) -- (0,3.0) node[above, font=\small]{$k_y$};
+  \node[font=\scriptsize, below right] at (1,0) {$\frac\pi a$};
+  \node[font=\scriptsize, below right] at (2,0) {$\frac{2\pi}a$};
+\end{tikzpicture}
+\caption{}
+\end{subfigure}
+\caption{\textit{а}~— условие отражения в $\vb k$-пространстве: концы
+векторов $\vb k$, испытывающих брэгговское отражение, лежат на
+плоскостях MM и NN, делящих вектор обратной решётки $\vb G$ пополам;
+\textit{б}~— первые три зоны Бриллюэна квадратной решётки (тонкие
+линии~— брэгговские прямые). Площади всех зон одинаковы}
+\label{fig:bz-2d}
+\end{figure}
+
+\paragraph{Зоны Бриллюэна кубических решёток}
+Из \eqref{eq:bragg-k} видно, что ближе всего к началу координат лежат
+брэгговские плоскости семейства с \emph{наибольшим} межплоскостным
+расстоянием $d_\text{max}$: они удалены на $G/2=\pi/d_\text{max}$.
+Именно они в первую очередь ограничивают первую зону
+(рис.~\ref{fig:bz-3d}).
+\begin{itemize}
+\item \emph{Простая кубическая} решётка (чистые металлы её не имеют,
+кроме $\alpha$-Po, но она лежит в основе упорядоченной $\beta$-латуни и
+CsCl). Наибольшее $d$ у плоскостей $\{100\}$: $d=a$. Шесть брэгговских
+плоскостей на расстоянии $\pi/a$ образуют \emph{куб} с ребром $2\pi/a$.
+Вторую зону ограничивают плоскости $\{110\}$ ($d=a/\sqrt2$), удалённые
+на $\sqrt2\,\pi/a$\ispr{В оригинале (с.~391) вторая зона связана с
+семейством $\{100\}$ с $d=a/\sqrt2$; такое межплоскостное расстояние
+имеют плоскости $\{110\}$.}~— двумерное сечение показано на
+рис.~\ref{fig:bz-2d},\,\textit{б}.
+\item \emph{ГЦК-решётка} (Cu, Ag, Au). Наибольшее $d=a/\sqrt3$ у
+плоскостей $\{111\}$: восемь плоскостей на расстоянии $\sqrt3\,\pi/a$
+образуют октаэдр. Его вершины срезают шесть плоскостей $\{200\}$
+($d=a/2$), удалённые на $2\pi/a$\ispr{В оригинале это семейство
+названо $\{100\}$. В ГЦК-решётке отражения от $\{100\}$ погашаются, и
+первое отражение этого типа даёт семейство $\{200\}$ с $d=a/2$~—
+именно ему соответствует расстояние $2\pi/a$.}. Первая зона~—
+\term{усечённый октаэдр} с восемью шестиугольными и шестью квадратными
+гранями\ispr{В оригинале (с.~392) эта фигура названа кубооктаэдром.
+Кубооктаэдр имеет треугольные и квадратные грани; первая зона ГЦК-решётки~—
+усечённый октаэдр (шестиугольные и квадратные грани).}.
+\item \emph{ОЦК-решётка} (щелочные металлы, Fe, W, Mo). Наибольшее
+$d=a/\sqrt2$ у плоскостей $\{110\}$; двенадцать плоскостей на расстоянии
+$\sqrt2\,\pi/a$ образуют \term{ромбический додекаэдр}.
+\end{itemize}
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[b]{0.3\textwidth}\centering
+\begin{tikzpicture}[scale=1.55]
+  \input{figures/bz-sc}
+  \draw[fmRed, line width=0.6pt] (bzG) -- (bzX);
+  \node[bzpt] at (bzG) {}; \node[bzpt] at (bzX) {}; \node[bzpt] at (bzR) {};
+  \node[font=\scriptsize, above left=-1pt] at (bzG) {$\Gamma$};
+  \node[font=\scriptsize, below right=-1pt] at (bzX) {$X$};
+  \node[font=\scriptsize, above right=-1pt] at (bzR) {$R$};
+\end{tikzpicture}
+\caption{простая кубическая}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.32\textwidth}\centering
+\begin{tikzpicture}[scale=1.55]
+  \input{figures/bz-fcc}
+  \draw[fmRed, line width=0.6pt] (bzG) -- (bzX) (bzG) -- (bzL);
+  \foreach \p in {G,X,L,W}{\node[bzpt] at (bz\p) {};}
+  \node[font=\scriptsize, above left=-1pt] at (bzG) {$\Gamma$};
+  \node[font=\scriptsize, below=1pt] at (bzX) {$X$};
+  \node[font=\scriptsize, above right=-1pt] at (bzL) {$L$};
+  \node[font=\scriptsize, right=1pt] at (bzW) {$W$};
+\end{tikzpicture}
+\caption{ГЦК}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.32\textwidth}\centering
+\begin{tikzpicture}[scale=1.55]
+  \input{figures/bz-bcc}
+  \draw[fmRed, line width=0.6pt] (bzG) -- (bzH) (bzG) -- (bzN);
+  \foreach \p in {G,H,N,P}{\node[bzpt] at (bz\p) {};}
+  \node[font=\scriptsize, above left=-1pt] at (bzG) {$\Gamma$};
+  \node[font=\scriptsize, below=1pt] at (bzH) {$H$};
+  \node[font=\scriptsize, right=1pt] at (bzN) {$N$};
+  \node[font=\scriptsize, above right=-1pt] at (bzP) {$P$};
+\end{tikzpicture}
+\caption{ОЦК}
+\end{subfigure}
+\caption{Первые зоны Бриллюэна кубических решёток (расчёт; невидимые рёбра~—
+пунктиром): \textit{а}~— куб; \textit{б}~— усечённый октаэдр;
+\textit{в}~— ромбический додекаэдр. Красным отмечены точки высокой
+симметрии: $\Gamma$~— центр зоны; $X$, $L$, $H$, $N$~— центры граней;
+$W$, $R$, $P$~— вершины}
+\label{fig:bz-3d}
+\end{figure}
+
+\paragraph{Энергии в точках зоны}
+Оценим энергию свободного электрона в характерных точках зоны. Для меди
+($a=0{,}361$~нм) в центре квадратной грани (точка $X$)
+\[
+k_X=\frac{2\pi}a=17{,}4~\text{нм}^{-1},\qquad
+E_X=\frac{\hbar^2k_X^2}{2m}=0{,}0381\cdot17{,}4^2\approx11{,}5~\text{эВ}.
+\]
+Так же рассчитаны остальные значения в табл.~\ref{tab:bz-points}. В
+последнем столбце~— радиус сферы, объём которой равен \emph{половине}
+объёма зоны, и энергия на её поверхности. Сравните её с энергией Ферми
+тех же металлов в табл.~\ref{tab:EF}: совпадение почти полное. Почему
+именно половина зоны~— выясним сейчас.
+
+\begin{table}[ht]
+\centering
+\caption{Энергии свободного электрона в точках зон Бриллюэна (эВ).
+В оригинале точки $L$, $X$, $W$ обозначены $A$, $B$, $C$, а точки $N$,
+$H$~— $A$, $B$}
+\label{tab:bz-points}
+\small
+\begin{tabular}{@{}lcccc@{\qquad}lccc@{}}
+\toprule
+\multicolumn{5}{@{}l}{ГЦК} & \multicolumn{4}{l}{ОЦК} \\
+\cmidrule(r){1-5}\cmidrule(l){6-9}
+Точка & $L$ & $X$ & $W$ & $\frac12$ зоны & Точка & $N$ & $H$ & $\frac12$ зоны \\
+$k$, ед. $2\pi/a$ & 0,866 & 1 & 1,118 & 0,782 & $k$, ед. $2\pi/a$ & 0,707 & 1 & 0,620 \\
+\midrule
+Cu & 8,64 & 11,52 & 14,40 & 7,04 & Li & 6,12 & 12,25 & 4,71 \\
+Ag & 6,75 & 9,00 & 11,27 & 5,51 & Na & 4,05 & 8,11 & 3,12 \\
+Au & 6,79 & 9,06 & 11,32 & 5,53 & K & 2,77 & 5,55 & 2,13 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\noindent Энергия серебра в точке $X$ исправлена\ispr{В табл.~3.13
+оригинала для серебра в точке $B$ ($X$) указано 9,2~эВ. Но энергия
+пропорциональна $k^2$, и из значения в точке $A$ ($L$) следует
+$6{,}746/0{,}866^2=9{,}0$~эВ; так же получается и из параметра решётки
+$a=0{,}409$~нм.}.
+
+\paragraph{Сколько электронов вмещает зона}
+Разделим объём зоны на объём одного состояния. Для простой кубической
+решётки объём первой зоны $(2\pi/a)^3$, объём одного состояния
+$8\pi^3/V$; их отношение
+\[
+\frac{(2\pi/a)^3}{8\pi^3/V}=\frac V{a^3}=N
+\]
+равно числу элементарных ячеек, т.\,е. числу атомов. В каждом состоянии~—
+два электрона с противоположными спинами.
+\begin{glavnoe}
+Зона Бриллюэна простой кубической, ГЦК- и ОЦК-решётки вмещает \vazhno{по
+два электрона на атом}. У одновалентных металлов (щелочные, Cu, Ag, Au)
+электроны заполняют поэтому лишь \emph{половину} первой зоны~— сферу,
+равную по объёму половине зоны. Отсюда и совпадение в
+табл.~\ref{tab:bz-points}.
+\end{glavnoe}
+Для ГПУ-решётки зоны не содержат целого числа состояний на атом:
+число зависит от отношения осей, и, например, у цинка ($c/a=1{,}86$)
+первая зона вмещает лишь 1,792 электрона на атом.
+
+\begin{primer}[Когда сфера Ферми касается границы зоны]
+Сколько электронов на атом поместится в сфере Ферми, \emph{вписанной}
+в первую зону ОЦК-решётки?
+\begin{shagi}
+\item Радиус вписанной сферы~— расстояние до грани $\{110\}$:
+$r=\sqrt2\,\pi/a=0{,}707\cdot(2\pi/a)$.
+\item Объём сферы $\frac43\pi r^3=1{,}481\,(2\pi/a)^3$; объём зоны
+$2\,(2\pi/a)^3$; отношение $0{,}74$.
+\item Полная зона вмещает 2 электрона на атом, значит вписанная сфера~—
+$2\cdot0{,}74=1{,}48$ электрона на атом.
+\end{shagi}
+Для ГЦК-решётки (вписанная сфера касается граней $\{111\}$,
+$r=\sqrt3\,\pi/a$; объём зоны $4(2\pi/a)^3$) отношение объёмов $0{,}68$,
+и электронная концентрация равна $1{,}36$ электрона на атом. Эти числа
+понадобятся в п.~3.3 при объяснении электронных соединений.
+\end{primer}
+
+\paragraph{Как заполняется зона}
+Проследим, как меняется изоэнергетическая поверхность при добавлении
+электронов, на примере двумерной квадратной решётки
+(рис.~\ref{fig:contours}). Минимум энергии~— в центре зоны.
+\begin{shagi}
+\item При малых $k$ электроны почти свободны: $E\approx\hbar^2k^2/2m$,
+изоэнергетические линии~— окружности.
+\item Вблизи границ $E(k)$ отстаёт от параболы, причём раньше всего~— в
+направлении~1, где граница ближе (до середины стороны $C$ расстояние
+$\pi/a$, а до угла~— $\sqrt2\,\pi/a$). Поэтому при одной и той же энергии
+$k$ в направлении~1 больше: линии «вытягиваются» к серединам сторон.
+\item Коснуться границы линия не может: вблизи точек $C$ она
+перестраивается~— разрывается и подходит к границе под прямым углом.
+Замкнутая (односвязная) линия становится многосвязной.
+\item Дальше остаются незаполненными только углы зоны.
+\end{shagi}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[scale=2.0,
+  c1/.style={fmBlue, line width=0.8pt}, c2/.style={fmBlue!80!fmRed, line width=0.8pt},
+  c3/.style={fmBlue!65!fmRed, line width=0.8pt}, c4/.style={fmBlue!50!fmRed, line width=0.8pt},
+  c5/.style={fmBlue!35!fmRed, line width=0.8pt}, c6/.style={fmRed!80!black, line width=1.2pt},
+  c7/.style={fmRed!70!fmAmber, line width=0.8pt}, c8/.style={fmAmber, line width=0.8pt}]
+  \fill[fmBlue!5] (-1,-1) rectangle (1,1);
+  \input{figures/sq-contours}
+  \draw[atomLine, line width=0.9pt] (-1,-1) rectangle (1,1);
+  \draw[-{Stealth[length=2mm]}, fmGray] (-1.25,0) -- (1.35,0) node[right, font=\small]{$k_x$};
+  \draw[-{Stealth[length=2mm]}, fmGray] (0,-1.25) -- (0,1.35) node[above, font=\small]{$k_y$};
+  \draw[arr, black] (0,0) -- (0.98,0) node[pos=0.55, below, font=\small]{1};
+  \draw[arr, black] (0,0) -- (0.97,0.97) node[pos=0.5, above left=-2pt, font=\small]{2};
+  \fill (1,0) circle (0.7pt) node[right, font=\small]{$C$};
+  \node[font=\scriptsize, below left] at (1,-1) {$\frac\pi a$};
+\end{tikzpicture}
+\caption{Изоэнергетические линии в первой зоне Бриллюэна квадратной
+решётки (расчёт в модели сильной связи). Синие замкнутые линии около
+центра~— малые энергии; красная~— линия, касающаяся границы в точках
+$C$; жёлтые дуги~— высокие энергии, когда свободны лишь углы зоны}
+\label{fig:contours}
+\end{figure}
+
+Дальнейшее зависит от величины разрыва энергии $\Delta E$ на границе
+зоны. Максимум энергии в первой зоне находится в её углах, а минимум во
+второй~— у середин сторон (точки $C$). Возможны два случая
+(рис.~\ref{fig:gap-overlap}).
+\begin{itemize}
+\item \emph{Разрыв велик}: минимум второй зоны $E_\text{II\,min}$ лежит
+\emph{выше} максимума первой $E_\text{I\,max}$. Выгодно сначала
+заполнить первую зону целиком. Если электронов как раз на это хватает
+(два на атом), кристалл~— \emph{диэлектрик} или \emph{полупроводник} в
+зависимости от ширины щели.
+\item \emph{Разрыв мал}: $E_\text{II\,min}<E_\text{I\,max}$~—
+\term{перекрытие зон}. Первая зона заполняется лишь до уровня
+$E_\text{II\,min}$, дальше электроны занимают состояния второй зоны
+около точек $C$, а углы первой зоны остаются пустыми. Обе зоны заполнены
+частично, и вещество~— \emph{металл}. Так обстоит дело у двухвалентных
+металлов (Be, Mg, Zn\ldots): двух электронов на атом хватило бы, чтобы
+целиком заполнить зону, но благодаря перекрытию они~— проводники.
+\end{itemize}
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[b]{0.48\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth, height=5.4cm, xmin=0, xmax=1.48, ymin=0, ymax=2.35,
+  xlabel={$k$, ед. $\pi/a$}, ylabel={$E$}, xtick={1,1.414}, xticklabels={$1$,$\sqrt2$}, ytick=\empty, axis lines=left]
+  \addplot[fmRed, thick, domain=0:1, samples=60] {x^2-x^6/3};
+  \addplot[fmRed, thick, domain=1:1.45, samples=40] {1.667+1.6*(x-1)^2};
+  \addplot[fmBlue, thick, domain=0:1.414, samples=60] {x^2-x^6/12};
+  \draw[fmBlue, dashed] (axis cs:0,1.333) -- (axis cs:1.48,1.333);
+  \draw[fmRed, dashed] (axis cs:0,1.667) -- (axis cs:1.48,1.667);
+  \node[font=\scriptsize, fmBlue, anchor=north west] at (axis cs:0.02,1.33) {$E_\text{I\,max}$};
+  \node[font=\scriptsize, fmRed, anchor=south west] at (axis cs:0.02,1.67) {$E_\text{II\,min}$};
+  \node[font=\scriptsize, fmRed] at (axis cs:0.82,0.42) {напр.~1};
+  \node[font=\scriptsize, fmBlue] at (axis cs:1.2,0.95) {напр.~2};
+\end{axis}
+\end{tikzpicture}
+\caption{щель между зонами}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.48\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth, height=5.4cm, xmin=0, xmax=1.48, ymin=0, ymax=2.35,
+  xlabel={$k$, ед. $\pi/a$}, ylabel={$E$}, xtick={1,1.414}, xticklabels={$1$,$\sqrt2$}, ytick=\empty, axis lines=left]
+  \fill[fmGreen!18] (axis cs:0,1.067) rectangle (axis cs:1.48,1.333);
+  \addplot[fmRed, thick, domain=0:1, samples=60] {x^2-x^6/3};
+  \addplot[fmRed, thick, domain=1:1.45, samples=40] {1.067+1.6*(x-1)^2};
+  \addplot[fmBlue, thick, domain=0:1.414, samples=60] {x^2-x^6/12};
+  \draw[fmBlue, dashed] (axis cs:0,1.333) -- (axis cs:1.48,1.333);
+  \draw[fmRed, dashed] (axis cs:0,1.067) -- (axis cs:1.48,1.067);
+  \node[font=\scriptsize, fmBlue, anchor=south west] at (axis cs:0.02,1.34) {$E_\text{I\,max}$};
+  \node[font=\scriptsize, fmRed, anchor=north west] at (axis cs:0.02,1.06) {$E_\text{II\,min}$};
+  \node[font=\scriptsize, fmGreen!50!black] at (axis cs:0.55,1.2) {перекрытие};
+  \node[font=\scriptsize, fmRed] at (axis cs:0.82,0.42) {напр.~1};
+  \node[font=\scriptsize, fmBlue] at (axis cs:1.2,0.95) {напр.~2};
+\end{axis}
+\end{tikzpicture}
+\caption{перекрытие зон}
+\end{subfigure}
+\caption{Энергия электрона вдоль направлений~1 (к середине стороны
+зоны) и~2 (к углу зоны), схема. Кривая~1 раньше упирается в границу и
+продолжается во второй зоне выше на $\Delta E$. \textit{а}~— минимум
+второй зоны выше максимума первой: щель; \textit{б}~— ниже: зоны
+перекрываются}
+\label{fig:gap-overlap}
+\end{figure}
+
+\paragraph{Металлы, полупроводники, диэлектрики}
+Почему полностью заполненная зона не проводит ток? В заполненной зоне
+каждому электрону с волновым вектором $\vb k$ (и скоростью $\vb v$)
+соответствует электрон с $-\vb k$ (и скоростью $-\vb v$), и суммарный
+ток равен нулю. Электрическое поле не может изменить это распределение:
+чтобы ускориться, электрон должен перейти в соседнее по $\vb k$
+состояние, а все они заняты. Ток возможен лишь в зоне, заполненной
+\emph{частично}. Отсюда классификация твёрдых тел
+(рис.~\ref{fig:band-filling}).
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=1cm, y=1cm,
+  bnd/.style={draw=atomLine, line width=0.5pt, fill=white},
+  occ/.style={fill=fmBlue!45}]
+  \foreach \s/\t/\u in {0/металл/{(Na, Cu)}, 3.4/металл/{(Mg, Zn)}, 6.8/полупроводник/{(Si, Ge)}, 10.2/диэлектрик/{(алмаз, NaCl)}}{
+    \node[font=\small, align=center] at (\s+1,-0.75) {\t\\[-1pt]\footnotesize\u};}
+  % натрий: зона заполнена наполовину
+  \fill[occ] (0.2,0) rectangle (1.8,1.3);
+  \draw[bnd, fill=none] (0.2,0) rectangle (1.8,2.6);
+  \draw[fmRed, thick] (0.05,1.3) -- (1.95,1.3);
+  % перекрытие: зона I (слева) и зона II (справа, сдвинута вверх)
+  \fill[occ] (3.55,0) rectangle (4.75,2.0);
+  \draw[bnd, fill=none] (3.55,0) rectangle (4.75,2.3);
+  \fill[occ] (4.05,1.6) rectangle (5.25,2.0);
+  \draw[bnd, fill=none] (4.05,1.6) rectangle (5.25,3.4);
+  \node[font=\scriptsize] at (3.8,0.3) {I}; \node[font=\scriptsize] at (5.0,3.1) {II};
+  \draw[fmRed, thick] (3.45,2.0) -- (5.35,2.0);
+  % полупроводник
+  \fill[occ] (7.0,0) rectangle (8.6,1.5);
+  \draw[bnd, fill=none] (7.0,0) rectangle (8.6,1.5);
+  \draw[bnd, fill=none] (7.0,2.0) rectangle (8.6,3.4);
+  \draw[dimline] (8.8,1.5) -- node[right, font=\scriptsize]{$\sim1$ эВ} (8.8,2.0);
+  % диэлектрик
+  \fill[occ] (10.4,0) rectangle (12.0,1.0);
+  \draw[bnd, fill=none] (10.4,0) rectangle (12.0,1.0);
+  \draw[bnd, fill=none] (10.4,3.0) rectangle (12.0,3.4);
+  \draw[dimline] (12.2,1.0) -- node[right, font=\scriptsize]{$>3$ эВ} (12.2,3.0);
+  \node[font=\scriptsize, fmRed] at (1.0,1.5) {$\EF$};
+\end{tikzpicture}
+\caption{Заполнение зон (синее~— занятые состояния при $T=0$, красная
+линия~— уровень Ферми): металл с наполовину заполненной зоной;
+металл с перекрывающимися зонами; полупроводник и диэлектрик~—
+заполненная зона отделена от пустой узкой или широкой щелью}
+\label{fig:band-filling}
+\end{figure}
+
+\begin{itemize}
+\item \term{Металлы}~— есть частично заполненная зона: либо электронов
+не хватает, чтобы заполнить зону (одновалентные металлы), либо зоны
+перекрываются (двухвалентные).
+\item \term{Диэлектрики}~— все зоны либо полностью заполнены, либо пусты,
+и щель широкая (у алмаза около 5,5~эВ).
+\item \term{Полупроводники}~— то же, но щель узкая (Si~— 1,1~эВ, Ge~—
+0,67~эВ). Уже при комнатной температуре тепловое движение перебрасывает
+часть электронов через щель, и проводимость растёт с нагревом.
+\end{itemize}
+
+\paragraph{Поверхность Ферми}
+Для металла важнее всего, как выглядит граница занятых состояний.
+\begin{opredelenie}
+\term{Поверхность Ферми}~— изоэнергетическая поверхность $E(\vb k)=\EF$,
+отделяющая при $T=0$ занятые состояния от свободных.
+\end{opredelenie}
+Её форма зависит от двух факторов: структуры кристалла (формы зоны) и
+числа электронов на атом.
+\begin{itemize}
+\item \emph{Щелочные металлы} (ОЦК). Электроны заполняют половину зоны;
+радиус сферы Ферми составляет около 88\,\% расстояния до ближайших
+граней (табл.~\ref{tab:bz-points}: $0{,}620/0{,}707$). Грани далеко,
+поверхность Ферми почти сферическая и замкнутая; её искажения~—
+двенадцать слабых выпуклостей к центрам граней~— не превышают 1,5\,\%.
+\item \emph{Благородные металлы} Cu, Ag, Au (ГЦК). Зона тоже заполнена
+наполовину, но сфера подходит к шестиугольным граням $\{111\}$ гораздо
+ближе~— на $0{,}782/0{,}866\approx90$\,\%. К тому же потенциал ионных
+остовов сильнее, чем у щелочных металлов. Опыт показывает, что
+поверхность Ферми вытягивается и \emph{касается} шестиугольных граней
+«шейками» (рис.~\ref{fig:necks}). Поверхность становится
+\emph{открытой}: в повторяющихся зонах она тянется через всё
+$\vb k$-пространство. Диаметр шеек сильно зависит от потенциала решётки.
+\item \emph{Многовалентные и переходные металлы}~— поверхности Ферми
+сложные. У алюминия (ГЦК, три электрона на атом) можно было бы
+ожидать заполненной первой зоны и половины второй. Расчёт показывает,
+что электроны занимают состояния \emph{четырёх} зон: первая заполнена
+целиком, а куски поверхности Ферми лежат во второй, третьей и
+четвёртой зонах.
+\end{itemize}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[scale=0.9]
+  \foreach \cx in {0,3.0,6.0}{
+    \draw[atomLine, line width=0.6pt] (\cx,0) ++(30:1.732) \foreach \a in {90,150,...,390}{-- ($(\cx,0)+(\a:1.732)$)};
+  }
+  \foreach \cx in {1.5,4.5}{
+    \fill[fmBlue!35] (\cx-0.35,-0.17) rectangle (\cx+0.35,0.17);}
+  \foreach \cx in {0,3.0,6.0}{
+    \fill[fmBlue!35] (\cx,0) circle (1.38);
+    \draw[fmBlue!70!black, line width=0.6pt] (\cx,0) circle (1.38);}
+  \foreach \cx in {1.5,4.5}{
+    \fill[fmBlue!35] (\cx-0.2,-0.17) rectangle (\cx+0.2,0.17);
+    \draw[fmBlue!70!black, line width=0.6pt] (\cx-0.16,0.17) -- (\cx+0.16,0.17) (\cx-0.16,-0.17) -- (\cx+0.16,-0.17);}
+  \draw[fmRed, line width=0.5pt] (4.5,0.2) -- (5.3,1.95) node[above, font=\small]{шейка};
+  \node[font=\small] at (0,-2.05) {зона 1};
+  \node[font=\small] at (3,-2.05) {соседняя зона};
+  \node[font=\small] at (6,-2.05) {\ldots};
+\end{tikzpicture}
+\caption{Открытая поверхность Ферми благородных металлов (схема сечения
+в повторяющихся зонах): почти сферические поверхности соседних зон
+соединены шейками через шестиугольные грани}
+\label{fig:necks}
+\end{figure}
+
+\begin{smysl}
+Форма (топология) поверхности Ферми сильно влияет на свойства металла.
+А она может меняться: тепловое возбуждение, дефекты, примеси и
+легирование меняют число электронов на атом и строение зон. Это одна из
+причин, по которым свойства сплавов так чувствительны к составу.
+\end{smysl}
+
+\paragraph{Плотность состояний в зонной теории}
+В теории свободных электронов $g(E)\propto\sqrt E$ (рис.~\ref{fig:fermi-dirac}).
+В зонной теории кривая меняется (рис.~\ref{fig:dos-band},\,\textit{а}).
+\begin{itemize}
+\item Участок $OA$: заполняются состояния с низкой энергией вблизи
+центра зоны, электроны почти свободны, кривая совпадает с параболой.
+\item Участок $AB$: заполняются состояния вблизи границ зоны, где
+энергия растёт с $k$ очень медленно, поэтому на единичный интервал
+энергии приходится больше состояний: $g(E)$ идёт выше параболы.
+\item Точка $B$: поверхность Ферми достигает границы зоны и меняет
+связность; производная $\d g/\d E$ терпит разрыв (излом кривой).
+\item Участок $BCD$: остаются незаполненными лишь углы зоны,
+состояний становится всё меньше, и $g(E)$ падает до нуля в точке $D$,
+где зона заполнена полностью.
+\end{itemize}
+Если зоны перекрываются, общая плотность состояний~— сумма кривых
+отдельных зон (рис.~\ref{fig:dos-band},\,\textit{б}): часть электронов с
+верхних уровней первой зоны переходит на более низкие свободные уровни
+второй, и обе зоны заполнены частично. Если не перекрываются~— у каждой
+зоны своя кривая, а между ними щель (\textit{в}). Точный расчёт $g(E)$
+для реальных металлов~— сложная задача.
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[b]{0.4\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth, height=5.2cm, xmin=-6.3, xmax=6.4, ymin=0, ymax=0.17,
+  xlabel={$E$}, ylabel={$g(E)$}, xtick=\empty, ytick=\empty, axis lines=left]
+  \addplot[fmGray, dashed] table {figures/dos-free.dat};
+  \addplot[fmBlue, thick] table {figures/dos-sc.dat};
+  \node[font=\scriptsize, below] at (axis cs:-6,0) {$O$};
+  \node[font=\scriptsize, above left] at (axis cs:-4.6,0.07) {$A$};
+  \node[font=\scriptsize, above] at (axis cs:-2,0.148) {$B$};
+  \node[font=\scriptsize, above] at (axis cs:2,0.148) {$C$};
+  \node[font=\scriptsize, below] at (axis cs:6,0) {$D$};
+\end{axis}
+\end{tikzpicture}
+\caption{}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.29\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=1.3\textwidth, height=5.2cm, xmin=0, xmax=2.1, ymin=0, ymax=3.2,
+  xlabel={$E$}, xtick=\empty, ytick=\empty, axis lines=left]
+  \addplot[fmGray!70, dashed] table[x=E, y=g1] {figures/dos-overlap.dat};
+  \addplot[fmGray!70, dashed] table[x=E, y=g2] {figures/dos-overlap.dat};
+  \addplot[fmBlue, thick] table[x=E, y=s] {figures/dos-overlap.dat};
+\end{axis}
+\end{tikzpicture}
+\caption{}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.29\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=1.3\textwidth, height=5.2cm, xmin=0, xmax=2.3, ymin=0, ymax=3.2,
+  xlabel={$E$}, xtick=\empty, ytick=\empty, axis lines=left]
+  \addplot[fmBlue, thick] table[x=E, y=s] {figures/dos-gap.dat};
+  \draw[dimline] (axis cs:1.0,0.25) -- node[above, font=\scriptsize]{щель} (axis cs:1.25,0.25);
+\end{axis}
+\end{tikzpicture}
+\caption{}
+\end{subfigure}
+\caption{Плотность состояний в зонной теории (расчёт в модели сильной
+связи для простой кубической решётки): \textit{а}~— одна зона, пунктир~—
+парабола свободных электронов; \textit{б}~— две перекрывающиеся зоны
+(пунктир~— вклады зон, сплошная~— сумма); \textit{в}~— зоны разделены
+щелью}
+\label{fig:dos-band}
+\end{figure}
+
+\begin{itogi}
+\begin{itemize}
+\item В периодическом поле волновая функция электрона~— функция Блоха
+$u_{\vb k}(\vb r)e^{i\vb k\vb r}$; электрон принадлежит всему кристаллу,
+идеальная решётка его не рассеивает.
+\item Разрешённые энергии образуют зоны, разделённые запрещёнными
+щелями. Щели возникают при брэгговском отражении электронных волн:
+в одномерном случае при $k=n\pi/a$, в общем~— на плоскостях, делящих
+пополам векторы обратной решётки.
+\item Зоны Бриллюэна: куб (простая кубическая), усечённый октаэдр (ГЦК),
+ромбический додекаэдр (ОЦК). Каждая вмещает два электрона на атом.
+\item Одновалентные металлы заполняют половину зоны; у двухвалентных
+металлов зоны перекрываются. Частично заполненная зона~— металл;
+заполненная зона и щель~— полупроводник или диэлектрик.
+\item Поверхность Ферми щелочных металлов почти сферическая, у
+благородных металлов~— открытая (шейки), у многовалентных~— сложная.
+\end{itemize}
+\end{itogi}
+
+\begin{proverka}
+\item Что общего у функции Блоха с плоской волной и чем она отличается?
+\item Почему при $k=\pi/a$ возникает разрыв энергии? Нарисуйте
+распределение электронной плотности в двух стоячих волнах.
+\item Найдите расстояние от центра до граней первой зоны Бриллюэна для
+ОЦК-решётки с $a=0{,}43$~нм (натрий).
+\item Почему двухвалентный магний~— металл, хотя двух электронов на атом
+хватило бы, чтобы целиком заполнить зону?
+\item Почему заполненная зона не даёт тока?
+\end{proverka}
