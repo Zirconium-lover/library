@@ -1,0 +1,13 @@
+% !TEX program = xelatex
+% Отдельная сборка главы 1:  latexmk glava1.tex   (или make glava1)
+\documentclass[12pt,twoside,openright]{book}
+\usepackage{fizmat}
+\def\fmSubtitle{Глава 1. Физическая кристаллография}
+\begin{document}
+\frontmatter
+\input{frontmatter}
+\tableofcontents
+\mainmatter
+\setcounter{chapter}{0}
+\input{chapters/ch1/ch1}
+\end{document}
