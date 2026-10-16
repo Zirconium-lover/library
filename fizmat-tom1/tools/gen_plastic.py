@@ -318,7 +318,186 @@ def hcp_planes(ca=1.633):
         f.write('\n'.join(L) + '\n')
 
 
+# ------------------------------------------------------------ две системы координат
+def _rot(axis, deg):
+    u = unit(axis); a = math.radians(deg); c, s_ = math.cos(a), math.sin(a)
+    K = np.array([[0, -u[2], u[1]], [u[2], 0, -u[0]], [-u[1], u[0], 0]])
+    return np.eye(3) + s_ * K + (1 - c) * K @ K
+
+
+def _clip(poly, a, b):
+    """Отсечение многоугольника полуплоскостью a·p <= b (Сазерленд–Ходжмен)."""
+    out = []
+    for i in range(len(poly)):
+        P, Q = poly[i], poly[(i + 1) % len(poly)]
+        fp, fq = np.dot(a, P) - b, np.dot(a, Q) - b
+        if fp <= 0:
+            out.append(P)
+        if fp * fq < 0:
+            out.append(P + (Q - P) * fp / (fp - fq))
+    return out
+
+
+def texture_frames():
+    """Лист (оси образца НП, ПН, НН), зёрна с кристаллами-кубиками
+    (кубическая текстура {001}<100> с разбросом и несколько случайно
+    ориентированных зёрен), увеличенное зерно с обеими системами координат,
+    ППФ (100) в осях образца и ОПФ нормали к листу в стандартном треугольнике.
+    Цвета осей кристалла: [100] — красный, [010] — зелёный, [001] — синий."""
+    rng = np.random.default_rng(11)
+    W, D, H = 6.0, 4.0, 0.7                     # размеры блока (НП, ПН, толщина)
+    seeds = []
+    for j in range(3):
+        for i in range(5):
+            seeds.append(np.array([0.65 + i * 1.18 + rng.uniform(-0.25, 0.25) + (0.45 if j % 2 else 0),
+                                   0.6 + j * 1.35 + rng.uniform(-0.2, 0.2)]))
+    seeds = [s_ for s_ in seeds if s_[0] < W - 0.3]
+    n = len(seeds)
+    rand_ids = {2, 7, 11}                       # случайно ориентированные зёрна
+    oris = []
+    for k in range(n):
+        if k in rand_ids:
+            q = rng.normal(size=4); q /= np.linalg.norm(q)
+            w, x, y, z = q
+            R = np.array([[1 - 2 * (y * y + z * z), 2 * (x * y - z * w), 2 * (x * z + y * w)],
+                          [2 * (x * y + z * w), 1 - 2 * (x * x + z * z), 2 * (y * z - x * w)],
+                          [2 * (x * z - y * w), 2 * (y * z + x * w), 1 - 2 * (x * x + y * y)]])
+        else:
+            R = _rot(rng.normal(size=3), rng.uniform(3, 11))
+        oris.append(R)
+    sel = 7                                     # зерно, показанное крупно
+    view = np.array([0.42, -1.0, 0.30])         # направление на наблюдателя для cubeproj
+    P = lambda v: (v[0] + 0.42 * v[1], 0.30 * v[1] + v[2])
+    cols = ['fmRed', 'fmGreen', 'fmBlue']
+    L = ['% создано tools/gen_plastic.py: системы координат образца и кристалла (текстура)']
+
+    def cube(center, R, a, T, extra=''):
+        """Видимые грани куба с ребром a, центром center и ориентацией R."""
+        out = []
+        for k in range(3):
+            for sg in (1, -1):
+                nrm = sg * R[:, k]
+                if np.dot(nrm, view) <= 0:
+                    continue
+                e1, e2 = R[:, (k + 1) % 3], R[:, (k + 2) % 3]
+                c0 = center + nrm * a / 2
+                pts = [c0 + (u1 * e1 + u2 * e2) * a / 2 for u1, u2 in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
+                out.append(f'\\filldraw[{cols[k]}!35, draw={cols[k]}!60!black, line width=0.3pt{extra}] ' +
+                           ' -- '.join(f'({T(*P(p))[0]:.3f},{T(*P(p))[1]:.3f})' for p in pts) + ' -- cycle;')
+        return out
+
+    # ---- (б) блок с зёрнами
+    ox, oy, sc = 4.6, 0.9, 0.95
+    Tb = lambda x, y: (ox + sc * x, oy + sc * y)
+    top = [np.array(v, float) for v in ((0, 0), (W, 0), (W, D), (0, D))]
+    pt = lambda x, y, z: Tb(*P((x, y, z)))
+    f2 = lambda q: f'({q[0]:.3f},{q[1]:.3f})'
+    L.append(f'\\fill[atomA!25] {f2(pt(0,0,0))} -- {f2(pt(W,0,0))} -- {f2(pt(W,0,H))} -- {f2(pt(0,0,H))} -- cycle;')
+    L.append(f'\\fill[atomA!40] {f2(pt(W,0,0))} -- {f2(pt(W,D,0))} -- {f2(pt(W,D,H))} -- {f2(pt(W,0,H))} -- cycle;')
+    L.append(f'\\fill[atomA!12] {f2(pt(0,0,H))} -- {f2(pt(W,0,H))} -- {f2(pt(W,D,H))} -- {f2(pt(0,D,H))} -- cycle;')
+    cells = []
+    for i in range(n):
+        poly = list(top)
+        for j in range(n):
+            if i != j:
+                a = seeds[j] - seeds[i]
+                b = np.dot(a, (seeds[i] + seeds[j]) / 2)
+                poly = _clip(poly, a, b)
+        cells.append(poly)
+        L.append(f'\\draw[atomLine!70, line width=0.5pt] ' +
+                 ' -- '.join(f2(pt(q[0], q[1], H)) for q in poly) + ' -- cycle;')
+    L.append(f'\\draw[fmAmber!80!black, line width=1.3pt] ' +
+             ' -- '.join(f2(pt(q[0], q[1], H)) for q in cells[sel]) + ' -- cycle;')
+    L.append(f'\\draw[atomLine, line width=0.6pt] {f2(pt(0,0,0))} -- {f2(pt(W,0,0))} -- {f2(pt(W,D,0))} -- '
+             f'{f2(pt(W,D,H))} -- {f2(pt(0,D,H))} -- {f2(pt(0,0,H))} -- cycle '
+             f'{f2(pt(0,0,H))} -- {f2(pt(W,0,H))} -- {f2(pt(W,D,H))} {f2(pt(W,0,H))} -- {f2(pt(W,0,0))};')
+    for k in sorted(range(n), key=lambda k: (-seeds[k][1], seeds[k][0])):   # дальние — раньше
+        c = np.array([seeds[k][0], seeds[k][1], H + 0.36])
+        L += cube(c, oris[k], 0.5, Tb)
+    # ---- (а) кусок листа (сантиметры) с отмеченной областью
+    Ta = lambda x, y: (0.15 + x, 1.25 + y)
+    pa = lambda x, y, z: Ta(*P((x, y, z)))
+    Wa, Da, Ha = 3.4, 2.2, 0.16
+    L.append(f'\\fill[atomA!40] {f2(pa(0,0,0))} -- {f2(pa(Wa,0,0))} -- {f2(pa(Wa,0,Ha))} -- {f2(pa(0,0,Ha))} -- cycle;')
+    L.append(f'\\fill[atomA!55] {f2(pa(Wa,0,0))} -- {f2(pa(Wa,Da,0))} -- {f2(pa(Wa,Da,Ha))} -- {f2(pa(Wa,0,Ha))} -- cycle;')
+    L.append(f'\\fill[atomA!18] {f2(pa(0,0,Ha))} -- {f2(pa(Wa,0,Ha))} -- {f2(pa(Wa,Da,Ha))} -- {f2(pa(0,Da,Ha))} -- cycle;')
+    L.append(f'\\draw[atomLine, line width=0.6pt] {f2(pa(0,0,0))} -- {f2(pa(Wa,0,0))} -- {f2(pa(Wa,Da,0))} -- '
+             f'{f2(pa(Wa,Da,Ha))} -- {f2(pa(0,Da,Ha))} -- {f2(pa(0,0,Ha))} -- cycle '
+             f'{f2(pa(0,0,Ha))} -- {f2(pa(Wa,0,Ha))} -- {f2(pa(Wa,Da,Ha))} {f2(pa(Wa,0,Ha))} -- {f2(pa(Wa,0,0))};')
+    zx, zy, zs = 2.3, 0.7, 0.45
+    sq = [pa(zx, zy, Ha), pa(zx + zs, zy, Ha), pa(zx + zs, zy + zs * D / W, Ha), pa(zx, zy + zs * D / W, Ha)]
+    L.append('\\draw[fmAmber!80!black, line width=0.8pt] ' + ' -- '.join(f2(q) for q in sq) + ' -- cycle;')
+    L.append(f'\\draw[atomLine!50, densely dotted] {f2(sq[3])} -- {f2(pt(0, D, H))} {f2(sq[0])} -- {f2(pt(0, 0, H))};')
+    for k, (lab, anc) in enumerate([('НП', 'north'), ('ПН', 'east'), ('НН', 'south')]):
+        q0 = Ta(*P((-0.35, -0.6, 0)))
+        q1 = Ta(*P(np.array([-0.35, -0.6, 0]) + np.eye(3)[k] * (1.0 if k != 1 else 1.1)))
+        L.append(f'\\draw[-{{Stealth[length=1.8mm]}}, atomLine, line width=0.8pt] {f2(q0)} -- {f2(q1)} '
+                 f'node[font=\\scriptsize, anchor={anc}] {{{lab}}};')
+    L.append(f'\\coordinate (Alab) at {f2(Ta(1.4, -0.85))};')
+    for name, q in [('Bsel', pt(seeds[sel][0], seeds[sel][1], H)), ('Bfront', pt(W / 2, 0, 0)),
+                    ('Bright', pt(W, D / 2, H / 2)), ('Btl', pt(0, D, H)), ('Bbl', pt(0, 0, 0))]:
+        L.append(f'\\coordinate ({name}) at {f2(q)};')
+    # ---- (в) выбранное зерно крупно: обе системы координат
+    cx, cy = 1.6, -2.9
+    Tc = lambda x, y: (cx + x, cy + y)
+    R = oris[sel]
+    L += cube(np.zeros(3), R, 1.25, Tc, ', opacity=0.75')
+    for k, lab in enumerate(['[100]', '[010]', '[001]']):
+        v = R[:, k] * 1.55
+        if np.dot(v, view) < 0:
+            v = -v
+            lab = '[' + ''.join('\\br1' if ch == '1' else ch for ch in lab[1:-1]) + ']'
+        q = Tc(*P(v))
+        L.append(f'\\draw[-{{Stealth[length=2mm]}}, {cols[k]}!80!black, line width=1.1pt] ({cx},{cy}) -- ({q[0]:.3f},{q[1]:.3f}) '
+                 f'node[font=\\scriptsize, {cols[k]}!80!black, anchor={"west" if q[0] > cx else "east"}] {{${lab}$}};')
+    for k, lab in enumerate(['НП', 'ПН', 'НН']):
+        v = np.eye(3)[k] * 1.9
+        q = Tc(*P(v))
+        L.append(f'\\draw[-{{Stealth[length=2mm]}}, atomLine, dashed, line width=0.8pt] ({cx},{cy}) -- ({q[0]:.3f},{q[1]:.3f}) '
+                 f'node[font=\\scriptsize, anchor={"south" if k == 2 else ("west" if k == 0 else "south west")}] {{{lab}}};')
+    L.append(f'\\coordinate (Csel) at ({cx},{cy + 1.35});')
+    # ---- (г) ППФ (100) в осях образца: НП вверх, ПН вправо, НН в центре
+    px, py, Rp = 6.3, -2.75, 1.45
+    L.append(f'\\draw[atomLine, line width=0.6pt] ({px},{py}) circle ({Rp});')
+    L.append(f'\\draw[atomLine!40] ({px - Rp},{py}) -- ({px + Rp},{py}) ({px},{py - Rp}) -- ({px},{py + Rp});')
+    for k_ in range(n):
+        for k in range(3):
+            v = oris[k_][:, k]
+            if v[2] < 0:
+                v = -v
+            X, Y = v[1] / (1 + v[2]), v[0] / (1 + v[2])
+            extra = ', draw=fmAmber!80!black, line width=0.9pt' if k_ == sel else ''
+            L.append(f'\\filldraw[{cols[k]}{extra}] ({px + Rp * X:.3f},{py + Rp * Y:.3f}) circle ({0.075 if k_ == sel else 0.055});')
+    L.append(f'\\coordinate (PFc) at ({px},{py}); \\coordinate (PFtop) at ({px},{py + Rp}); '
+             f'\\coordinate (PFright) at ({px + Rp},{py});')
+    # ---- (д) ОПФ нормали к листу (НН) в стандартном треугольнике
+    ix, iy, Zi = 9.05, -3.6, 6.6
+    Ti = lambda x, y: (ix + Zi * x, iy + Zi * y)
+
+    def arc(a, b, m=30):
+        a, b = unit(a), unit(b)
+        om = math.acos(np.dot(a, b))
+        return [proj100((math.sin((1 - t) * om) * a + math.sin(t * om) * b) / math.sin(om))
+                for t in np.linspace(0, 1, m)]
+    tri = arc((1, 0, 0), (1, 1, 0)) + arc((1, 1, 0), (1, 1, 1)) + arc((1, 1, 1), (1, 0, 0))
+    L.append('\\filldraw[fmAmber!12, draw=atomLine, line width=0.6pt] ' +
+             ' -- '.join(f'({Ti(*q)[0]:.3f},{Ti(*q)[1]:.3f})' for q in tri) + ' -- cycle;')
+    for k_ in range(n):
+        nd = oris[k_].T @ np.array([0, 0, 1.0])
+        g = np.sort(np.abs(nd))[::-1]
+        q = Ti(*proj100(g))
+        extra = ', draw=fmAmber!80!black, line width=0.9pt' if k_ == sel else ''
+        L.append(f'\\filldraw[atomLine{extra}] ({q[0]:.3f},{q[1]:.3f}) circle ({0.075 if k_ == sel else 0.055});')
+    for name, v in [('I100', (1, 0, 0)), ('I110', (1, 1, 0)), ('I111', (1, 1, 1))]:
+        q = Ti(*proj100(v))
+        L.append(f'\\coordinate ({name}) at ({q[0]:.3f},{q[1]:.3f});')
+    with open(os.path.join(OUT, 'pl-texture-frames.tex'), 'w') as f:
+        f.write('\n'.join(L) + '\n')
+    nd = oris[sel].T @ np.array([0, 0, 1.0])
+    print('выбранное зерно: НН в осях кристалла', np.round(nd, 3))
+
+
 if __name__ == '__main__':
     schmid_table()
-    slip_stereo(); ipf(); pf123(); hcp_planes()
-    print('готово: pl-slip-stereo, pl-ipf, pl-pf123, pl-hcp-planes')
+    slip_stereo(); ipf(); pf123(); hcp_planes(); texture_frames()
+    print('готово: pl-slip-stereo, pl-ipf, pl-pf123, pl-hcp-planes, pl-texture-frames')

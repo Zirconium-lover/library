@@ -1,0 +1,57 @@
+% Лестница масштабов (рисуется вручную; используется во frontmatter.tex).
+% Ось x — десятичный логарифм длины в метрах: x = 1,3 см · (lg L + 10).
+\begin{tikzpicture}[x=1.3cm, y=1cm, font=\sffamily\scriptsize]
+  \def\rowh{0.43}
+  % ---- оси и сетка
+  \foreach \e in {0,...,10}{\draw[atomLine!15] (\e,0.45) -- (\e,-10.6);}
+  \foreach \e/\t in {0/{0,1 нм}, 1/{1 нм}, 2/{10 нм}, 3/{100 нм}, 4/{1 мкм}, 5/{10 мкм},
+                     6/{100 мкм}, 7/{1 мм}, 8/{1 см}, 9/{10 см}, 10/{1 м}}{
+    \node[atomLine, anchor=south] at (\e,0.45) {\t};
+    \node[atomLine, anchor=north] at (\e,-10.6) {\t};}
+  \draw[atomLine, line width=0.6pt] (0,0.45) -- (10,0.45) (0,-10.6) -- (10,-10.6);
+  % ---- строки: \row{y}{lo}{hi}{цвет}{подпись}
+  \newcommand{\scalerow}[5]{%
+    \pgfmathsetmacro{\lo}{#2+10}\pgfmathsetmacro{\hi}{#3+10}%
+    \fill[#4!75, rounded corners=1.5pt] (\lo,{#1-0.13}) rectangle (\hi,{#1+0.13});
+    \pgfmathtruncatemacro{\wide}{(\hi-\lo>=4.5) ? 1 : 0}%
+    \pgfmathtruncatemacro{\rside}{(\hi>6.5) ? 1 : 0}%
+    \ifnum\wide=1 \node[white, font=\sffamily\bfseries\scriptsize] at ({(\lo+\hi)/2},#1) {#5};
+    \else\ifnum\rside=1 \node[anchor=east, #4!80!black, inner sep=2pt] at (\lo,#1) {#5};
+    \else \node[anchor=west, #4!80!black, inner sep=2pt] at (\hi,#1) {#5};\fi\fi}
+  \newcommand{\scalegroup}[3]{%
+    \fill[#2!6] (-0.1,{#1+0.32}) rectangle (10.1,{#1-#3*\rowh+0.1});}
+  % ---- Строение
+  \scalegroup{0}{fmBlue}{4}
+  \node[anchor=east, fmBlue!80!black, font=\sffamily\bfseries\footnotesize] at (10,0.08) {СТРОЕНИЕ};
+  \scalerow{-0.25}{-10}{-9.6}{fmBlue}{атомы; межатомное расстояние 0,25 нм}
+  \scalerow{-0.68}{-9.6}{-9.2}{fmBlue}{элементарная ячейка 0,3--0,6 нм}
+  \scalerow{-1.11}{-6}{-3.5}{fmBlue}{зёрна поликристалла 1 мкм -- 0,3 мм}
+  \scalerow{-1.54}{-3}{0}{fmBlue}{образцы и детали}
+  % ---- Дефекты
+  \scalegroup{-2.05}{fmRed}{6}
+  \node[anchor=east, fmRed!80!black, font=\sffamily\bfseries\footnotesize] at (10,-1.97) {ДЕФЕКТЫ (гл.~2)};
+  \scalerow{-2.3}{-9.7}{-9.2}{fmRed}{вакансия с зоной искажений}
+  \scalerow{-2.73}{-9.6}{-9}{fmRed}{ядро дислокации; толщина границы зерна}
+  \scalerow{-3.16}{-9}{-8}{fmRed}{дефект упаковки (ширина расщеплённой дислокации)}
+  \scalerow{-3.59}{-9}{-6}{fmRed}{выделения второй фазы, зоны Гинье--Престона}
+  \scalerow{-4.02}{-8}{-5}{fmRed}{расстояние между дислокациями}
+  \scalerow{-4.45}{-6.5}{-5}{fmRed}{дислокационные ячейки, субзёрна}
+  % ---- Процессы и свойства
+  \scalegroup{-4.95}{fmGreen}{8}
+  \node[anchor=east, fmGreen!80!black, font=\sffamily\bfseries\footnotesize] at (10,-4.87) {ПРОЦЕССЫ И СВОЙСТВА (гл.~1--3)};
+  \scalerow{-5.2}{-9.45}{-9.25}{fmGreen}{длина волны электрона у уровня Ферми}
+  \scalerow{-5.63}{-9}{-8.3}{fmGreen}{пробег фононов при 300\,К}
+  \scalerow{-6.06}{-7.55}{-7.25}{fmGreen}{пробег электронов в Cu при 300\,К}
+  \scalerow{-6.49}{-7.2}{-6.8}{fmGreen}{стенка Блоха в железе}
+  \scalerow{-6.92}{-8}{-5}{fmGreen}{линии и полосы скольжения}
+  \scalerow{-7.35}{-7}{-4}{fmGreen}{кристаллы мартенсита}
+  \scalerow{-7.78}{-6}{-3}{fmGreen}{магнитные домены}
+  \scalerow{-8.21}{-4.3}{-3.3}{fmGreen}{диффузия за 1 ч у $T_\text{пл}$}
+  % ---- Наблюдение
+  \scalegroup{-8.71}{fmGray}{4}
+  \node[anchor=east, fmGray!80!black, font=\sffamily\bfseries\footnotesize] at (10,-8.63) {ЧЕМ СМОТРЕТЬ};
+  \scalerow{-8.96}{-10}{-6}{fmGray}{просвечивающий электронный микроскоп}
+  \scalerow{-9.39}{-8.5}{-3}{fmGray}{растровый электронный микроскоп}
+  \scalerow{-9.82}{-6.3}{-3}{fmGray}{оптический микроскоп}
+  \scalerow{-10.25}{-4}{0}{fmGray}{невооружённый глаз}
+\end{tikzpicture}

@@ -103,6 +103,8 @@
 \definecolor{fmGrayBg}{HTML}{F3F4F5}
 \definecolor{fmPurple}{HTML}{5E4B8B}
 \definecolor{fmPurpleBg}{HTML}{F3F0F8}
+\definecolor{fmIndigo}{HTML}{3949AB}
+\definecolor{fmIndigoBg}{HTML}{EEF0FA}
 \definecolor{fmHead}{HTML}{1B3A5C}
 
 % цвета для рисунков
@@ -272,6 +274,41 @@
   colback=fmAmberBg, colframe=fmAmber, boxrule=0.6pt, arc=2pt,
   left=4pt, right=4pt, top=1pt, bottom=1pt,
   before skip=8pt, after skip=8pt, #1}
+
+% Масштаб явления: логарифмическая линейка 0,1 нм … 1 м с подсвеченными
+% диапазонами. \begin{masshtab}[что]{lo/hi/подпись, lo/hi/подпись, ...} … \end{masshtab}
+%   lo, hi — десятичные логарифмы длины в метрах (-9 — 1 нм, -6 — 1 мкм, -3 — 1 мм).
+\newcommand{\masshtabstrip}[1]{%
+\begin{tikzpicture}[x=0.82cm, y=1cm, font=\sffamily\tiny, baseline=(current bounding box.center)]
+  \foreach \lo/\hi/\lab [count=\mi] in {#1}{%
+    \pgfmathsetmacro{\my}{0.19+0.34*(\mi-1)}%
+    \fill[fmIndigo!75, rounded corners=1.5pt] (\lo,\my-0.095) rectangle (\hi,\my+0.095);
+    \pgfmathtruncatemacro{\mwide}{(\hi-\lo>=3.5) ? 1 : 0}%
+    \pgfmathtruncatemacro{\mright}{(\hi>-3.5) ? 1 : 0}%
+    \ifnum\mwide=1
+      \node[white, inner sep=0pt, font=\sffamily\bfseries\tiny] at ({(\lo+\hi)/2},\my) {\lab};
+    \else\ifnum\mright=1
+      \node[anchor=east, fmIndigo, inner sep=2pt] at (\lo,\my) {\lab};
+    \else
+      \node[anchor=west, fmIndigo, inner sep=2pt] at (\hi,\my) {\lab};
+    \fi\fi}
+  \draw[fmIndigo!45, line width=0.6pt] (-10,0) -- (0,0);
+  \foreach \e in {-10,...,0}{\draw[fmIndigo!45, line width=0.5pt] (\e,0) -- (\e,-0.07);}
+  \foreach \e/\t in {-10/{0,1 нм}, -8/{10 нм}, -7/{100 нм}, -5/{10 мкм}, -4/{100 мкм}, -2/{1 см}, -1/{10 см}}{%
+    \node[fmIndigo!50, below=0.5pt, inner sep=1pt] at (\e,-0.06) {\t};}
+  \foreach \e/\t in {-9/{1 нм}, -6/{1 мкм}, -3/{1 мм}, 0/{1 м}}{%
+    \node[fmIndigo, below=0.5pt, inner sep=1pt, font=\sffamily\bfseries\tiny] at (\e,-0.06) {\t};}
+\end{tikzpicture}}
+\NewDocumentEnvironment{masshtab}{om}
+  {\begin{tcolorbox}[fmbase, colback=fmIndigoBg, colframe=fmIndigo,
+     leftrule=3pt, toptitle=2pt, bottomtitle=2pt,
+     colbacktitle=fmIndigoBg, coltitle=fmIndigo,
+     title={\tikz[baseline=-0.6ex]{\draw[fmIndigo, line width=0.5pt] (0,-0.09) rectangle (0.5,0.09);
+       \foreach \t in {0.1,0.2,0.3,0.4}{\draw[fmIndigo, line width=0.4pt] (\t,0.09) -- (\t,0.01);}}\
+       Масштаб\IfValueT{#1}{: #1}},
+     titlerule=0.4pt, titlerule style={fmIndigo!40}]
+   \begin{center}\masshtabstrip{#2}\end{center}\vspace{-1.2ex}}
+  {\end{tcolorbox}}
 
 % Вопросы для самопроверки в конце раздела
 \NewDocumentEnvironment{proverka}{}
