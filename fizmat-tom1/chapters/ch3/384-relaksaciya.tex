@@ -1,0 +1,457 @@
+% ----------------------------------------------------------------------
+%  3.8.4. Релаксационные явления; 3.8.5. Внутреннее трение
+% ----------------------------------------------------------------------
+\subsection{Релаксационные явления и их механизмы}\label{ssec:relaxation}
+
+Всё сказанное выше предполагало, что деформация \emph{мгновенно}
+следует за напряжением по закону Гука $\sigma=E\varepsilon$. На самом деле
+однозначная связь $\sigma$ и $\varepsilon$ устанавливается лишь при очень
+медленном нагружении.
+
+\paragraph{Нерелаксированный и релаксированный модули}
+Быстро приложим к образцу растягивающее напряжение $\sigma$
+(рис.~\ref{fig:anelastic}\,\textit{а}). Образец почти мгновенно
+деформируется на $\varepsilon'$, и модуль равен
+$E_\text{н}=\sigma/\varepsilon'$. Если же выдержать образец под нагрузкой до
+установления равновесия, деформация постепенно вырастет на $\varepsilon''$, и
+модуль станет $E_\text{р}=\sigma/(\varepsilon'+\varepsilon'')$. Очевидно,
+$E_\text{н}>E_\text{р}$; первый называют \term{нерелаксированным}, второй~—
+\term{релаксированным}. При мгновенном снятии нагрузки деформация сразу
+падает на $\varepsilon'$, а оставшаяся часть $\varepsilon''$ исчезает
+постепенно (\term{упругое последействие}).
+
+\begin{opredelenie}[Неупругость и время релаксации]
+\term{Неупругость} (анэластичность)~— поведение, при котором в
+равновесии деформация однозначно определяется напряжением (и полностью
+исчезает после разгрузки), но устанавливается не мгновенно, а с
+запаздыванием. \term{Время релаксации деформации} $\tau$~— время, за
+которое при постоянном напряжении отклонение деформации от равновесной
+уменьшается в $e$ раз. Аналогично вводят релаксацию напряжения при
+постоянной деформации.
+\end{opredelenie}
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[b]{0.52\textwidth}\centering
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=1 by 2, vertical sep=8pt, xticklabels at=edge bottom},
+  width=\linewidth, height=3.5cm, xmin=0, xmax=9, axis lines=left, xtick=\empty,
+  ylabel style={rotate=-90}]
+  \nextgroupplot[ylabel={$\sigma$}, ymin=0, ymax=1.3, ytick=\empty]
+  \addplot[fmRed, thick] coordinates {(0,0) (1,0) (1,1) (5,1) (5,0) (9,0)};
+  \nextgroupplot[ylabel={$\varepsilon$}, ymin=0, ymax=1.2, ytick={0.5,1}, yticklabels={$\varepsilon'$, $\varepsilon'+\varepsilon''$},
+    xlabel={$t$}, yticklabel style={font=\scriptsize}]
+  \addplot[fmBlue, thick] coordinates {(0,0) (1,0) (1,0.5)};
+  \addplot[fmBlue, thick, domain=1:5, samples=60] {0.5+0.5*(1-exp(-(x-1)/0.8))};
+  \addplot[fmBlue, thick] coordinates {(5,0.9966) (5,0.4966)};
+  \addplot[fmBlue, thick, domain=5:9, samples=60] {0.4966*exp(-(x-5)/0.8)};
+  \addplot[fmGray, densely dotted, domain=0:9] {1};
+  \node[font=\scriptsize, anchor=north west] at (axis cs:1.6,0.62) {$\tau$};
+\end{groupplot}
+\end{tikzpicture}
+\caption{}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.44\textwidth}\centering
+\begin{tikzpicture}[x=2.2cm, y=1.6cm]
+  \draw[-{Stealth[length=2mm]}] (0,0) -- (1.9,0) node[below, font=\small]{$\varepsilon$};
+  \draw[-{Stealth[length=2mm]}] (0,0) -- (0,2.35) node[left, font=\small]{$\sigma$};
+  \draw[fmBlue, thick, -{Stealth[length=2mm]}] (0,0) -- (1,2);
+  \draw[fmRed, thick, -{Stealth[length=2mm]}] (1,2) -- (1.5,2);
+  \draw[fmBlue, thick, -{Stealth[length=2mm]}] (1.5,2) -- (0.5,0);
+  \draw[fmRed, thick, -{Stealth[length=2mm]}] (0.5,0) -- (0.02,0);
+  \draw[fmGray, dashed] (0,0) -- (1.5,2);
+  \foreach \p/\l/\a in {{(0,0)}/O/south east, {(1,2)}/A/south, {(1.5,2)}/B/south, {(0.5,0)}/C/north}{
+    \fill \p circle (1.3pt); \node[font=\small, anchor=\a] at \p {\l};}
+  \node[font=\scriptsize, fmBlue, anchor=east] at (0.45,1.0) {$E_\text{н}$};
+  \node[font=\scriptsize, fmGray, anchor=west] at (0.85,0.95) {$E_\text{р}$};
+\end{tikzpicture}
+\caption{}
+\end{subfigure}
+\caption{Неупругость: \textit{а}~— напряжение и деформация во времени:
+мгновенная деформация $\varepsilon'$, запаздывающая $\varepsilon''$ (время
+релаксации $\tau$) и упругое последействие после разгрузки;
+\textit{б}~— цикл быстрого нагружения: $OA$~— адиабатическое
+растяжение (образец охлаждается), $AB$~— нагрев до температуры среды и
+дополнительное удлинение, $BC$~— адиабатическая разгрузка (образец
+нагревается), $CO$~— охлаждение и сокращение. Наклон $OA$~—
+нерелаксированный (адиабатический) модуль $E_\text{н}$, наклон $OB$~—
+релаксированный (изотермический) $E_\text{р}<E_\text{н}$}
+\label{fig:anelastic}
+\end{figure}
+
+Пример~— тепловые эффекты при деформации
+(рис.~\ref{fig:anelastic}\,\textit{б}). При быстром (адиабатическом)
+растяжении $OA$ образец охлаждается\footnote{Термоупругий эффект: у тел с
+положительным коэффициентом расширения адиабатическое растяжение
+понижает температуру, сжатие~— повышает.}. Затем, поглощая тепло из
+окружающей среды, он нагревается и дополнительно удлиняется до точки~$B$.
+При быстрой разгрузке до точки $C$ образец, наоборот, оказывается теплее
+среды и, остывая, возвращается в точку $O$. Наклон $OA$ даёт
+\emph{адиабатический} (нерелаксированный) модуль, наклон $OB$~—
+\emph{изотермический} (релаксированный).
+
+Запаздывание деформации наблюдается даже при очень малых напряжениях и
+проявляется в целом ряде \term{релаксационных явлений}: различии
+адиабатического и изотермического модулей, зависимости модулей от
+частоты, внутреннем трении, обратимой ползучести.
+
+\paragraph{Механизмы релаксации}
+Релаксация~— следствие запаздывания каких-либо процессов в решётке; их
+скорости и задают времена релаксации.
+\begin{enumerate}
+\item \emph{Тепловые потоки.} При изгибе пластины
+(рис.~\ref{fig:relax-mech}\,\textit{а}) по одну сторону нейтральной
+плоскости материал растянут, по другую~— сжат. При быстром нагружении
+растянутая часть охлаждается, сжатая нагревается. Затем температура
+выравнивается: растянутая часть нагревается и дополнительно удлиняется,
+сжатая остывает и дополнительно сокращается~— прогиб при постоянной
+нагрузке растёт до предельного значения. Теплообмен может идти и между
+частями тела, и между телом и средой, и даже между соседними зёрнами
+поликристалла.
+\item \emph{Перераспределение атомов в поле напряжений.} В неупорядоченном
+растворе атомы распределены без связи с направлениями в кристалле.
+Напряжение делает часть позиций энергетически выгоднее: крупные атомы
+замещения стремятся перейти в растянутые области, мелкие~— в сжатые
+(пары растворённых атомов~— \emph{эффект Зинера}). В ОЦК-растворах
+внедрения атомы C, N, O сидят в октаэдрических пустотах трёх типов
+$a$, $b$, $c$, каждая из которых вытянута вдоль одной из осей куба
+(рис.~\ref{fig:relax-mech}\,\textit{б}). При растяжении вдоль оси $x$
+выгоднее становятся позиции типа $a$, и атомы перескакивают в них
+(\emph{эффект Снука}). Перескоки~— это элементарные акты диффузии, поэтому
+энергия активации такой релаксации равна энергии активации диффузии
+атомов внедрения.
+\item \emph{Изменение степени порядка.} В упорядочивающихся сплавах
+напряжение смещает равновесную степень дальнего порядка; новое
+равновесие устанавливается с конечным временем релаксации.
+\item \emph{Движение границ зёрен и двойников}, сопровождаемое
+необратимыми потерями энергии (вязкое скольжение по границам).
+\item \emph{Магнитоупругость.} В ферромагнетиках напряжение смещает
+доменные стенки и поворачивает намагниченность (тот же механизм, что у
+$\Delta E$-эффекта, п.~\ref{ssec:delta-E}), что даёт дополнительные потери.
+\end{enumerate}
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[b]{0.5\textwidth}\centering
+\begin{tikzpicture}
+  \fill[fmBlue!15] (58:4.3) arc (58:122:4.3) -- (122:4.0) arc (122:58:4.0) -- cycle;
+  \fill[fmRed!15] (58:4.0) arc (58:122:4.0) -- (122:3.7) arc (122:58:3.7) -- cycle;
+  \draw[atomLine, thick] (58:4.3) arc (58:122:4.3) -- (122:3.7) arc (122:58:3.7) -- cycle;
+  \draw[fmGray, dashed] (58:4.0) arc (58:122:4.0);
+  \node[font=\scriptsize, fmBlue, anchor=south] at (90:4.35) {растяжение: охлаждение ($-$)};
+  \node[font=\scriptsize, fmRed!80!black, anchor=north] at (90:3.65) {сжатие: нагрев ($+$)};
+  \draw[arrB] (122:4.3) ++(0,0.6) -- ++(0,-0.55);
+  \draw[arrB] (58:4.3) ++(0,0.6) -- ++(0,-0.55);
+  \draw[arrB] (90:3.7) ++(0,-0.95) -- ++(0,0.6);
+\end{tikzpicture}
+\caption{}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.46\textwidth}\centering
+\begin{tikzpicture}[cubeproj, scale=1.15]
+  \def\s{2}
+  \draw[atomLine, thin] (0,0,0) -- (\s,0,0) -- (\s,0,\s) -- (0,0,\s) -- cycle;
+  \draw[atomLine, thin] (\s,0,0) -- (\s,\s,0) -- (\s,\s,\s) -- (\s,0,\s);
+  \draw[atomLine, thin] (0,0,\s) -- (0,\s,\s) -- (\s,\s,\s);
+  \draw[atomLine, thin, dashed] (0,0,0) -- (0,\s,0) -- (\s,\s,0) (0,\s,0) -- (0,\s,\s);
+  \foreach \x in {0,\s}{\foreach \y in {0,\s}{\foreach \z in {0,\s}{
+    \node[circle, fill=atomA, draw=atomLine, line width=0.3pt, inner sep=0pt, minimum size=2.6mm] at (\x,\y,\z) {};}}}
+  \node[circle, fill=atomA, draw=atomLine, line width=0.3pt, inner sep=0pt, minimum size=2.6mm] at (1,1,1) {};
+  \foreach \p/\c/\l/\an in {{(1,0,0)}/fmRed/a/north, {(\s,1,1)}/fmRed/a/west,
+      {(1,0,1)}/fmGreen/b/north west, {(0,1,0)}/fmGreen/b/east,
+      {(1,1,\s)}/fmBlue/c/south, {(0,0,1)}/fmBlue/c/east}{
+    \node[\c, font=\small\bfseries] at \p {$\times$};
+    \node[\c, font=\scriptsize, anchor=\an] at \p {\,\l\,};}
+  \draw[arrB] (\s+0.35,0.0,0.0) -- (\s+1.05,0,0) node[right, font=\scriptsize, black]{$\sigma$};
+  \draw[arrB] (-0.35,0,0) -- (-1.05,0,0) node[left, font=\scriptsize, black]{$\sigma$};
+  \node[font=\scriptsize] at (\s+0.55,-0.25,0) {$x$};
+\end{tikzpicture}
+\caption{}
+\end{subfigure}
+\caption{Механизмы релаксации: \textit{а}~— изгиб пластины (штрихи~—
+нейтральная плоскость): растянутая
+часть при быстром нагружении охлаждается, сжатая нагревается; при
+выравнивании температуры прогиб растёт; \textit{б}~— октаэдрические пустоты
+ОЦК-решётки ($\times$) трёх типов: $a$, $b$, $c$~— с короткой осью вдоль
+$x$, $y$, $z$ соответственно; при растяжении вдоль $x$ выгодны позиции $a$}
+\label{fig:relax-mech}
+\end{figure}
+
+\subsection{Внутреннее трение}\label{ssec:internal-friction}
+
+Если возбудить колебания тела в вакууме, исключив трение о среду и
+излучение звука, амплитуда всё равно будет затухать, хотя и медленнее.
+Часть механической энергии необратимо переходит в тепло за счёт
+процессов, объединяемых названием \term{внутреннее трение}. При больших
+амплитудах главная причина~— пластическая деформация, но затухание есть и
+при малых амплитудах, когда напряжения далеки от предела упругости,~— это
+проявление неупругости.
+
+\paragraph{Петля упругого гистерезиса}
+Будем ступенчато нагружать образец кручением
+(рис.~\ref{fig:hysteresis}\,\textit{а}). Мгновенное приложение напряжения
+$\tau_\text{м}$ даёт деформацию по прямой $Ob$ с наклоном $G_\text{н}$
+(нерелаксированный модуль сдвига). Выдержка приводит к релаксации до
+точки $c$ (наклон $Oc$~— релаксированный модуль $G_\text{р}<G_\text{н}$).
+Мгновенная смена напряжения на $-\tau_\text{м}$ переводит образец в точку
+$f'$, выдержка~— в $c'$; новая смена знака~— в $f$, выдержка~— снова в
+$c$. Получается замкнутая \emph{петля гистерезиса} $fcf'c'f$; её площадь
+равна энергии, рассеянной за цикл. При синусоидальном нагружении петля
+имеет вид эллипса (рис.~\ref{fig:hysteresis}\,\textit{б}): деформация
+отстаёт от напряжения по фазе на угол $\delta$
+(рис.~\ref{fig:hysteresis}\,\textit{в}). Если тело строго подчиняется
+закону Гука, «петля» вырождается в отрезок прямой и потерь нет; чем
+больше отставание, тем шире петля и больше потери.
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[b]{0.34\textwidth}\centering
+\begin{tikzpicture}[x=1.15cm, y=1.15cm]
+  \draw[-{Stealth[length=2mm]}] (-1.5,0) -- (1.6,0) node[below, font=\small]{$\varepsilon$};
+  \draw[-{Stealth[length=2mm]}] (0,-1.4) -- (0,1.5) node[left, font=\small]{$\tau$};
+  \draw[fmGray, dashed] (0,0) -- (0.5,1);
+  \draw[fmGray, dashed] (0,0) -- (1,1);
+  \draw[fmBlue, thick] (0,1) -- (1,1) -- (0,-1) -- (-1,-1) -- cycle;
+  \fill[fmBlue!12] (0,1) -- (1,1) -- (0,-1) -- (-1,-1) -- cycle;
+  \draw[fmBlue, thick] (0,1) -- (1,1) -- (0,-1) -- (-1,-1) -- cycle;
+  \foreach \p/\l/\a in {{(0.5,1)}/b/south, {(1,1)}/c/south west, {(0,-1)}/f'/north west,
+      {(-1,-1)}/c'/north east, {(0,1)}/f/south east}{
+    \fill \p circle (1.2pt); \node[font=\scriptsize, anchor=\a] at \p {$\l$};}
+  \node[font=\scriptsize, anchor=north west] at (0,0) {$O$};
+\end{tikzpicture}
+\caption{}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.28\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=1.08\linewidth, height=4.2cm, axis lines=middle, xmin=-1.3, xmax=1.4,
+  ymin=-1.3, ymax=1.4, xtick=\empty, ytick=\empty, xlabel={$\varepsilon$}, ylabel={$\sigma$},
+  xlabel style={anchor=north east}, ylabel style={anchor=north west}]
+  \addplot[fmBlue, thick, fill=fmBlue!12, domain=0:360, samples=90] ({sin(x-25)}, {sin(x)});
+\end{axis}
+\end{tikzpicture}
+\caption{}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.34\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=1.05\linewidth, height=4.2cm, axis lines=middle, xmin=0, xmax=400,
+  ymin=-1.3, ymax=1.4, xtick=\empty, ytick=\empty, xlabel={$t$},
+  xlabel style={anchor=north east}]
+  \addplot[fmRed, thick, domain=0:390, samples=90] {sin(x)};
+  \addplot[fmBlue, thick, dashed, domain=0:390, samples=90] {0.8*sin(x-40)};
+  \draw[{Stealth[length=1.5mm]}-{Stealth[length=1.5mm]}] (axis cs:90,1.12) -- (axis cs:130,1.12);
+  \node[font=\scriptsize, anchor=south] at (axis cs:110,1.12) {$\delta$};
+  \node[font=\scriptsize, fmRed, anchor=west] at (axis cs:250,-1.15) {$\sigma$};
+  \node[font=\scriptsize, fmBlue, anchor=west] at (axis cs:330,-0.25) {$\varepsilon$};
+\end{axis}
+\end{tikzpicture}
+\caption{}
+\end{subfigure}
+\caption{Упругий гистерезис: \textit{а}~— петля при прерывистом
+(ступенчатом) кручении; \textit{б}~— петля при синусоидальном нагружении
+(эллипс); \textit{в}~— отставание деформации от напряжения на угол $\delta$}
+\label{fig:hysteresis}
+\end{figure}
+
+\paragraph{Мера внутреннего трения}
+За меру потерь принимают \term{удельную энергию затухания} $\Delta W/W$~—
+отношение энергии, рассеянной за цикл, к максимальной запасённой
+упругой энергии,~— или \term{тангенс угла потерь}:
+\begin{keyeq}\label{eq:Q-1}
+Q^{-1}=\operatorname{tg}\delta=\frac{1}{2\pi}\,\frac{\Delta W}{W} .
+\end{keyeq}
+
+\paragraph{Пик внутреннего трения: условие $\omega\tau=1$}
+Пусть процесс релаксации имеет время $\tau$, а нагрузка меняется с круговой
+частотой $\omega$.
+\begin{itemize}
+\item $\omega\tau\gg1$: за полупериод релаксация не успевает начаться,
+возникает только мгновенная деформация; тело ведёт себя идеально
+упруго с модулем $E_\text{н}$, сдвига фаз и потерь нет.
+\item $\omega\tau\ll1$: релаксация успевает пройти полностью в каждый
+момент; тело снова идеально упруго, но с модулем $E_\text{р}$, потерь опять
+нет.
+\item $\omega\tau\approx1$: деформация отстаёт сильнее всего, потери
+максимальны.
+\end{itemize}
+Для процесса с одним временем релаксации («стандартное линейное тело»)
+\begin{keyeq}\label{eq:debye-peak}
+Q^{-1}=\Delta\,\frac{\omega\tau}{1+\omega^2\tau^2},\qquad
+\Delta=\frac{E_\text{н}-E_\text{р}}{\sqrt{E_\text{н}E_\text{р}}} ,
+\end{keyeq}
+где $\Delta$~— \term{сила релаксации}. Это \term{пик внутреннего трения}
+(дебаевский пик) с максимумом $\Delta/2$ при $\omega\tau=1$; одновременно
+динамический модуль меняется от $E_\text{р}$ к $E_\text{н}$
+(рис.~\ref{fig:debye-peak}). Обычно $\Delta\ll1$, и даже в максимуме сдвиг
+фаз составляет доли градуса~— градусы\ispr{В оригинале сказано, что при
+$\omega\tau=1$ сдвиг фаз между напряжением и деформацией «будет
+максимальным, равным $90^\circ$». Сдвиг фаз при $\omega\tau=1$ действительно
+максимален, но мал: $\operatorname{tg}\delta_{\max}\approx\Delta/2$. Сдвиг $90^\circ$
+соответствовал бы чисто вязкому телу.}.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=1 by 2, vertical sep=8pt, xticklabels at=edge bottom},
+  width=0.66\textwidth, height=3.6cm, xmin=-2.5, xmax=2.5, axis lines=left,
+  xtick={-2,-1,0,1,2}, xticklabels={$10^{-2}$,$10^{-1}$,$1$,$10$,$10^{2}$}]
+  \nextgroupplot[ylabel={$Q^{-1}/\Delta$}, ymin=0, ymax=0.6, ytick={0,0.5}]
+  \addplot[fmRed, thick, domain=-2.5:2.5, samples=101] {10^x/(1+10^(2*x))};
+  \draw[fmGray, densely dotted] (axis cs:0,0) -- (axis cs:0,0.5);
+  \nextgroupplot[ylabel={$E$}, ymin=0.95, ymax=2.1, ytick={1,2}, yticklabels={$E_\text{р}$,$E_\text{н}$},
+    xlabel={$\omega\tau$}]
+  \addplot[fmBlue, thick, domain=-2.5:2.5, samples=101] {1+10^(2*x)/(1+10^(2*x))};
+  \draw[fmGray, densely dotted] (axis cs:0,0.95) -- (axis cs:0,1.5);
+\end{groupplot}
+\end{tikzpicture}
+\caption{Дебаевский пик внутреннего трения и сопровождающее его изменение
+динамического модуля в зависимости от $\omega\tau$ (расчёт по
+формуле~\eqref{eq:debye-peak})}
+\label{fig:debye-peak}
+\end{figure}
+
+\paragraph{Спектр релаксации}
+У каждого механизма своё время релаксации. Поэтому, меняя частоту, мы
+получаем на кривой $Q^{-1}(\nu)$ ряд пиков~— \term{спектр релаксации}
+(рис.~\ref{fig:relax-spectrum}). По положению и высоте пиков можно судить о
+концентрации примесей внедрения, о составе твёрдых растворов, о
+состоянии границ зёрен, о дислокационной структуре. Так внутреннее
+трение стало тонким методом физического металловедения.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.86\textwidth, height=5.0cm, xmin=-8, xmax=7, ymin=0, ymax=3.6,
+  xlabel={частота $\nu$, Гц}, ylabel={$Q^{-1}$, отн. ед.}, ytick=\empty,
+  xtick={-8,-6,-4,-2,0,2,4,6}, xticklabels={$10^{-8}$,$10^{-6}$,$10^{-4}$,$10^{-2}$,$1$,$10^{2}$,$10^{4}$,$10^{6}$}]
+  \addplot[fmBlue, thick, fill=fmBlue!10] table[x=lg, y=q] {figures/el-spectrum.dat} \closedcycle;
+  \foreach \x/\y/\n in {-6/1.35/1, -4/2.55/2, -2/1.85/3, 0/3.25/4, 2/2.25/5, 5/1.55/6}{
+    \edef\tmp{\noexpand\node[font=\noexpand\small\noexpand\bfseries] at (axis cs:\x,\y) {\n};}\tmp}
+\end{axis}
+\end{tikzpicture}
+\caption{Спектр релаксации металла при комнатной температуре (схема по
+К.~Зинеру): 1~— пары растворённых атомов с разными радиусами (растворы
+замещения); 2~— вязкое скольжение по границам зёрен; 3~— вязкое течение в
+сильно искажённых областях полос скольжения; 4~— диффузия атомов
+внедрения (пик Снука); 5~— поперечные тепловые потоки при изгибе образца;
+6~— межкристаллитные тепловые потоки}
+\label{fig:relax-spectrum}
+\end{figure}
+
+\paragraph{Как измеряют внутреннее трение}
+\begin{enumerate}
+\item \emph{Метод свободных затухающих колебаний.} Образцу сообщают
+начальную амплитуду $A_0$ и считают, во сколько раз она уменьшится за $n$
+колебаний. При малых деформациях потери не зависят от амплитуды; так как
+энергия пропорциональна квадрату амплитуды, а амплитуда за цикл меняется
+мало,
+$\frac{\Delta W}{W}=\frac{A_n^2-A_{n+1}^2}{A_n^2}\approx2\ln\frac{A_n}{A_{n+1}}$,
+и
+\begin{keyeq}\label{eq:Q-decrement}
+Q^{-1}\approx\frac1\pi\ln\frac{A_n}{A_{n+1}}=\frac{1}{\pi n}\ln\frac{A_0}{A_n} .
+\end{keyeq}
+Величину $\ln(A_n/A_{n+1})$ называют \term{логарифмическим декрементом}.
+Чаще всего используют \emph{крутильный маятник}: образец-проволока~—
+упругий элемент маятника, а период колебаний меняют, перемещая грузы на
+коромысле. Метод позволяет работать в широком интервале температур и
+частот при малом фоне.
+\item \emph{Резонансный метод.} Измеряют ширину $\Delta\omega$ резонансного
+пика амплитуды вынужденных колебаний стержня. Если ширину брать на уровне
+половины максимальной амплитуды, то $Q^{-1}=\Delta\omega/(\sqrt3\,\omega_\text{рез})$;
+на уровне $1/\sqrt2$ от максимума~— просто $Q^{-1}=\Delta\omega/\omega_\text{рез}$.
+\end{enumerate}
+
+\paragraph{Температурная развёртка и энергия активации}
+Чтобы пройти пик, надо изменить $\omega\tau$ хотя бы на два порядка, а
+менять частоту в таких пределах трудно. Зато время релаксации
+термоактивируемого процесса сильно зависит от температуры:
+\begin{equation}\label{eq:tau-T}
+\tau=\tau_0\,e^{H/RT},
+\end{equation}
+где $H$~— энергия (теплота) активации процесса. Поэтому пик проходят,
+меняя \emph{температуру} при постоянной частоте. Чем выше частота, тем
+меньше должно быть $\tau$ и тем выше температура пика; высота пика от
+частоты не зависит. Измерив температуры пика $T_1$ и $T_2$ при двух
+частотах, из условия $\omega_1\tau(T_1)=\omega_2\tau(T_2)=1$ находим
+\begin{keyeq}\label{eq:H-two-freq}
+\ln\frac{\omega_2}{\omega_1}=\frac HR\left(\frac1{T_1}-\frac1{T_2}\right).
+\end{keyeq}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.7\textwidth, height=5.4cm, xmin=330, xmax=500, ymin=0, ymax=4.8,
+  xlabel={$T$, К}, ylabel={$Q^{-1}\cdot10^{3}$},
+  legend style={at={(0.98,0.97)}, anchor=north east, font=\scriptsize}]
+  \addplot[fmBlue, thick] table[x=T, y=q1] {figures/el-snoek.dat};
+  \addlegendentry{$\nu_1=0{,}31$~Гц}
+  \addplot[fmRed, thick, dashed] table[x=T, y=q2] {figures/el-snoek.dat};
+  \addlegendentry{$\nu_2=1{,}2$~Гц}
+  \draw[fmBlue, densely dotted] (axis cs:404,0) -- (axis cs:404,4);
+  \draw[fmRed, densely dotted] (axis cs:422,0) -- (axis cs:422,4);
+  \node[font=\scriptsize, fmBlue, anchor=south east] at (axis cs:404,4.0) {$T_1$};
+  \node[font=\scriptsize, fmRed, anchor=south west] at (axis cs:422,4.0) {$T_2$};
+\end{axis}
+\end{tikzpicture}
+\caption{Пик Снука в тантале с кислородом при двух частотах крутильного
+маятника (расчёт по формулам~\eqref{eq:debye-peak} и~\eqref{eq:tau-T} с
+$H=106$~кДж/моль): с ростом частоты пик смещается к более высокой
+температуре, не меняя высоты}
+\label{fig:snoek}
+\end{figure}
+
+\begin{primer}[Энергия активации диффузии кислорода в тантале]
+Пик Снука в тантале с кислородом при частотах $\nu_1=0{,}31$ и $\nu_2=1{,}2$~Гц
+наблюдается при $T_1=404$ и $T_2=422$~К (рис.~\ref{fig:snoek}). По
+формуле~\eqref{eq:H-two-freq}
+\[
+H=\frac{R\ln(\nu_2/\nu_1)}{1/T_1-1/T_2}=\frac{8{,}31\cdot\ln3{,}87}{1/404-1/422}\approx1{,}07\cdot10^{5}~\text{Дж/моль}.
+\]
+Это и есть энергия активации диффузии кислорода в тантале
+(${\approx}1{,}1$~эВ на атом)\isprmark.
+\end{primer}
+\isprtext{В оригинале в тексте речь идёт о кислороде в тантале, а подпись к
+рисунку указывает тантал «с~0,013\,\% углерода». Рисунок~\ref{fig:snoek}
+рассчитан для кислорода.}
+
+Двухчастотная методика широко применяется для определения энергии
+активации диффузии примесей внедрения в ОЦК-металлах, а высота пика
+Снука (при малых концентрациях пропорциональная концентрации)~— для
+определения содержания растворённых C, N, O, например в железе. Для
+твёрдых растворов замещения метод применим, если радиусы компонентов
+заметно различаются, а концентрация не ниже ${\sim}10$\,\%: только тогда пик
+Зинера достаточно велик.
+
+\begin{itogi}
+\begin{itemize}
+\item Упругость изотропного тела: $E$, $G$, $D$, $\nu$; $G=E/2(1+\nu)$,
+$D=E/3(1-2\nu)$; у металлов $\nu\approx0{,}25$--$0{,}35$, $G/E\approx3/8$.
+\item Модули отражают силу связи: растут с $\Tpl$ (Портевен), падают при
+нагреве ($e\propto\alpha$), определяют скорость звука и $\theta_D$.
+\item Модули измеряют точнее всего динамическими методами:
+$E=4\rho\nu_\text{рез}^2L^2$.
+\item $E(Z)$~— периодическая функция; максимум у переходных металлов;
+упругость структурно нечувствительна; у ферромагнетиков~—
+$\Delta E$-эффект.
+\item Неупругость: $E_\text{н}>E_\text{р}$; механизмы релаксации~— тепловые
+потоки, перераспределение атомов (Снук, Зинер), упорядочение, границы,
+магнитоупругость.
+\item Внутреннее трение $Q^{-1}=\frac{1}{2\pi}\frac{\Delta W}{W}$; пик при
+$\omega\tau=1$; по сдвигу пика с частотой находят энергию активации.
+\end{itemize}
+\end{itogi}
+
+\begin{proverka}
+\item Почему коэффициент Пуассона не может превышать 0,5?
+\item Почему модуль упругости уменьшается при нагреве и как его
+температурный коэффициент связан с коэффициентом расширения?
+\item Рассчитайте собственную частоту стального стержня длиной 0,2~м,
+закреплённого посередине ($E=210$~ГПа, $\rho=7850$~кг/м$^3$).
+\item Почему модуль упругости почти не зависит от размера зерна, а
+внутреннее трение~— сильно?
+\item Почему размагниченный никель имеет меньший модуль Юнга, чем
+намагниченный до насыщения?
+\item Почему адиабатический модуль больше изотермического?
+\item Почему потери максимальны при $\omega\tau=1$, а не при очень низкой или
+очень высокой частоте?
+\item Пик Снука в железе при частоте 1~Гц наблюдается при $\approx310$~К.
+При какой температуре он будет при 100~Гц, если $H=84$~кДж/моль?
+\end{proverka}
