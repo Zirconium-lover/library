@@ -1,0 +1,273 @@
+% ----------------------------------------------------------------------
+%  3.4.2. Макроскопическое описание диффузии
+% ----------------------------------------------------------------------
+\subsection{Макроскопическое описание диффузии}\label{ssec:fick}
+
+На макроуровне твёрдое тело рассматривают как сплошную среду, забывая
+об атомах. Основа~— \term{уравнение непрерывности} (вещество не
+возникает и не исчезает):
+\begin{equation}\label{eq:continuity}
+\frac{\partial C}{\partial t}+\operatorname{div}\vb J=0 .
+\end{equation}
+
+\paragraph{Законы Фика}
+При отжиге неоднородного однофазного сплава возникает поток вещества,
+выравнивающий концентрацию. \term{Первый закон Фика}:
+\begin{keyeq}\label{eq:fick1}
+J=-D\frac{\partial C}{\partial x}\qquad\text{или}\qquad \vb J=-D\,\nabla C ,
+\end{keyeq}
+где $D$~— \term{коэффициент диффузии}. Его размерность~— м$^2$/с, но в
+справочниках чаще встречаются см$^2$/с ($1~\text{см}^2/\text{с}=10^{-4}~\text{м}^2/\text{с}$).
+Подставив \eqref{eq:fick1} в \eqref{eq:continuity}, получим
+\term{второй закон Фика}~— как меняется концентрация во времени:
+\begin{keyeq}\label{eq:fick2}
+\frac{\partial C}{\partial t}=\frac{\partial}{\partial x}\left(D\frac{\partial C}{\partial x}\right)
+\quad\xrightarrow{\ D=\text{const}\ }\quad
+\frac{\partial C}{\partial t}=D\frac{\partial^2C}{\partial x^2}.
+\end{keyeq}
+В трёхмерном случае при постоянном $D$: $\partial C/\partial t=D\nabla^2C$.
+Фик получил эти уравнения по аналогии с теплопроводностью, и с тех пор
+они не изменились.
+
+\begin{table}[ht]
+\centering
+\caption{Порядки коэффициентов диффузии}
+\label{tab:D-orders}
+\small
+\begin{tabular}{@{}lc@{}}
+\toprule
+Случай & $D$, м$^2$/с \\
+\midrule
+атомы в жидком металле & $\sim10^{-9}$ \\
+углерод в $\gamma$-Fe (внедрение), 1000\,°C & $\sim10^{-11}$ \\
+самодиффузия металлов у точки плавления & $10^{-12}$--$10^{-10}$ \\
+самодиффузия меди при комнатной температуре & $\sim10^{-40}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{glavnoe}
+Из второго закона Фика следует простая и очень полезная оценка:
+за время $t$ диффузия распространяется на расстояние порядка
+\begin{equation}\label{eq:diff-length}
+L\sim\sqrt{Dt}.
+\end{equation}
+Расстояние растёт как \emph{корень} из времени: чтобы продвинуться вдвое
+дальше, нужно в четыре раза больше времени. Например, при
+$D=10^{-12}$~м$^2$/с за час ($3600$~с) получаем
+$L\sim\sqrt{3{,}6\cdot10^{-9}}\approx60$~мкм.
+\end{glavnoe}
+
+\paragraph{Стационарные решения}
+В стационарном состоянии $\partial C/\partial t=0$, и нужно решить
+$\nabla^2C=0$. В одномерных случаях:
+\[
+\frac{\d^2C}{\d x^2}=0\ \ \text{(плоскость)},\qquad
+\frac{\d^2C}{\d r^2}+\frac1r\frac{\d C}{\d r}=0\ \ \text{(цилиндр)},\qquad
+\frac{\d^2C}{\d r^2}+\frac2r\frac{\d C}{\d r}=0\ \ \text{(сфера)}.
+\]
+Решения: $C$ линейна по $x$, по $\ln r$ и по $1/r$ соответственно.
+Например, поток через пластину толщиной $h$ при концентрациях $C_1$ и
+$C_2$ на её сторонах постоянен: $J=D(C_1-C_2)/h$. Так рассчитывают
+проникновение водорода сквозь стенку сосуда или оболочку твэла.
+
+\paragraph{Тонкий слой: гауссово решение}
+Нанесём на торец образца тонкий слой диффузанта (его количество на
+единицу площади~— $\alpha$) и отожжём в течение времени $t$. Если $D$
+постоянен, решение второго закона Фика~— гауссиана:
+\begin{keyeq}\label{eq:gauss}
+C(x,t)=\frac{\alpha}{\sqrt{\pi Dt}}\exp\!\left(-\frac{x^2}{4Dt}\right),
+\qquad \int_0^\infty C\,\d x=\alpha ,
+\end{keyeq}
+где $x$~— расстояние от торца\ispr{В оригинале (с.~430) множитель
+равен $\alpha/(2\sqrt{\pi Dt})$, а условие сохранения записано как
+$\int_{-\infty}^{\infty}C\,\d x=\alpha$. Это решение для тонкого слоя
+\emph{внутри} бесконечного образца (между двумя половинами), когда
+вещество уходит в обе стороны. Для слоя на торце полубесконечного
+образца, как описано в тексте, вещество уходит только в одну сторону, и
+множитель вдвое больше.}. Со временем профиль расплывается: высота
+падает как $1/\sqrt t$, а ширина растёт как $\sqrt{Dt}$
+(рис.~\ref{fig:gauss}).
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.62\textwidth, height=5cm, xmin=0, xmax=4, ymin=0, ymax=1.2,
+  xlabel={$x$}, ylabel={$C$}, xtick=\empty, ytick=\empty, axis lines=left]
+  \addplot[fmBlue, thick, domain=0:4, samples=100] {1/sqrt(pi*0.25)*exp(-x^2/(4*0.25))*0.6};
+  \addplot[fmGreen!70!black, thick, domain=0:4, samples=100] {1/sqrt(pi*1)*exp(-x^2/4)*0.6};
+  \addplot[fmRed, thick, domain=0:4, samples=100] {1/sqrt(pi*4)*exp(-x^2/16)*0.6};
+  \node[font=\small, fmBlue] at (axis cs:0.75,0.62) {$t_1$};
+  \node[font=\small, fmGreen!60!black] at (axis cs:1.6,0.3) {$4t_1$};
+  \node[font=\small, fmRed] at (axis cs:3.0,0.18) {$16t_1$};
+\end{axis}
+\end{tikzpicture}
+\caption{Расплывание тонкого слоя: при увеличении времени в 4 раза
+ширина профиля удваивается, а высота уменьшается вдвое (площадь под
+кривыми одинакова)}
+\label{fig:gauss}
+\end{figure}
+
+\paragraph{Как измеряют коэффициент диффузии}
+Из \eqref{eq:gauss} $\ln C=\text{const}-x^2/4Dt$: в координатах
+$\ln C$~— $x^2$ профиль~— прямая с наклоном $-1/(4Dt)$. Значит, нужно
+после отжига снимать тонкие слои параллельно торцу, измерять в каждом
+концентрацию и по наклону прямой найти $D$. Почти всегда диффузант
+берут в виде \emph{радиоактивного изотопа}: это резко повышает
+чувствительность и, главное, позволяет измерять \emph{самодиффузию}~—
+движение атомов металла в собственной решётке. Коэффициенты, измеренные
+методом меченых атомов, обозначают $D^*$.
+
+\begin{podrobnee}[метод Грузина и пределы измерений]
+П.\,Л.~Грузин предложил измерять не активность снятого слоя, а
+интегральную активность оставшейся части образца. Излучение глубже
+лежащих слоёв ослабляется с коэффициентом поглощения $\mu$:
+\[
+I(x_n)=\int_{x_n}^\infty i(x)\,e^{-\mu(x-x_n)}\d x ,
+\]
+где $i(x)\propto C(x,t)$. Дифференцируя, получаем
+$i(x_n)=\mu I_n-\d I_n/\d x_n\propto\exp(-x_n^2/4D^*t)$, и $D^*$
+находят тем же способом.
+
+Верхний предел измерения ($10^{-8}$--$10^{-6}$~см$^2$/с) соответствует
+самодиффузии у точки плавления. Нижний предел определяется тем, что
+концентрация в снятых слоях должна измениться хотя бы на порядок:
+$x^2/4D^*t\approx2{,}3$, т.\,е. $x\approx3\sqrt{D^*t}$. При толщине слоя
+около 0,1~мкм\isprmark{} ($x^2=10^{-10}$~см$^2$) и времени отжига $10^4$~ч
+\[
+D^*\approx\frac{x^2}{9t}=\frac{10^{-10}}{9\cdot10^4\cdot3600}\approx3\cdot10^{-19}~\text{см}^2/\text{с}.
+\]
+Для слоёв толщиной 1~мкм предел был бы около
+$3\cdot10^{-17}$~см$^2$/с.
+\end{podrobnee}
+\isprtext{В оригинале (с.~432) говорится о слоях толщиной «более
+микрона», но в расчёт подставлено $x^2=10^{-10}$~см$^2$, т.\,е.
+$x=0{,}1$~мкм, и множитель 9 потерян; получено $\approx10^{-18}$~см$^2$/с.}
+
+\paragraph{Контакт двух полубесконечных тел}
+Пусть исходно $C=0$ при $x<0$ и $C=C_0$ при $x>0$ (рис.~\ref{fig:erf},\,\textit{а}).
+Разобьём правую половину на тонкие слои толщиной $\Delta\alpha$; каждый
+расплывается в гауссиану, а истинное распределение~— их сумма
+(рис.~\ref{fig:erf},\,\textit{б}). В пределе сумма становится интегралом,
+и решение выражается через \term{функцию ошибок}
+$\operatorname{erf}z=\frac2{\sqrt\pi}\int_0^ze^{-\eta^2}\d\eta$:
+\begin{keyeq}\label{eq:erf}
+C(x,t)=\frac{C_0}2\left[1+\operatorname{erf}\frac{x}{2\sqrt{Dt}}\right]
+\end{keyeq}
+(рис.~\ref{fig:erf},\,\textit{в})\ispr{В оригинале (с.~433) в формуле
+стоит $1-\operatorname{erf}$; такое решение отвечает обратному
+начальному условию ($C_0$ при $x<0$).}. Каждому значению $C/C_0$
+отвечает своё $z=x/2\sqrt{Dt}$: плоскость с любой постоянной
+концентрацией удаляется от $x=0$ как $\sqrt{Dt}$, и только плоскость
+$C=C_0/2$ ($z=0$) неподвижна.
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[b]{0.3\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=1.02\textwidth, height=4.4cm, xmin=-3, xmax=3, ymin=0, ymax=1.15,
+  xlabel={$x$}, ylabel={$C/C_0$}, xtick={0}, ytick={0,1}, axis lines=left]
+  \addplot[fmBlue, thick] coordinates {(-3,0) (0,0) (0,1) (3,1)};
+\end{axis}
+\end{tikzpicture}
+\caption{}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.3\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=1.15\textwidth, height=4.4cm, xmin=-3, xmax=3, ymin=0, ymax=1.15,
+  xlabel={$x$}, xtick={0}, ytick={0,1}, axis lines=left]
+  \addplot[fmGray, thin] table[x=x, y=g0] {figures/dif-erf-sum.dat};
+  \addplot[fmGray, thin] table[x=x, y=g1] {figures/dif-erf-sum.dat};
+  \addplot[fmGray, thin] table[x=x, y=g2] {figures/dif-erf-sum.dat};
+  \addplot[fmGray, thin] table[x=x, y=g3] {figures/dif-erf-sum.dat};
+  \addplot[fmGray, thin] table[x=x, y=g4] {figures/dif-erf-sum.dat};
+  \addplot[fmGray, thin] table[x=x, y=g5] {figures/dif-erf-sum.dat};
+  \addplot[fmRed, thick] table[x=x, y=sum] {figures/dif-erf-sum.dat};
+\end{axis}
+\end{tikzpicture}
+\caption{}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.3\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=1.15\textwidth, height=4.4cm, xmin=-3, xmax=3, ymin=0, ymax=1.15,
+  xlabel={$x$}, xtick={0}, ytick={0,0.5,1}, yticklabels={0,$\frac12$,1}, axis lines=left]
+  \addplot[fmBlue, thick] table[x=x, y=L5] {figures/dif-erf.dat};
+  \addplot[fmGreen!70!black, thick] table[x=x, y=L10] {figures/dif-erf.dat};
+  \addplot[fmRed, thick] table[x=x, y=L20] {figures/dif-erf.dat};
+  \draw[fmGray, dotted] (axis cs:-3,0.5) -- (axis cs:3,0.5);
+\end{axis}
+\end{tikzpicture}
+\caption{}
+\end{subfigure}
+\caption{Диффузия между двумя полубесконечными телами (расчёт):
+\textit{а}~— начальная «ступенька»; \textit{б}~— распределение как
+сумма гауссиан от тонких слоёв (серые кривые~— вклады нескольких
+слоёв); \textit{в}~— профили $\frac12[1+\operatorname{erf}(x/2\sqrt{Dt})]$
+при $t_1$, $4t_1$, $16t_1$; все проходят через $C_0/2$ при $x=0$}
+\label{fig:erf}
+\end{figure}
+
+Решение с функцией ошибок предполагает постоянный $D$, поэтому для
+точного определения $D$ его применяют редко. Зато им удобно оценивать
+количество вещества, проникшего в образец, когда $D$ меняется вдоль
+зоны диффузии (например, при науглероживании или обезуглероживании
+стали),~— получается среднее значение $D$.
+
+\begin{primer}[Цементация]
+Поверхность стали поддерживают при концентрации углерода $C_s$; в
+глубине~— $C_\text{нач}\approx0$. Тогда
+$C(x,t)=C_s\left[1-\operatorname{erf}\frac{x}{2\sqrt{Dt}}\right]$.
+На какой глубине через 10~ч при $927$\,°C концентрация составит
+половину поверхностной?
+\begin{shagi}
+\item $1-\operatorname{erf}z=\frac12$ при $z\approx0{,}48$.
+\item $D$ углерода в аустените при 1200~К: $D=2{,}3\cdot10^{-5}\exp\bigl(-148\,000/(8{,}31\cdot1200)\bigr)\approx8\cdot10^{-12}$~м$^2$/с.
+\item $x=2z\sqrt{Dt}=0{,}96\sqrt{8\cdot10^{-12}\cdot3{,}6\cdot10^4}\approx0{,}5$~мм.
+\end{shagi}
+Чтобы удвоить глубину слоя, цементацию пришлось бы вести 40~ч.
+\end{primer}
+
+\paragraph{Метод Больцмана--Матано}
+При \emph{взаимной} диффузии двух металлов коэффициент $\widetilde D$
+зависит от состава, и решение \eqref{eq:erf} неприменимо. Нужно решить
+обратную задачу: по измеренному профилю $C(x)$ найти $\widetilde D(C)$.
+\begin{shagi}
+\item Подстановка Больцмана $\lambda=x/\sqrt t$ превращает уравнение
+$\partial C/\partial t=\partial(\widetilde D\,\partial C/\partial x)/\partial x$
+в обыкновенное: $-\frac\lambda2\frac{\d C}{\d\lambda}=\frac{\d}{\d\lambda}\left(\widetilde D\frac{\d C}{\d\lambda}\right)$.
+\item Интегрируя от края зоны ($C'$, где $\d C/\d\lambda=0$) до $C$,
+получаем $\widetilde D\frac{\d C}{\d\lambda}=-\frac12\int_{C'}^C\lambda\,\d C$.
+\item Интегрирование от другого края ($C''$) должно дать то же самое.
+Это возможно лишь при определённом выборе начала отсчёта~—
+\term{плоскости Матано} $x_M$: $\int_{C'}^{C''}(x-x_M)\,\d C=0$.
+\end{shagi}
+\begin{keyeq}\label{eq:matano}
+\widetilde D(C)=\frac1{2t}\left(\frac{\d x}{\d C}\right)_C\int_{C'}^C(x_M-x)\,\d C .
+\end{keyeq}
+Матано предложил вычислять всё графически (рис.~\ref{fig:matano}):
+плоскость $x_M$ проводят так, чтобы заштрихованные площади слева и
+справа от неё были равны; производную $\d x/\d C$ берут по наклону
+кривой, интеграл~— как площадь. Самая трудоёмкая операция~— точное
+определение производной.
+
+\input{figures/dif-matano}
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.66\textwidth, height=5.4cm, xmin=-3, xmax=3, ymin=0, ymax=1.1,
+  xlabel={$x$}, ylabel={$C$}, xtick={\MatanoX}, xticklabels={$x_M$}, ytick={0,1},
+  yticklabels={$C'$,$C''$}, axis lines=left]
+  \addplot[name path=prof, fmBlue, thick] table[x=x, y=C] {figures/dif-matano.dat};
+  \path[name path=top] (axis cs:-3,1) -- (axis cs:3,1);
+  \path[name path=bot] (axis cs:-3,0) -- (axis cs:3,0);
+  \addplot[fmBlue!25] fill between[of=prof and bot, soft clip={domain=-3:\MatanoX}];
+  \addplot[fmRed!25] fill between[of=prof and top, soft clip={domain=\MatanoX:3}];
+  \draw[fmGray, dashed] (axis cs:\MatanoX,0) -- (axis cs:\MatanoX,1.05);
+  \draw[fmGray, dotted] (axis cs:-3,1) -- (axis cs:3,1);
+\end{axis}
+\end{tikzpicture}
+\caption{Профиль взаимной диффузии при $\widetilde D$, растущем с
+концентрацией (расчёт): кривая несимметрична. Плоскость Матано $x_M$
+выбрана так, что синяя и розовая площади равны}
+\label{fig:matano}
+\end{figure}
