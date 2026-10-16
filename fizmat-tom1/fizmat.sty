@@ -290,6 +290,12 @@
 
 % Сноска об исправлении ошибки исходного учебника
 \newcommand{\ispr}[1]{\footnote{\textcolor{fmRed}{\sffamily\bfseries Исправление.}~#1}}
+% Внутри цветных блоков (tcolorbox) обычная сноска попала бы в сам блок.
+% Поэтому там ставим только знак \isprmark, а текст — сразу после блока: \isprtext{...}
+\makeatletter
+\newcommand{\isprmark}{\refstepcounter{footnote}\protected@xdef\@thefnmark{\thefootnote}\@makefnmark}
+\makeatother
+\newcommand{\isprtext}[1]{\footnotetext{\textcolor{fmRed}{\sffamily\bfseries Исправление.}~#1}}
 % Ссылка на страницу исходного учебника
 \newcommand{\orig}[1]{\textsf{[ориг.~с.~#1]}}
 
