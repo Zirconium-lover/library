@@ -1,0 +1,578 @@
+% ----------------------------------------------------------------------
+%  3.7.2. Теплоёмкость кристаллических твёрдых тел
+% ----------------------------------------------------------------------
+\subsection{Теплоёмкость кристаллов}\label{ssec:heat-capacity}
+
+Теплоёмкость показывает, сколько энергии тело запасает при нагреве на
+один градус. Это одно из важнейших свойств твёрдого тела, и её измерение
+(калориметрия)~— один из основных методов исследования структурных и
+фазовых превращений в сплавах.
+
+\paragraph{Определения: $C_V$ и $C_p$}
+Теплоёмкость~— отношение поглощённой теплоты к вызванному ею изменению
+температуры, $C=\delta Q/\d T$. Она зависит от условий нагрева:
+\begin{keyeq}\label{eq:CV-Cp}
+C_V=\left(\frac{\partial U}{\partial T}\right)_V,\qquad
+C_p=\left(\frac{\partial H}{\partial T}\right)_p,\qquad
+C_p-C_V=\frac{\beta^2TV}{K},
+\end{keyeq}
+где $U$~— внутренняя энергия, $H=U+pV$~— энтальпия,
+$\beta=\frac1V\bigl(\frac{\partial V}{\partial T}\bigr)_p$~— коэффициент
+объёмного теплового расширения,
+$K=-\frac1V\bigl(\frac{\partial V}{\partial p}\bigr)_T$~— сжимаемость.
+Теория проще всего вычисляет $C_V$ (энергию колебаний при неизменном
+объёме), а измеряют на опыте $C_p$ (образец свободно расширяется).
+Разница мала: грубо $C_p\approx C_V(1+10^{-4}T)$, т.\,е. несколько
+процентов при комнатной температуре и меньше при низких. Поэтому для
+качественных оценок $C_V$ можно брать табличные значения $C_p$.
+
+\begin{podrobnee}[Вывод связи $C_p$ и $C_V$]
+Из $H=U+pV$ при $p=\text{const}$:
+$C_p=\bigl(\frac{\partial U}{\partial T}\bigr)_p+p\bigl(\frac{\partial V}{\partial T}\bigr)_p$.
+Считая $U=U(V,T)$, имеем
+$\bigl(\frac{\partial U}{\partial T}\bigr)_p=C_V+\bigl(\frac{\partial U}{\partial V}\bigr)_T\bigl(\frac{\partial V}{\partial T}\bigr)_p$,
+откуда
+\[
+C_p=C_V+\left[\left(\frac{\partial U}{\partial V}\right)_T+p\right]\left(\frac{\partial V}{\partial T}\right)_p .
+\]
+Сравнивая $\d S=\frac1T\d U+\frac pT\d V$ с полным дифференциалом
+$S(V,T)$ и приравнивая смешанные производные, получаем
+$\bigl(\frac{\partial U}{\partial V}\bigr)_T+p=T\bigl(\frac{\partial p}{\partial T}\bigr)_V$.
+Наконец, из $\d V=\bigl(\frac{\partial V}{\partial p}\bigr)_T\d p+\bigl(\frac{\partial V}{\partial T}\bigr)_p\d T=0$
+следует $\bigl(\frac{\partial p}{\partial T}\bigr)_V=\beta/K$. Подставляя,
+$C_p-C_V=T\cdot\frac{\beta}{K}\cdot\beta V=\beta^2TV/K$.
+\end{podrobnee}
+
+\begin{primer}[Насколько $C_p$ больше $C_V$ у меди]
+Для меди при 300~К: $\beta\approx5{,}0\cdot10^{-5}$~К$^{-1}$, мольный объём
+$V=7{,}1\cdot10^{-6}$~м$^3$/моль, сжимаемость
+$K\approx7{,}3\cdot10^{-12}$~Па$^{-1}$. Тогда
+$C_p-C_V=\frac{(5\cdot10^{-5})^2\cdot300\cdot7{,}1\cdot10^{-6}}{7{,}3\cdot10^{-12}}\approx0{,}7$~Дж/(моль$\cdot$К)~—
+около 3\,\% от $C_p\approx24{,}5$~Дж/(моль$\cdot$К).
+\end{primer}
+
+\paragraph{Из чего складывается теплоёмкость}
+\begin{itemize}
+\item \term{Решёточная} (фононная)~— главный вклад: энергия колебаний
+атомов. Падает до нуля при $T\to0$; около комнатной температуры и выше
+близка к $3R$ и слегка растёт из-за ангармонизма.
+\item \term{Электронная}~— в металлах: энергия теплового возбуждения
+электронов проводимости. При обычных температурах мала, но ниже
+нескольких кельвинов преобладает.
+\item \term{Вакансионная}~— вблизи температуры плавления: энергия,
+затрачиваемая на образование равновесных вакансий.
+\item \term{Аномальные вклады} при фазовых превращениях: магнитное
+упорядочение, упорядочение сплавов, полиморфные превращения.
+\end{itemize}
+
+\subsubsection{Теплоёмкость решётки}
+
+\paragraph{Классический предел: закон Дюлонга и Пти}
+П.~Дюлонг и А.~Пти установили, что при достаточно высоких температурах
+теплоёмкость всех простых твёрдых тел примерно одинакова и равна
+$\approx25$~Дж/(моль$\cdot$К). Классическая статистика объясняет это
+сразу: на каждую колебательную степень свободы приходится средняя энергия
+$kT$ ($kT/2$ кинетической и $kT/2$ потенциальной). У атома три степени
+свободы, поэтому
+\begin{keyeq}\label{eq:dulong}
+U_\text{реш}=3NkT,\qquad C_V=3R\approx25~\text{Дж/(моль}\cdot\text{К)} .
+\end{keyeq}
+Для химического соединения с $n$ атомами в формульной единице
+$C_V\approx3nR$ на моль соединения. Но при понижении температуры
+теплоёмкость всех тел падает ниже $3R$ и стремится к нулю~— классическая
+теория этого объяснить не может.
+
+\paragraph{Модель Эйнштейна}
+Эйнштейн первым применил к колебаниям атомов квантование Планка. Он
+считал все $3N$ нормальных колебаний независимыми осцилляторами
+\emph{одной} частоты $\omega_E$. Энергия каждого даётся
+формулой~\eqref{eq:mode-energy}, а вводя \term{температуру Эйнштейна}
+$\theta_E=\hbar\omega_E/k$, получаем
+\begin{keyeq}\label{eq:einstein}
+C_V=3R\left(\frac{\theta_E}{T}\right)^2\frac{e^{\theta_E/T}}{\bigl(e^{\theta_E/T}-1\bigr)^2} .
+\end{keyeq}
+При $T\gg\theta_E$ это $3R$ (закон Дюлонга и Пти), а при $T\ll\theta_E$~—
+$C_V\approx3R(\theta_E/T)^2e^{-\theta_E/T}$: теплоёмкость обращается в нуль,
+потому что колебания «вымерзают». Для большинства тел
+$\theta_E=100$--$300$~К, что соответствует частотам
+$\nu_E=k\theta_E/h\approx(2$--$6)\cdot10^{12}$~Гц~— разумной частоте
+атомных колебаний.
+
+Главная заслуга модели~— идея квантования механических колебаний,
+которая и объясняет падение теплоёмкости. Слабость~— слишком
+резкий, экспоненциальный спад при низких температурах: опыт даёт
+степенной закон $C_V\propto T^3$ (рис.~\ref{fig:cv-debye}). Причина в том,
+что реальный спектр содержит колебания \emph{всех} частот, в том числе
+сколь угодно низких (длинные звуковые волны), которые не вымерзают даже
+при очень низкой температуре. Модель Эйнштейна хорошо подходит лишь для
+оптических ветвей, частота которых слабо зависит от $\vb k$.
+
+\paragraph{Модель Дебая}
+Дебай рассматривал кристалл как сплошную упругую среду, в которой
+частоты всех трёх акустических ветвей подчиняются линейному закону
+$\omega=\upsilon k$. Число стоячих волн с частотой ниже $\nu$ в объёме $V$
+пропорционально $V/\lambda^3\propto\nu^3$, поэтому \emph{плотность
+колебаний по частотам}~— число нормальных колебаний в интервале
+$(\nu,\nu+\d\nu)$, делённое на $\d\nu$,~— растёт как $\nu^2$. Но в
+кристалле всего $3N$ колебаний, поэтому Дебай \emph{обрезал} спектр на
+частоте $\nu_D$, при которой их набирается ровно $3N$:
+\begin{keyeq}\label{eq:debye-g}
+g(\nu)=\frac{9N}{\nu_D^3}\,\nu^2\quad(\nu\le\nu_D),\qquad g(\nu)=0\quad(\nu>\nu_D);
+\qquad\int_0^{\nu_D}g(\nu)\,\d\nu=3N .
+\end{keyeq}
+Граничной частоте соответствует \term{температура Дебая}
+$\theta_D=h\nu_D/k$~— главный параметр теории. Умножая число колебаний
+на их среднюю энергию~\eqref{eq:mode-energy} и интегрируя по спектру,
+получаем энергию решётки и, дифференцируя по $T$, теплоёмкость
+($x=h\nu/kT$):
+\begin{keyeq}\label{eq:debye-C}
+C_V=9R\left(\frac{T}{\theta_D}\right)^3\int_0^{\theta_D/T}\frac{x^4e^x}{(e^x-1)^2}\,\d x .
+\end{keyeq}
+Интеграл не выражается через элементарные функции, но оба предела
+просты:
+\begin{itemize}
+\item $T\gg\theta_D$: $C_V=3R\bigl[1-\frac1{20}(\theta_D/T)^2+\ldots\bigr]\to3R$~—
+снова закон Дюлонга и Пти с малой квантовой поправкой;
+\item $T\ll\theta_D$: верхний предел можно заменить бесконечностью
+($\int_0^\infty x^3\d x/(e^x-1)=\pi^4/15$), и получается \term{закон $T^3$
+Дебая}:
+\end{itemize}
+\begin{keyeq}\label{eq:debye-T3}
+C_V=\frac{12\pi^4}{5}\,R\left(\frac{T}{\theta_D}\right)^3\approx1944\left(\frac{T}{\theta_D}\right)^3~\text{Дж/(моль}\cdot\text{К)} .
+\end{keyeq}
+
+\begin{smysl}[Откуда берётся $T^3$]
+При температуре $T$ возбуждены только колебания с $h\nu\lesssim kT$.
+Во-первых, их \emph{число} растёт как $\int_0^{kT/h}\nu^2\d\nu\propto T^3$.
+Во-вторых, \emph{энергия} каждого из них~$\approx kT$. Значит, энергия
+решётки $U\propto T^3\cdot T=T^4$, а теплоёмкость $C\propto T^3$.
+У Эйнштейна же низкочастотных колебаний нет вовсе, и все колебания
+вымерзают одновременно~— экспоненциально.
+\end{smysl}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.74\textwidth, height=6.0cm, xmin=0, xmax=1.6, ymin=0, ymax=1.1,
+  xlabel={$T/\theta_D$}, ylabel={$C_V/3R$},
+  legend style={at={(0.98,0.04)}, anchor=south east}]
+  \addplot[fmGray, densely dotted, domain=0:1.6] {1};
+  \addlegendentry{закон Дюлонга и Пти}
+  \addplot[fmAmber, thick, dashed] table[x=t, y=T3] {figures/th-cv.dat};
+  \addlegendentry{закон $T^3$~\eqref{eq:debye-T3}}
+  \addplot[fmRed, thick, dash dot] table[x=t, y=E] {figures/th-cv.dat};
+  \addlegendentry{{модель Эйнштейна, $\theta_E=0{,}75\,\theta_D$}}
+  \addplot[fmBlue, very thick] table[x=t, y=D] {figures/th-cv.dat};
+  \addlegendentry{модель Дебая~\eqref{eq:debye-C}}
+\end{axis}
+\end{tikzpicture}
+\caption{Теплоёмкость решётки по Дебаю и по Эйнштейну (расчёт). При высоких
+температурах обе модели дают $3R$; при низких кривая Эйнштейна падает
+экспоненциально, а кривая Дебая~— по закону $T^3$, как и на опыте.
+В координатах $T/\theta_D$ опытные точки самых разных веществ ложатся на
+дебаевскую кривую}
+\label{fig:cv-debye}
+\end{figure}
+
+\begin{table}[ht]
+\centering
+\caption{Температуры Дебая некоторых веществ}\label{tab:thetaD}
+\small
+\begin{tabular}{lccccccccc}
+\toprule
+Вещество & Pb & Mo & C (алмаз) & Si & Ge & NaCl & KCl & KBr & CaF$_2$\\
+\midrule
+$\theta_D$, К & 94,5 & 425 & 1910 & 658 & 366 & 320 & 227 & 174 & 474\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Значения $\theta_D$ (табл.~\ref{tab:thetaD}) коррелируют с прочностью связи и
+массой атомов: лёгкие атомы и жёсткие связи (алмаз) дают высокую $\theta_D$,
+тяжёлые атомы и слабые связи (свинец)~— низкую. Вещество с высокой
+$\theta_D$ при комнатной температуре ещё далеко от классического предела:
+у алмаза $C_V(300~\text{К})$ составляет лишь около $0{,}2$ от $3R$.
+
+\paragraph{Насколько точна модель Дебая}
+Реальный фононный спектр сильно отличается от дебаевской параболы: в нём
+есть острые максимумы, а наибольшая частота определяется не обрезанием, а
+законом дисперсии (рис.~\ref{fig:dos-real}\,\textit{а}). Тем не менее в
+\emph{обоих} предельных случаях теория Дебая верна: при высоких
+температурах~— потому что там важно лишь полное число колебаний $3N$, а при
+низких~— потому что возбуждены только длинноволновые акустические
+колебания, для которых упругая среда~— точная модель. В промежуточной
+области результат приближённый.
+
+Проверяют это так: по измеренной теплоёмкости при каждой температуре
+находят такую $\theta_D(T)$, при которой формула~\eqref{eq:debye-C} даёт
+опытное значение. Если бы модель была точной, $\theta_D$ не зависела бы от
+$T$. На деле $\theta_D(T)$ меняется на 10--20\,\% и обычно имеет минимум при
+$T\approx(0{,}05$--$0{,}2)\,\theta_D$ (рис.~\ref{fig:dos-real}\,\textit{б}).
+Поэтому закон $T^3$ строго выполняется лишь при очень низких температурах
+($T\lesssim\theta_D/50$), гораздо ниже, чем можно было бы ожидать. Сильнее
+всего от модели Дебая отклоняются вещества со сложными решётками, где
+спектр содержит оптические ветви.
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[b]{0.49\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=\linewidth, height=5.2cm, xmin=0, xmax=1.08, ymin=0, ymax=9.5,
+  xlabel={$\nu/\nu_{\max}$}, ylabel={$g(\nu)$, отн. ед.},
+  legend style={at={(0.02,0.98)}, anchor=north west, font=\scriptsize}]
+  \addplot[fmBlue, thick, const plot mark mid, fill=fmBlue!12] table[x=nu, y=g] {figures/th-dos.dat} \closedcycle;
+  \addlegendentry{расчёт для ГЦК-решётки}
+  \addplot[fmRed, thick, dashed, domain=0:1.049, samples=60] {9*x^2/1.049^3};
+  \addlegendentry{приближение Дебая}
+  \draw[fmRed, thick, dashed] (axis cs:1.049,0) -- (axis cs:1.049,{9/1.049});
+\end{axis}
+\end{tikzpicture}
+\caption{}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.49\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.92\linewidth, height=5.2cm, xmin=0, xmax=0.8, ymin=0.82, ymax=1.06,
+  xlabel={$T/\theta_D(0)$}, ylabel={$\theta_D(T)/\theta_D(0)$},
+  yticklabel style={/pgf/number format/fixed, /pgf/number format/precision=2}]
+  \addplot[fmGray, densely dotted, domain=0:0.8] {1};
+  \addplot[fmBlue, thick] table[x=t, y=th] {figures/th-thetaD.dat};
+  \node[font=\scriptsize, fmGray, anchor=south east] at (axis cs:0.78,1.0) {модель Дебая};
+\end{axis}
+\end{tikzpicture}
+\caption{}
+\end{subfigure}
+\caption{Модель Дебая и реальный спектр: \textit{а}~— плотность колебаний
+ГЦК-кристалла с центральными силами между ближайшими соседями (расчёт по
+$4\cdot10^5$ волновым векторам) и дебаевская парабола с тем же
+низкочастотным ходом и той же площадью $3N$; \textit{б}~— эффективная
+температура Дебая, при которой формула~\eqref{eq:debye-C} воспроизводит
+теплоёмкость спектра~(\textit{а}). Похожий ход $\theta_D(T)$ наблюдают у
+серебра, меди и многих других металлов}
+\label{fig:dos-real}
+\end{figure}
+
+\paragraph{Оценка $\theta_D$ по формуле Линдемана}
+Температуру Дебая металла можно оценить по температуре плавления $\Tpl$,
+атомной массе $A$ и атомному объёму $V$ (в см$^3$/моль)\ispr{В оригинале
+формула приведена без квадратного корня, что даёт для меди
+$\theta_D\approx800$~К вместо опытных 343~К.}:
+\begin{equation}\label{eq:lindemann-theta}
+\theta_D\approx137\sqrt{\frac{\Tpl}{A\,V^{2/3}}} .
+\end{equation}
+Формула следует из критерия плавления Линдемана (см. п.~3.7.4): кристалл
+плавится, когда амплитуда колебаний атомов достигает определённой доли
+межатомного расстояния. Хуже всего она работает для веществ с низкой
+симметрией решётки.
+
+\begin{primer}[Температура Дебая меди по Линдеману]
+Для меди $\Tpl=1358$~К, $A=63{,}5$, $V=7{,}1$~см$^3$/моль, $V^{2/3}=3{,}7$:
+$\theta_D\approx137\sqrt{1358/(63{,}5\cdot3{,}7)}=137\sqrt{5{,}78}\approx330$~К.
+Опыт: 343~К.
+\end{primer}
+
+\begin{podrobnee}[Ангармонические поправки]
+Всё сказанное относится к гармоническому приближению: сила
+пропорциональна смещению, потенциальная энергия~— его квадрату. С ростом
+температуры амплитуды растут, и становятся важны следующие члены
+разложения потенциальной энергии по смещению $x$:
+$U(x)=ax^2-bx^3-cx^4$ ($a,b,c>0$). Член с $x^3$ описывает асимметрию
+отталкивания и притяжения, член с $x^4$~— «смягчение» колебаний при больших
+амплитудах. Расчёт даёт
+\[
+C_V=3R\left[1+kT\left(\frac{3c}{2a^2}+\frac{15b^2}{8a^3}\right)\right],
+\]
+т.\,е. малую добавку, линейно растущую с температурой; при высоких
+температурах её частично маскирует квантовая поправка из
+формулы Дебая. Ангармонизм гораздо важнее для теплопроводности и
+теплового расширения (п.~3.7.3 и~3.7.4).
+\end{podrobnee}
+
+\subsubsection{Теплоёмкость электронов проводимости}
+
+Если бы электроны проводимости вели себя как классический газ, каждый
+имел бы энергию $\frac32kT$, и одновалентный металл имел бы добавочную
+теплоёмкость $\frac32R$~— половину решёточной. Опыт же показывает, что при
+комнатной температуре электронный вклад не превышает примерно 1\,\% этой
+величины. Загадка разрешилась только с открытием принципа Паули и
+статистики Ферми (п.~\ref{ssec:free-el}).
+
+\begin{smysl}[Почему электронный вклад так мал]
+Электроны заполняют все состояния до уровня Ферми $\EF=kT_\text{F}$, где
+$T_\text{F}\sim5\cdot10^4$~К. Нагреть электрон~— значит перевести его в
+свободное состояние с энергией на $\sim kT$ выше, а свободные состояния
+есть только выше $\EF$. Поэтому возбуждаются лишь электроны в полосе
+шириной $\sim kT$ у уровня Ферми~— доля $\sim T/T_\text{F}$ от всех. Их
+энергия $\Delta E\sim N\frac{T}{T_\text{F}}\,kT$, и теплоёмкость
+$C_\text{эл}=\d\Delta E/\d T\sim2Nk\,T/T_\text{F}$~— в $T_\text{F}/T\sim100$ раз
+меньше классической при комнатной температуре и линейна по $T$.
+\end{smysl}
+
+Строгий расчёт для одновалентного металла даёт (на моль)
+\begin{keyeq}\label{eq:C-el}
+C_\text{эл}=\frac{\pi^2}{2}R\,\frac{T}{T_\text{F}}=\gamma T ,
+\end{keyeq}
+где $\gamma$~— \term{коэффициент электронной теплоёмкости}. Для свободных
+электронов $\gamma\approx5\cdot10^{-4}$~Дж/(моль$\cdot$К$^2$).
+
+\paragraph{Низкие температуры: $C=\gamma T+AT^3$}
+Решёточная теплоёмкость падает как $T^3$, электронная~— лишь как $T$, поэтому
+при достаточно низкой температуре электронный вклад обязательно
+становится главным. Приравнивая~\eqref{eq:debye-T3} и~\eqref{eq:C-el} при
+$\theta_D\approx300$~К и $T_\text{F}\approx5\cdot10^4$~К, получаем температуру
+пересечения $3$--$4$~К. При $T\ll\theta_D$ теплоёмкость металла
+\begin{keyeq}\label{eq:C-low}
+C=\gamma T+AT^3,\qquad A=\frac{12\pi^4R}{5\theta_D^3}
+\quad\Longrightarrow\quad\frac{C}{T}=\gamma+AT^2 .
+\end{keyeq}
+Отсюда удобный способ измерения: в координатах $C/T$~— $T^2$ опытные
+точки ложатся на прямую, отрезок на оси ординат даёт $\gamma$, а наклон~—
+$A$, т.\,е. температуру Дебая (рис.~\ref{fig:c-low}).
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[b]{0.49\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.97\linewidth, height=5.2cm, xmin=0, xmax=6, ymin=0, ymax=12,
+  xlabel={$T$, К}, ylabel={$C$, мДж/(моль$\cdot$К)},
+  legend style={at={(0.02,0.98)}, anchor=north west, font=\scriptsize}]
+  \addplot[fmBlue, thick, domain=0:6, samples=60] {0.695*x + 0.0481*x^3};
+  \addlegendentry{$C=\gamma T+AT^3$}
+  \addplot[fmGreen, thick, dashed, domain=0:6] {0.695*x};
+  \addlegendentry{электроны, $\gamma T$}
+  \addplot[fmRed, thick, dash dot, domain=0:6, samples=60] {0.0481*x^3};
+  \addlegendentry{решётка, $AT^3$}
+  \draw[fmGray, densely dotted] (axis cs:3.8,0) -- (axis cs:3.8,2.64);
+  \node[font=\scriptsize, anchor=north west, fmGray] at (axis cs:3.8,1.6) {3,8~К};
+\end{axis}
+\end{tikzpicture}
+\caption{}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.49\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=\linewidth, height=5.2cm, xmin=0, xmax=17, ymin=0, ymax=1.65,
+  xlabel={$T^2$, К$^2$}, ylabel={$C/T$, мДж/(моль$\cdot$К$^2$)},
+  yticklabel style={/pgf/number format/fixed, /pgf/number format/precision=1}]
+  \addplot[fmBlue, thick, domain=0:16.5] {0.695 + 0.0481*x};
+  \addplot[only marks, mark=*, mark size=1.4pt, fmBlue, samples at={1,2.5,4,6,8,10,12,14,16}] {0.695 + 0.0481*x};
+  \draw[fmGreen, thick, {Stealth[length=2mm]}-{Stealth[length=2mm]}] (axis cs:0.6,0) -- (axis cs:0.6,0.695);
+  \node[font=\scriptsize, fmGreen, anchor=west] at (axis cs:0.8,0.35) {$\gamma=0{,}695$};
+  \draw[fmRed] (axis cs:10,1.176) -- (axis cs:14,1.176) -- (axis cs:14,1.368);
+  \node[font=\scriptsize, fmRed, anchor=west] at (axis cs:14.1,1.24) {$A$};
+\end{axis}
+\end{tikzpicture}
+\caption{}
+\end{subfigure}
+\caption{Теплоёмкость меди при низких температурах, рассчитанная по
+формуле~\eqref{eq:C-low} с опытными $\gamma=0{,}695$~мДж/(моль$\cdot$К$^2$) и
+$\theta_D=343$~К: \textit{а}~— электронный и решёточный вклады (ниже
+$\approx3{,}8$~К преобладает электронный); \textit{б}~— те же данные в
+координатах $C/T$~— $T^2$: прямая, отрезок которой на оси ординат равен
+$\gamma$, а наклон~— $A$}
+\label{fig:c-low}
+\end{figure}
+
+\begin{table}[ht]
+\centering
+\caption{Коэффициенты электронной теплоёмкости и температуры Дебая
+металлов}\label{tab:gamma}
+\small
+\begin{tabular}{lcc@{\qquad}lcc@{\qquad}lcc}
+\toprule
+Металл & $\gamma\cdot10^4$ & $\theta_D$, К & Металл & $\gamma\cdot10^4$ & $\theta_D$, К & Металл & $\gamma\cdot10^4$ & $\theta_D$, К\\
+\midrule
+Be & 2,3 & 1440 & Cd & 7,1 & 209 & V & 92,1 & 380\\
+Mg & 13,6 & 406 & Pb & 31,4 & 105 & Cr & 15,9 & 630\\
+Na & 18,0 & 158 & La & 67,0 & 142 & Fe & 50,2 & 470\\
+Cu & 6,9 & 343 & Ti & 33,5 & 420 & Nb & 87,9 & 275\\
+Ag & 6,1 & 225 & Zr & 28,9 & 291 & Mo & 21,3 & 450\\
+Au & 7,3 & 165 & & & & W & 14,6 & 400\\
+Zn & 5,4 & 327 & & & & & & \\
+\bottomrule
+\multicolumn{9}{l}{\footnotesize $\gamma$~— в Дж/(моль$\cdot$К$^2$).}
+\end{tabular}
+\end{table}
+
+Линейный ход $C_\text{эл}(T)$ подтверждается у большинства металлов, но
+величина $\gamma$ часто сильно отличается от оценки для свободных
+электронов (табл.~\ref{tab:gamma}). Дело в том, что $\gamma$ пропорционален
+\emph{плотности состояний на уровне Ферми}: в~\eqref{eq:C-el} именно она
+определяет, сколько электронов попадает в полосу $kT$ у $\EF$. Поэтому:
+\begin{itemize}
+\item у переходных металлов (а также лантанидов и актинидов) уровень Ферми
+лежит в узкой $d$- ($f$-) зоне с высокой плотностью состояний
+(п.~\ref{ssec:bands}), и $\gamma$ в 5--20 раз больше, чем у соседних простых
+металлов (сравните Cu и Fe, V, Nb);
+\item элементы одной группы с одинаковой валентностью имеют близкие
+$\gamma$; у всех лантанидов, кроме Eu и Yb, $\gamma\sim10^{-2}$~Дж/(моль$\cdot$К$^2$),
+у Eu и Yb она ниже из-за меньшей валентности;
+\item у щелочных и щёлочноземельных металлов $\gamma$ больше, чем у простых
+$B$-металлов.
+\end{itemize}
+Образование промежуточных фаз в сплавах меняет силы и тип связи, и
+прежде всего~— электронную теплоёмкость. При низких температурах у
+интерметаллидов тоже $C=\gamma T+AT^3$, но с другими $\gamma$ и $A$, чем у
+компонентов. Усиление ионной и ковалентной составляющих связи уменьшает
+$\gamma$; у твёрдых растворов $\gamma$ зависит от состава и от $\gamma$
+компонентов. Так низкотемпературная калориметрия «видит» электронное
+строение фаз.
+
+\subsubsection{Вакансионный вклад}
+
+Вблизи температуры плавления заметно растёт равновесная концентрация
+вакансий (п.~2.1.2), и на их образование расходуется дополнительное
+тепло. Если доля вакансий
+$n_\text{в}=e^{S_\text{в}/R}e^{-E_\text{в}/RT}$ ($E_\text{в}$~— энергия образования
+вакансии на моль, $S_\text{в}$~— энтропия
+образования)\ispr{В оригинале энтропийный множитель записан как
+$\exp(-S/RT)$; правильно $\exp(S/R)$~— см. п.~2.1.2.}, то добавочная
+энтальпия $H_\text{в}=E_\text{в}n_\text{в}$, и
+\begin{keyeq}\label{eq:C-vac}
+C_p^\text{вак}=\frac{\partial H_\text{в}}{\partial T}=\frac{E_\text{в}^2}{RT^2}\,e^{S_\text{в}/R}e^{-E_\text{в}/RT} .
+\end{keyeq}
+Этот вклад экспоненциально растёт с температурой; у простых металлов
+вблизи $\Tpl$ он составляет доли процента~— около процента, а у
+тугоплавких металлов, по ряду оценок, достигает 10--15\,\%. Измерение
+вакансионной теплоёмкости~— один из методов определения равновесной
+концентрации вакансий.
+
+\subsubsection{Теплоёмкость при фазовых превращениях}
+
+\paragraph{Превращения первого и второго рода}
+По классификации Эренфеста:
+\begin{itemize}
+\item при \term{превращении первого рода} скачком меняются первые
+производные энергии Гиббса~— энтропия
+$S=-(\partial G/\partial T)_p$ и объём $V=(\partial G/\partial p)_T$. Скачку
+энтропии отвечает \emph{скрытая теплота} $\Delta H=T_\text{пр}\Delta S$;
+превращение идёт при постоянной температуре, и две фазы разделены
+границей. Примеры: плавление, испарение, сублимация, полиморфные
+превращения;
+\item при \term{превращении второго рода} $S$ и $V$ непрерывны, а скачком
+меняются вторые производные $G$, в первую очередь теплоёмкость
+\begin{equation}\label{eq:Cp-G}
+C_p=\left(\frac{\partial H}{\partial T}\right)_p=T\left(\frac{\partial S}{\partial T}\right)_p=-T\left(\frac{\partial^2G}{\partial T^2}\right)_p .
+\end{equation}
+Примеры: многие переходы порядок--беспорядок, переход
+ферромагнетик--парамагнетик, сверхпроводящий переход (в отсутствие поля).
+\end{itemize}
+
+На рис.~\ref{fig:phase-order} сопоставлены оба типа. При превращении
+первого рода теплоёмкость обращается в бесконечность в точке
+$T_\text{пр}$ (на конечную скрытую теплоту приходится нулевой интервал
+температур), при превращении второго рода она испытывает конечный скачок.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 4, vertical sep=4pt, horizontal sep=1.1cm,
+    xticklabels at=edge bottom},
+  width=0.47\textwidth, height=2.9cm, xmin=0.25, xmax=1.8, axis lines=left,
+  xtick={1}, xticklabels={$T_\text{пр}$}, ytick=\empty, ylabel style={rotate=-90, font=\small},
+  every axis plot/.append style={thick}]
+  % ---- G
+  \nextgroupplot[ylabel={$G$}, title={\small первый род}, ymin=-3.2, ymax=0]
+  \addplot[fmBlue, domain=0.25:1] {-(0.5*x+0.5*x^2)};
+  \addplot[fmBlue, dashed, thin, domain=1:1.4] {-(0.5*x+0.5*x^2)};
+  \addplot[fmRed, domain=1:1.8] {-1-2.1*(x-1)-0.3*(x-1)^2};
+  \addplot[fmRed, dashed, thin, domain=0.6:1] {-1-2.1*(x-1)-0.3*(x-1)^2};
+  \nextgroupplot[ylabel={$G$}, title={\small второй род}, ymin=-2.6, ymax=0]
+  \addplot[fmBlue, domain=0.25:1] {-(0.5*x+0.5*x^2)};
+  \addplot[fmRed, domain=1:1.8] {-1-1.5*(x-1)-0.25*(x-1)^2};
+  % ---- H
+  \nextgroupplot[ylabel={$H$}, ymin=0, ymax=1.8]
+  \addplot[fmBlue, domain=0.25:1] {0.5*x^2};
+  \addplot[fmRed, domain=1:1.8] {1.1+0.6*(x-1)+0.3*(x-1)^2};
+  \draw[fmGray, densely dotted] (axis cs:1,0.5) -- (axis cs:1,1.1);
+  \node[font=\scriptsize, anchor=west] at (axis cs:1.02,0.8) {$\Delta H$};
+  \nextgroupplot[ylabel={$H$}, ymin=0, ymax=1.2]
+  \addplot[fmBlue, domain=0.25:1] {0.5*x^2};
+  \addplot[fmRed, domain=1:1.8] {0.5+0.5*(x-1)+0.25*(x-1)^2};
+  % ---- S
+  \nextgroupplot[ylabel={$S$}, ymin=0.5, ymax=2.7]
+  \addplot[fmBlue, domain=0.25:1] {0.5+x};
+  \addplot[fmRed, domain=1:1.8] {2.1+0.6*(x-1)};
+  \draw[fmGray, densely dotted] (axis cs:1,1.5) -- (axis cs:1,2.1);
+  \node[font=\scriptsize, anchor=west] at (axis cs:1.02,1.8) {$\Delta S$};
+  \nextgroupplot[ylabel={$S$}, ymin=0.5, ymax=2.0]
+  \addplot[fmBlue, domain=0.25:1] {0.5+x};
+  \addplot[fmRed, domain=1:1.8] {1.5+0.5*(x-1)};
+  % ---- C_p
+  \nextgroupplot[ylabel={$C_p$}, ymin=0, ymax=1.6, xlabel={$T$}]
+  \addplot[fmBlue, domain=0.25:1] {x};
+  \addplot[fmRed, domain=1:1.8] {0.6*x};
+  \draw[fmAmber, very thick, -{Stealth[length=2mm]}] (axis cs:1,0) -- (axis cs:1,1.55);
+  \node[font=\scriptsize, fmAmber!80!black, anchor=west] at (axis cs:1.03,1.4) {$\infty$};
+  \nextgroupplot[ylabel={$C_p$}, ymin=0, ymax=1.6, xlabel={$T$}]
+  \addplot[fmBlue, domain=0.25:1] {x};
+  \addplot[fmRed, domain=1:1.8] {0.5*x};
+  \draw[fmGray, densely dotted] (axis cs:1,0.5) -- (axis cs:1,1);
+\end{groupplot}
+\end{tikzpicture}
+\caption{Изменение термодинамических функций при фазовых превращениях
+первого (слева) и второго (справа) рода (схема; синие линии~—
+низкотемпературная фаза, красные~— высокотемпературная, штрихи~—
+метастабильные продолжения). При первом роде $G(T)$ имеет излом, $H$ и
+$S$~— скачки, $C_p$~— бесконечный пик; при втором роде $G$, $H$, $S$
+непрерывны, а $C_p$ испытывает конечный скачок}
+\label{fig:phase-order}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[b]{0.58\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=\linewidth, height=5.6cm, xmin=250, xmax=1900, ymin=20, ymax=90,
+  xlabel={$T$, К}, ylabel={$C_p$, Дж/(моль$\cdot$К)},
+  xtick={400,800,1200,1600}, scaled x ticks=false,
+  x tick label style={/pgf/number format/1000 sep={}}]
+  \addplot[fmBlue, thick] table[x=T, y=C] {figures/th-fe-alpha.dat};
+  \addplot[fmRed, thick] table[x=T, y=C] {figures/th-fe-gamma.dat};
+  \addplot[fmGreen, thick] table[x=T, y=C] {figures/th-fe-delta.dat};
+  \addplot[fmGray, thick] table[x=T, y=C] {figures/th-fe-liq.dat};
+  \draw[fmAmber, thick, -{Stealth[length=2mm]}] (axis cs:1184,41) -- (axis cs:1184,88);
+  \draw[fmAmber, thick, -{Stealth[length=2mm]}] (axis cs:1665,42) -- (axis cs:1665,88);
+  \draw[fmAmber, thick, -{Stealth[length=2mm]}] (axis cs:1809,46) -- (axis cs:1809,88);
+  \node[font=\scriptsize, fmBlue] at (axis cs:600,45) {$\alpha$-Fe};
+  \node[font=\scriptsize, fmRed] at (axis cs:1420,30) {$\gamma$-Fe};
+  \node[font=\scriptsize, fmGreen, anchor=east] at (axis cs:1650,52) {$\delta$};
+  \node[font=\scriptsize, fmGray] at (axis cs:1860,52) {ж};
+  \node[font=\scriptsize, anchor=east] at (axis cs:1030,84) {$T_\text{К}$};
+  \node[font=\scriptsize, fmAmber!80!black, anchor=west, align=left] at (axis cs:1200,72) {скрытые\\теплоты};
+\end{axis}
+\end{tikzpicture}
+\caption{}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.4\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=\linewidth, height=5.6cm, xmin=300, xmax=900, ymin=20, ymax=45,
+  xlabel={$T$, К}, ylabel={$C_p$, Дж/(моль$\cdot$К)}, xtick={400,600,800}]
+  \addplot[fmBlue, thick] table[x=T, y=C] {figures/th-cuzn.dat};
+  \node[font=\scriptsize, anchor=east] at (axis cs:735,42) {$T_\text{К}$};
+  \node[font=\scriptsize, fmGray, align=center] at (axis cs:480,38) {порядок\\$B2$};
+  \node[font=\scriptsize, fmGray, align=center] at (axis cs:830,38) {беспо-\\рядок};
+\end{axis}
+\end{tikzpicture}
+\caption{}
+\end{subfigure}
+\caption{Аномалии теплоёмкости (схемы по справочным данным): \textit{а}~—
+железо: $\lambda$-пик в точке Кюри $T_\text{К}=1042$~К (переход второго
+рода) и скрытые теплоты (стрелки) полиморфных превращений
+$\alpha\to\gamma$ (1184~К), $\gamma\to\delta$ (1665~К) и плавления
+(1809~К)~— переходов первого рода; \textit{б}~— $\beta$-латунь CuZn:
+$\lambda$-пик при упорядочении в точке Курнакова $T_\text{К}\approx741$~К}
+\label{fig:fe-cp}
+\end{figure}
+
+\paragraph{Примеры}
+На кривой теплоёмкости железа (рис.~\ref{fig:fe-cp}\,\textit{а}) видны
+оба типа аномалий: $\lambda$-образный пик в точке Кюри (1042~К)~—
+переход \emph{второго} рода, а при 1184~К ($\alpha\to\gamma$) и 1665~К
+($\gamma\to\delta$)~— полиморфные превращения \emph{первого} рода со
+скрытой теплотой\ispr{В оригинале порядок перечисления переходов («первого и
+второго рода соответственно») обратен: магнитное превращение в точке Кюри
+является переходом второго рода, а полиморфные $\alpha\to\gamma$ и
+$\gamma\to\delta$~— первого.}. Упорядочение $\beta$-латуни CuZn
+(рис.~\ref{fig:fe-cp}\,\textit{б}) даёт скачок теплоёмкости в точке
+Курнакова~— переход второго рода. Но переход порядок--беспорядок может
+быть и первого рода: в ГЦК-сплаве Cu$_3$Au на кривой теплоёмкости
+наблюдается разрыв с конечной скрытой теплотой (п.~\ref{ssec:solid-sol}).

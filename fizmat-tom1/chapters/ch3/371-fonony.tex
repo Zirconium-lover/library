@@ -1,0 +1,248 @@
+% ----------------------------------------------------------------------
+%  3.7.1. Нормальные колебания решётки и фононы
+% ----------------------------------------------------------------------
+\begin{orientir}
+Теплоёмкость, теплопроводность и тепловое расширение твёрдого тела
+определяются в первую очередь \emph{колебаниями атомов} около положений
+равновесия. Сначала мы введём язык, на котором эти колебания удобно
+описывать,~— нормальные колебания и фононы (3.7.1). Затем применим его к
+теплоёмкости (3.7.2), теплопроводности (3.7.3) и тепловому расширению
+(3.7.4). Сквозная мысль раздела: \vazhno{в гармоническом приближении
+кристалл~— это газ невзаимодействующих фононов; теплоёмкость объясняется
+уже им, а теплопроводность и расширение требуют учёта ангармонизма}.
+\end{orientir}
+
+\subsection{Нормальные колебания решётки и фононы}\label{ssec:phonons}
+
+Атомы кристалла связаны сильными межатомными силами, поэтому колебание,
+возникшее у одного атома, немедленно передаётся соседям. Описывать
+движение каждого атома по отдельности бессмысленно: в кристалле
+возбуждаются \emph{коллективные} движения~— упругие волны, охватывающие
+все атомы.
+
+\begin{opredelenie}[Нормальное колебание]
+Коллективное гармоническое колебание всех атомов кристалла с одной
+частотой $\omega$ и одним волновым вектором $\vb k$ ($|\vb k|=2\pi/\lambda$,
+направление~— направление распространения). Число независимых нормальных
+колебаний равно числу степеней свободы атомов: $3N$ для кристалла из $N$
+атомов.
+\end{opredelenie}
+
+\paragraph{Одноатомная цепочка}
+Простейшая модель~— цепочка одинаковых атомов массой $m$ на расстоянии $a$
+друг от друга, связанных «пружинками» жёсткости $K$
+(рис.~\ref{fig:chain}\,\textit{а}). Если концы цепочки закреплены, она
+ведёт себя как струна: основное колебание~— стоячая волна с узлами на
+концах (кривая~1), следующее~— с дополнительным узлом посередине
+(кривая~2), и~т.\,д. Но в отличие от струны цепочка \emph{дискретна}, и
+самая короткая волна, которую она может нести, соответствует
+противофазному движению соседних атомов: $\lambda_{\min}=2a$. Более
+короткие волны ничего нового не дают~— они задают те же смещения атомов,
+что и какая-нибудь длинная волна (это та же самая причина, по которой
+состояния электрона достаточно рассматривать в первой зоне Бриллюэна,
+п.~\ref{ssec:bands}). Поэтому волновой вектор достаточно менять в пределах
+$-\pi/a\le k\le\pi/a$.
+
+Решение уравнений движения цепочки даёт \term{закон дисперсии}~—
+зависимость частоты от волнового вектора:
+\begin{keyeq}\label{eq:chain-disp}
+\omega(k)=\omega_{\max}\left|\sin\frac{ka}{2}\right|,\qquad
+\omega_{\max}=2\sqrt{\frac Km}=\frac{2\upsilon_0}{a},
+\end{keyeq}
+где $\upsilon_0=a\sqrt{K/m}$~— скорость длинных волн (звука). При малых $k$
+(длинные волны) $\omega\approx\upsilon_0k$~— цепочка неотличима от
+сплошной струны. С ростом $k$ кривая загибается
+(рис.~\ref{fig:chain}\,\textit{б}): фазовая скорость
+$\omega/k=\upsilon_0\sin(ka/2)/(ka/2)$ падает, и на границе зоны, при
+$\lambda=2a$, частота достигает максимума $\omega_{\max}$.
+
+\begin{primer}[Максимальная частота колебаний атомов меди]
+Расстояние между ближайшими атомами меди $a\approx2{,}55\cdot10^{-10}$~м,
+скорость звука $\upsilon_0\approx3{,}5\cdot10^{3}$~м/с. Тогда
+$\omega_{\max}=2\upsilon_0/a\approx2{,}7\cdot10^{13}$~с$^{-1}$
+($\nu_{\max}\approx4\cdot10^{12}$~Гц)~— это и есть характерная частота
+тепловых колебаний атомов в твёрдом теле.
+\end{primer}
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[b]{0.5\textwidth}\centering
+\begin{tikzpicture}[x=1cm, y=1cm]
+  \foreach \n/\yy/\lab in {1/0/1, 2/-1.05/2, 3/-2.1/3}{
+    \draw[fmGray, dashed, line width=0.3pt] (0,\yy) -- (6,\yy);
+    \draw[fmBlue!60, line width=0.5pt, domain=0:6, samples=60, smooth]
+      plot (\x, {\yy+0.32*sin(\n*30*\x)});
+    \foreach \i in {0,...,10}{
+      \fill[atomA, draw=atomLine, line width=0.3pt] (0.6*\i, {\yy+0.32*sin(\n*18*\i)}) circle (0.07);}
+    \fill[pattern=north east lines, pattern color=fmGray] (-0.18,\yy-0.3) rectangle (-0.06,\yy+0.3);
+    \fill[pattern=north east lines, pattern color=fmGray] (6.06,\yy-0.3) rectangle (6.18,\yy+0.3);
+    \node[font=\small, anchor=east] at (-0.25,\yy) {\lab};}
+  \begin{scope}[yshift=-3.35cm]
+    \draw[fmGray, dashed, line width=0.3pt] (0,0) -- (6,0);
+    \draw[fmRed!60, line width=0.5pt, domain=0:6, samples=120, smooth]
+      plot (\x, {0.3*cos(300*\x)});
+    \foreach \i in {0,...,10}{
+      \pgfmathsetmacro{\yy}{0.3*cos(180*\i)}
+      \fill[atomA, draw=atomLine, line width=0.3pt] (0.6*\i,\yy) circle (0.07);}
+    \draw[dimline] (1.2,-0.5) -- node[below, font=\scriptsize]{$\lambda_{\min}=2a$} (2.4,-0.5);
+    \draw[dimline] (3.6,-0.5) -- node[below, font=\scriptsize]{$a$} (4.2,-0.5);
+  \end{scope}
+\end{tikzpicture}
+\caption{}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.46\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=\linewidth, height=5.0cm, xmin=-3.6, xmax=3.6, ymin=0, ymax=1.32,
+  axis lines=middle, xlabel={$k$}, ylabel={$\omega/\omega_{\max}$},
+  xlabel style={anchor=west}, ylabel style={anchor=south},
+  xtick={-3.14159,3.14159}, xticklabels={$-\frac{\pi}{a}$, $\frac{\pi}{a}$},
+  ytick={1}, yticklabels={$1$}]
+  \fill[fmBlue!7] (axis cs:-3.14159,0) rectangle (axis cs:3.14159,1.3);
+  \addplot[fmGray, dashed, domain=-2.2:2.2] {abs(x)/2};
+  \draw[fmGray, densely dotted] (axis cs:-3.14159,1) -- (axis cs:3.14159,1);
+  \addplot[fmBlue, thick, domain=-3.14159:3.14159, samples=121] {abs(sin(deg(x/2)))};
+  \draw[fmGray, densely dotted] (axis cs:-3.14159,0) -- (axis cs:-3.14159,1);
+  \draw[fmGray, densely dotted] (axis cs:3.14159,0) -- (axis cs:3.14159,1);
+  \node[font=\scriptsize, fmGray, anchor=west] at (axis cs:2.2,1.12) {$\omega=\upsilon_0k$};
+  \node[font=\scriptsize, fmBlue, anchor=east] at (axis cs:-0.15,1.2) {I зона};
+\end{axis}
+\end{tikzpicture}
+\caption{}
+\end{subfigure}
+\caption{Колебания одноатомной цепочки: \textit{а}~— стоячие волны в
+цепочке с закреплёнными концами (1, 2, 3~— первые три гармоники) и самая
+короткая волна $\lambda_{\min}=2a$, при которой соседние атомы движутся в
+противофазе; \textit{б}~— закон дисперсии~\eqref{eq:chain-disp}; штрихи~—
+линейный закон $\omega=\upsilon_0k$ сплошной струны}
+\label{fig:chain}
+\end{figure}
+
+\paragraph{Двухатомная цепочка: акустические и оптические колебания}
+Пусть теперь в цепочке чередуются тяжёлые (масса $M$) и лёгкие (масса $m$)
+атомы. Период цепочки стал равен $2a$, и граница зоны сместилась к
+$k=\pi/2a$. Зато на каждом $k$ теперь \emph{две} частоты
+(рис.~\ref{fig:diatomic}):
+\begin{itemize}
+\item \term{акустические колебания}: соседние атомы движутся почти в одной
+фазе, вся ячейка смещается как целое; при $k\to0$ частота
+$\omega_\text{ак}\to0$ (это обычный звук). Именно акустические колебания
+определяют теплоёмкость, теплопроводность и тепловое расширение;
+\item \term{оптические колебания}: соседние атомы движутся в
+противофазе~— две подрешётки колеблются одна относительно другой;
+частота максимальна при $k=0$. В ионном кристалле такое движение создаёт
+переменный дипольный момент и сильно взаимодействует со светом
+(инфракрасное поглощение)~— отсюда название.
+\end{itemize}
+На границе зоны между ветвями остаётся \emph{щель}: частоты от
+$\sqrt{2K/M}$ до $\sqrt{2K/m}$ цепочкой не пропускаются. Оптические ветви
+возникают в любом кристалле, где в примитивной ячейке больше одного атома,
+даже одинаковых (кремний, германий, ГПУ-металлы).
+
+\begin{podrobnee}[Закон дисперсии двухатомной цепочки и подсчёт ветвей]
+Для цепочки с жёсткостью связи $K$
+\[
+\omega^2_{\text{ак},\text{опт}}=K\left(\frac1m+\frac1M\right)\mp
+K\sqrt{\left(\frac1m+\frac1M\right)^2-\frac{4\sin^2 ka}{mM}} .
+\]
+При $k=0$: $\omega_\text{ак}=0$, $\omega_\text{опт}=\sqrt{2K(1/m+1/M)}$; при
+$k=\pi/2a$: $\omega_\text{ак}=\sqrt{2K/M}$, $\omega_\text{опт}=\sqrt{2K/m}$.
+В трёхмерном кристалле с $p$ атомами в примитивной ячейке всего $3p$
+ветвей: три акустические (одна продольная и две поперечные) и $3(p-1)$
+оптических. Каждая ветвь содержит $N/p$ значений $\vb k$ в зоне
+Бриллюэна, так что общее число колебаний~— $3N$.
+\end{podrobnee}
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[b]{0.46\textwidth}\centering
+\begin{tikzpicture}[x=1cm, y=1cm]
+  \foreach \yy/\s/\lab in {0/1/акустическое, -1.7/-1/оптическое}{
+    \draw[fmGray, dashed, line width=0.3pt] (0,\yy) -- (5.6,\yy);
+    \draw[fmBlue!50, line width=0.4pt, domain=0:5.6, samples=60, smooth]
+      plot (\x, {\yy+0.42*sin(32*\x+20)});
+    \ifnum\s<0
+      \draw[fmRed!50, line width=0.4pt, domain=0:5.6, samples=60, smooth]
+        plot (\x, {\yy-0.62*sin(32*\x+20)});
+    \fi
+    \foreach \i in {0,...,8}{
+      \pgfmathsetmacro{\xx}{0.7*\i}
+      \pgfmathtruncatemacro{\odd}{mod(\i,2)}
+      \ifnum\odd=0
+        \pgfmathsetmacro{\yA}{\yy+0.42*sin(32*\xx+20)}
+        \fill[atomB, draw=atomLine, line width=0.3pt] (\xx,\yA) circle (0.13);
+      \else
+        \pgfmathsetmacro{\yA}{\yy+(\s>0 ? 0.42 : -0.62)*sin(32*\xx+20)}
+        \fill[atomA, draw=atomLine, line width=0.3pt] (\xx,\yA) circle (0.08);
+      \fi}
+    \node[font=\small, anchor=west] at (0,\yy+0.75) {\lab};}
+\end{tikzpicture}
+\caption{}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{0.5\textwidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.88\linewidth, height=5.2cm, xmin=0, xmax=1.62, ymin=0, ymax=1.8,
+  xlabel={$k$}, ylabel={$\omega\big/\sqrt{K/m}$},
+  xtick={0,1.5708}, xticklabels={$0$, $\frac{\pi}{2a}$}, ytick={0.8944,1.4142},
+  yticklabels={$\sqrt{2K/M}$, $\sqrt{2K/m}$}, yticklabel style={font=\scriptsize}]
+  \fill[fmAmber!18] (axis cs:0,0.8944) rectangle (axis cs:1.5708,1.4142);
+  \addplot[fmBlue, thick] table[x=k, y=ac] {figures/th-diatomic.dat};
+  \addplot[fmRed, thick] table[x=k, y=op] {figures/th-diatomic.dat};
+  \draw[fmGray, densely dotted] (axis cs:1.5708,0) -- (axis cs:1.5708,1.75);
+  \node[font=\scriptsize, fmBlue, anchor=north west] at (axis cs:0.45,0.55) {акустическая};
+  \node[font=\scriptsize, fmRed, anchor=west] at (axis cs:0.15,1.52) {оптическая};
+  \node[font=\scriptsize, fmAmber!80!black] at (axis cs:0.6,1.15) {запрещённые частоты};
+\end{axis}
+\end{tikzpicture}
+\caption{}
+\end{subfigure}
+\caption{Двухатомная цепочка ($M/m=2{,}5$; крупные кружки~— тяжёлые
+атомы $M$, мелкие~— лёгкие $m$): \textit{а}~— длинноволновые акустическое (атомы смещаются в одной фазе) и оптическое (подрешётки
+движутся навстречу друг другу) колебания; \textit{б}~— две ветви закона
+дисперсии и щель между ними (расчёт)}
+\label{fig:diatomic}
+\end{figure}
+
+\paragraph{От нормальных колебаний к фононам}
+В гармоническом приближении нормальные колебания независимы, и энергия
+кристалла~— это сумма энергий $3N$ независимых гармонических
+\emph{нормальных осцилляторов}. Нормальный осциллятор не имеет ничего
+общего с отдельным атомом: каждое нормальное колебание~— это движение
+\emph{всех} атомов с одной частотой.
+
+По квантовой механике энергия осциллятора частоты $\omega$ принимает
+значения
+\[
+E_n=\left(n+\tfrac12\right)\hbar\omega=\left(n+\tfrac12\right)h\nu,
+\qquad n=0,1,2,\ldots
+\]
+Минимальная порция энергии, которую может принять или отдать нормальное
+колебание, равна $\hbar\omega$.
+
+\begin{opredelenie}[Фонон]
+Квант энергии нормального колебания решётки: энергия $\hbar\omega=h\nu$,
+квазиимпульс $\hbar\vb k$. Нормальное колебание, возбуждённое до уровня
+$n$, содержит $n$ одинаковых фононов.
+\end{opredelenie}
+
+Нагретый кристалл можно представлять как ящик, заполненный \emph{фононным
+газом}. Фононы~— бозоны, и число их не сохраняется: при нагреве они
+рождаются, при охлаждении исчезают. Среднее число фононов в колебании
+частоты $\omega$ даётся распределением Бозе--Эйнштейна, а средняя
+тепловая энергия этого колебания (без нулевых колебаний)~— произведением
+энергии фонона на их среднее число:
+\begin{keyeq}\label{eq:mode-energy}
+\langle n\rangle=\frac{1}{e^{\hbar\omega/kT}-1},\qquad
+\langle E\rangle=\frac{\hbar\omega}{e^{\hbar\omega/kT}-1}.
+\end{keyeq}
+
+\begin{smysl}
+Формула~\eqref{eq:mode-energy}~— ключ ко всему разделу. Её два предела:
+\begin{itemize}
+\item $kT\gg\hbar\omega$: $e^{x}-1\approx x$, и $\langle E\rangle\approx kT$~—
+классический результат (равнораспределение энергии);
+\item $kT\ll\hbar\omega$: $\langle E\rangle\approx\hbar\omega\,e^{-\hbar\omega/kT}$~—
+колебание «заморожено», фононов в нём почти нет.
+\end{itemize}
+При данной температуре заметно возбуждены лишь колебания с
+$\hbar\omega\lesssim kT$.
+\end{smysl}
