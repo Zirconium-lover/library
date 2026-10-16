@@ -2,14 +2,13 @@
 % Полный том (все готовые главы):  latexmk main.tex   (или make all)
 \documentclass[12pt,twoside,openright]{book}
 \usepackage{fizmat}
-\def\fmSubtitle{Главы 2 и 3. Дефекты кристаллической решётки. Физика твёрдого тела}
+\def\fmSubtitle{Главы 1--3. Физическая кристаллография.\\ Дефекты кристаллической решётки. Физика твёрдого тела}
 \begin{document}
 \frontmatter
 \input{frontmatter}
 \tableofcontents
 \mainmatter
-% Глава 1 будет добавлена позже
-\setcounter{chapter}{1}
+\input{chapters/ch1/ch1}
 \input{chapters/ch2/ch2}
 \input{chapters/ch3/ch3}
 \end{document}
