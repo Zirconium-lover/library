@@ -5,3 +5,4 @@ doi,title,what_to_extract
 10.1134/s1063778824110073,Fracture Parameters and Plasticity of the Zr–Nb–Sn–Fe Tubes with Different Hydrides Orientations,"σ_y, σ_B, δ, параметры разрушения Э635 при разных Fn и H; T испытаний; геометрия образцов"
 10.1134/s0036029525701629,Influence of Hydride Orientation on the Deformation of Tubes Made of E635 Zirconium Alloy,"свойства матрицы Э635 в МКЭ (E, σ_y, упрочнение, анизотропия), свойства гидридов, критерий"
 10.1007/s11041-005-0047-x,Structure and Fracture Resistance of Zirconium Alloys for Atomic Power Engineering,"K_IC/J_IC, σ_y, δ Э110 и Э635 при 20–350 °C"
+,NUREG/CR-7024 (PNNL-19417) Material Property Correlations,"формулы E(T), K, n, m для Zry-4/ZIRLO/M5 (разд. CMLMEC/CSTRES), коэффициенты анизотропии"
