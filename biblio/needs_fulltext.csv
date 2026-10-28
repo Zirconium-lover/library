@@ -4,10 +4,15 @@ id,doi,title,what_to_extract
 51,10.1016/s0997-7538(01)01147-0,Plastic potentials for anisotropic porous solids,выражение фактора анизотропии h через коэффициенты Хилла; потенциал для пористой Hill-матрицы (для текстурированного Zr)
 41,10.1016/0001-6160(84)90213-x,Analysis of the cup-cone fracture in a round tensile bar,"значения q1,q2,f_c,f_F,ε_N,s_N,f_N и вид функции f*"
 43,10.1016/j.euromechsol.2007.08.002,Modification of the Gurson Model for shear failure,"формула сдвигового члена и функции ω(σ), рекомендуемые k_ω"
+185,10.1016/j.cma.2006.10.003,Numerical implementation and assessment of a phenomenological nonlocal model of ductile rupture,"форма нелокального оператора, длина ℓ, суть исправления, алгоритм интегрирования"
+188,10.1016/j.jmps.2010.03.007,A constitutive model for plastically anisotropic solids with non-spherical voids,выражение потенциала и законов эволюции для Hill-матрицы; требуемые параметры анизотропии
 60,10.1016/j.compstruc.2012.06.006,Numerical aspects of the crack band approach,"подтвердить DOI; формулы ширины полосы (по площади, проекции, Oliver), рекомендации по интегрированию"
 7,10.1016/j.engfracmech.2006.08.025,An engineering solution for mesh size effects in the simulation of delamination using cohesive zone models,"формулы штрафной жёсткости (α≈50), длины зоны процесса, минимального числа элементов в зоне"
 6,10.1016/j.mechmat.2005.10.003,A damage model for the simulation of delamination in advanced composites under variable-mode loading,полная формулировка поверхности повреждения и касательной матрицы
 9,10.1016/j.jmps.2008.10.003,A unified potential-based cohesive model of mixed-mode fracture,"формулы потенциала PPR, правило разгрузки; подтверждение DOI"
+200,10.1007/bf02663302,A local criterion for cleavage fracture of a nuclear pressure vessel steel,"формула σ_w, значения m и σ_u, V0, способ калибровки"
+201,10.1016/0956-7151(95)90256-2,On the role of particle cracking in flow and fracture of metal matrix composites,"формулировка 1D закона повреждения, критерий неустойчивости"
+202,10.1016/s0022-5096(97)00038-0,Microstructural factors controlling the strength and ductility of particle-reinforced metal-matrix composites,"параметры Вейбулла частиц, схема расчёта доли разрушенных ячеек"
 13,10.3390/ma19010081,Analyses of Stress-State-Dependent Ductile Damage and Fracture Behavior of Zirconium,"табл. 2–3: параметры MBW (D1–D4, c-параметры), η и θ_L каждого образца, εf; кривая упрочнения Zr"
 14,10.1007/s11661-000-0010-9,Anisotropic behavior and rupture of hydrided ZIRCALOY-4 sheets,"коэффициенты анизотропии (Hill/обобщённый), закон упрочнения, параметры GT (q1,q2,f0,fc,fN) по H"
 28,10.1016/j.actamat.2023.119356,On the effects of transformation strain induced by hydride precipitation,"принятый тензор деформации превращения (компоненты), упругие постоянные гидрида, величины остаточных напряжений у вершины"
@@ -34,6 +39,7 @@ id,doi,title,what_to_extract
 68,10.1080/18811248.2005.9726364,Investigation of Hydride Rim Effect on Failure of Zircaloy-4 Cladding with Tube Burst Test,"авторы; толщина ободка, H, окружная деформация разрушения, T"
 71,,Embrittlement and DBTT of High-Burnup PWR Fuel Cladding Alloys (ANL-13/16),"таблицы RCT: H, RHCF, offset/permanent strain, DBTT для Zry-4/ZIRLO/M5"
 35,10.1186/s10033-023-00925-2,Relations of Microstructural Attributes and Strength-Ductility of Zirconium Alloys with Hydrides,"таблица параметров CZM (прочность, энергия) гидрида, границы и матрицы; размеры гидридов; ref. 19 (Fang et al., ранняя работа)"
+14,10.1007/s11661-000-0010-9,Anisotropic behavior and rupture of hydrided ZIRCALOY-4 sheets,"коэффициенты анизотропии, параметры GT (q1,q2,f0,fc,fN) в зависимости от H"
 ,,Interface debonding models: a viscous regularization with a limited rate dependency,подтвердить DOI на странице издателя/Crossref (PDF chaboche2001.pdf есть в library)
 ,,Implications of the size effect method for analyzing the fracture of concrete,подтвердить DOI на странице издателя/Crossref (PDF gettu1998.pdf есть в library)
 ,,A new arc-length method for handling sharp snap-backs,подтвердить DOI на странице издателя/Crossref (PDF hellweg1998.pdf есть в library)
