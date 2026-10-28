@@ -34,10 +34,18 @@ id,doi,title,what_to_extract
 ,,"Micromechanics, Microstructure and Formation of Zirconium Hydrides (Chan, DPhil Oxford 2022)","таблицы K_IC, E, нагрузки разрушения консолей с надрезом по границе Zr/гидрид (оценка прочности/G_c границы); ссылка с DOI на Chan, Roberts, Gong 2016 JNM"
 14,10.1007/s11661-000-0010-9,Anisotropic behavior and rupture of hydrided ZIRCALOY-4 sheets,"коэффициенты анизотропии, закон упрочнения, параметры GT (q1,q2,f0,fc,fN) по H"
 120,10.1134/s2075113325700807,Changes in the Microstructure and Mechanical Properties of Zr-1% Nb (E110) Alloy Cladding during Thermal Tests ...,"σ_y, σ_B, δ продольно/поперечно до и после отжига, T испытаний, содержание H"
+255,10.1134/s1063778824110073,Fracture Parameters and Plasticity of the Zr–Nb–Sn–Fe Tubes with Different Hydrides Orientations,"σ_y, σ_B, δ, параметры разрушения Э635 при разных Fn и H; T испытаний; геометрия образцов"
+256,10.1134/s0036029525701629,Influence of Hydride Orientation on the Deformation of Tubes Made of E635 Zirconium Alloy,"свойства матрицы Э635 в МКЭ (E, σ_y, упрочнение, анизотропия), свойства гидридов, критерий"
+257,10.1007/s11041-005-0047-x,Structure and Fracture Resistance of Zirconium Alloys for Atomic Power Engineering,"K_IC/J_IC, σ_y, δ Э110 и Э635 при 20–350 °C"
 14,10.1007/s11661-000-0010-9,Anisotropic behavior and rupture of hydrided ZIRCALOY-4 sheets,"коэффициенты Hill, параметры GTN, кривые надрезанных образцов при разных H"
 15,10.1007/s11661-998-0087-0,Behavior and rupture of hydrided ZIRCALOY-4 tubes and sheets,параметры модифицированной модели Гурсона; пластичность в зависимости от H
 29,10.1016/j.actamat.2015.03.037,In situ micropillar deformation of hydrides in Zircaloy-4,кривые столбов с гидридами; критические сдвиговые напряжения; деформация в гидриде
 33,10.1007/978-1-4471-4195-2,Puls 2012 DHC book,"напряжение разрушения гидрида у вершины трещины, K_IH, критический размер гидрида — с условиями"
+267,10.1016/j.jallcom.2007.08.045,K_IH Zr-2.5Nb loading mode,значения K_IH (МПа·м^1/2) при 160–280 °C; длина критического гидрида (шаг бороздок)
+269,10.1016/j.jnucmat.2011.09.005,Raynaud 2012 through-thickness crack growth,K_J vs H и доля радиальных гидридов при 25/300/375 °C
+128,10.1016/j.engfailanal.2024.108110,Kolesnik 2024 review,"таблица экспериментов (>100), напряжение/деформация разрушения гидрида, ссылки на Kubo 2013 и Weck 2015"
+138,10.1016/j.jnucmat.2012.10.002,Billone 2013 DBTT,"определение RHCF, DBTT по сплавам, деформация разрушения колец"
+143,10.1016/j.jnucmat.2023.154560,Woo & Lee 2023,определения метрик связности и корреляции с прочностью/пластичностью колец
 64,10.1016/j.jnucmat.2006.11.008,Effect of radial hydrides on the axial and hoop mechanical properties of Zircaloy-4 cladding,"таблицы: H, доля радиальных гидридов, деформация разрушения при плоской деформации, T испытаний"
 67,10.1080/00223131.2019.1676835,A study on macroscopic fuel cladding ductile-to-brittle transition at 300°C induced by radial hydrides,авторы; определение Flθ/A; порог хрупкости; таблица H/деформация (OA)
 66,10.1080/00223131.2014.978829,Stress and temperature-dependent hydride reorientation of Zircaloy-4 cladding and its effect on the ductility degradation,"авторы, год; RCT деформация vs RHF, H, T (OA)"
