@@ -33,3 +33,10 @@ id,doi,title,what_to_extract
 68,10.1080/18811248.2005.9726364,Investigation of Hydride Rim Effect on Failure of Zircaloy-4 Cladding with Tube Burst Test,"авторы; толщина ободка, H, окружная деформация разрушения, T"
 71,,Embrittlement and DBTT of High-Burnup PWR Fuel Cladding Alloys (ANL-13/16),"таблицы RCT: H, RHCF, offset/permanent strain, DBTT для Zry-4/ZIRLO/M5"
 35,10.1186/s10033-023-00925-2,Relations of Microstructural Attributes and Strength-Ductility of Zirconium Alloys with Hydrides,"таблица параметров CZM (прочность, энергия) гидрида, границы и матрицы; размеры гидридов; ref. 19 (Fang et al., ранняя работа)"
+,,Interface debonding models: a viscous regularization with a limited rate dependency,подтвердить DOI на странице издателя/Crossref (PDF chaboche2001.pdf есть в library)
+,,Implications of the size effect method for analyzing the fracture of concrete,подтвердить DOI на странице издателя/Crossref (PDF gettu1998.pdf есть в library)
+,,A new arc-length method for handling sharp snap-backs,подтвердить DOI на странице издателя/Crossref (PDF hellweg1998.pdf есть в library)
+,,A finite element method to model progressive fracturing,подтвердить DOI на странице издателя/Crossref (PDF li1995.pdf есть в library)
+,,Material rate dependence and mesh sensitivity in localization problems,подтвердить DOI на странице издателя/Crossref (PDF needleman1988.pdf есть в library)
+61,,Gradient enhanced damage for quasi-brittle materials,подтвердить DOI на странице издателя/Crossref (PDF peerlings1996.pdf есть в library)
+,,Analytical solutions to prevent apparent snap-back in the modeling of elastic-damaging processes,подтвердить DOI на странице издателя/Crossref (PDF yazdani1995.pdf есть в library)
