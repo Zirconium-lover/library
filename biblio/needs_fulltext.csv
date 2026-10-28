@@ -59,6 +59,11 @@ id,doi,title,what_to_extract
 66,10.1080/00223131.2014.978829,Stress and temperature-dependent hydride reorientation of Zircaloy-4 cladding and its effect on the ductility degradation,"авторы, год; RCT деформация vs RHF, H, T (OA)"
 68,10.1080/18811248.2005.9726364,Investigation of Hydride Rim Effect on Failure of Zircaloy-4 Cladding with Tube Burst Test,"авторы; толщина ободка, H, окружная деформация разрушения, T"
 71,,Embrittlement and DBTT of High-Burnup PWR Fuel Cladding Alloys (ANL-13/16),"таблицы RCT: H, RHCF, offset/permanent strain, DBTT для Zry-4/ZIRLO/M5"
+294,10.1016/j.msea.2014.02.075,Fracture of Zircaloy-4 cladding tubes with or without hydride blisters ... EDC tests,"таблица εf по H, T, двухосности; уравнение εf(глубина блистера); геометрия HB-EDC"
+307,10.1016/j.engfailanal.2009.07.001,Behavior and failure of uniformly hydrided Zircaloy-4 fuel claddings between 25°C and 480°C,εf по H/T/типу испытания; параметры анизотропии; фрактография
+143,10.1016/j.jnucmat.2023.154560,Understanding the mechanical integrity of Zircaloy cladding with various radial and circumferential hydride morphologies via image analysis,меры морфологии/связности и соответствующие RCT деформации/энергии
+268,10.1016/j.jnucmat.2010.10.068,Effect of hydride orientation on fracture toughness of Zircaloy-4 cladding,"J_Q/K по H, ориентации, T"
+295,10.1520/jai101183,Fracture toughness of hydrided Zircaloy-4 sheet under through-thickness crack growth conditions,"K_Q при 300/375 °C (расхождение версий), H"
 35,10.1186/s10033-023-00925-2,Relations of Microstructural Attributes and Strength-Ductility of Zirconium Alloys with Hydrides,"таблица параметров CZM (прочность, энергия) гидрида, границы и матрицы; размеры гидридов; ref. 19 (Fang et al., ранняя работа)"
 14,10.1007/s11661-000-0010-9,Anisotropic behavior and rupture of hydrided ZIRCALOY-4 sheets,"коэффициенты анизотропии, параметры GT (q1,q2,f0,fc,fN) в зависимости от H"
 ,,Interface debonding models: a viscous regularization with a limited rate dependency,подтвердить DOI на странице издателя/Crossref (PDF chaboche2001.pdf есть в library)
