@@ -40,3 +40,6 @@
   чужие файлы не запускать и не трогать.
 - Лимит WebSearch — 200 вызовов на ход **на всех агентов сразу**. Не трать поиски на перебор:
   один точный запрос «название + doi», второй — только для проверки сомнительного DOI.
+- Приёмы, давшие DOI: WebSearch с `allowed_domains` (`tandfonline.com`, `onlinelibrary.wiley.com`,
+  `researchgate.net`, `ascelibrary.org`, `iopscience.iop.org`, `mdpi.com`, `jstage.jst.go.jp`, `elibrary.ru`,
+  `link.springer.com`, `sciencedirect.com`) — DOI часто виден прямо в URL. Поиск по строке DOI в кавычках почти не работает.

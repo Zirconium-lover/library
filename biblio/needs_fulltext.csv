@@ -27,4 +27,9 @@ id,doi,title,what_to_extract
 15,10.1007/s11661-998-0087-0,Behavior and rupture of hydrided ZIRCALOY-4 tubes and sheets,параметры модифицированной модели Гурсона; пластичность в зависимости от H
 29,10.1016/j.actamat.2015.03.037,In situ micropillar deformation of hydrides in Zircaloy-4,кривые столбов с гидридами; критические сдвиговые напряжения; деформация в гидриде
 33,10.1007/978-1-4471-4195-2,Puls 2012 DHC book,"напряжение разрушения гидрида у вершины трещины, K_IH, критический размер гидрида — с условиями"
+64,10.1016/j.jnucmat.2006.11.008,Effect of radial hydrides on the axial and hoop mechanical properties of Zircaloy-4 cladding,"таблицы: H, доля радиальных гидридов, деформация разрушения при плоской деформации, T испытаний"
+67,10.1080/00223131.2019.1676835,A study on macroscopic fuel cladding ductile-to-brittle transition at 300°C induced by radial hydrides,авторы; определение Flθ/A; порог хрупкости; таблица H/деформация (OA)
+66,10.1080/00223131.2014.978829,Stress and temperature-dependent hydride reorientation of Zircaloy-4 cladding and its effect on the ductility degradation,"авторы, год; RCT деформация vs RHF, H, T (OA)"
+68,10.1080/18811248.2005.9726364,Investigation of Hydride Rim Effect on Failure of Zircaloy-4 Cladding with Tube Burst Test,"авторы; толщина ободка, H, окружная деформация разрушения, T"
+71,,Embrittlement and DBTT of High-Burnup PWR Fuel Cladding Alloys (ANL-13/16),"таблицы RCT: H, RHCF, offset/permanent strain, DBTT для Zry-4/ZIRLO/M5"
 35,10.1186/s10033-023-00925-2,Relations of Microstructural Attributes and Strength-Ductility of Zirconium Alloys with Hydrides,"таблица параметров CZM (прочность, энергия) гидрида, границы и матрицы; размеры гидридов; ref. 19 (Fang et al., ранняя работа)"
