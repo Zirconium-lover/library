@@ -1,1 +1,28 @@
 id,doi,title,what_to_extract
+7,10.1016/j.engfracmech.2006.08.025,An engineering solution for mesh size effects in the simulation of delamination using cohesive zone models,"формулы штрафной жёсткости (α≈50), длины зоны процесса, минимального числа элементов в зоне"
+6,10.1016/j.mechmat.2005.10.003,A damage model for the simulation of delamination in advanced composites under variable-mode loading,полная формулировка поверхности повреждения и касательной матрицы
+9,10.1016/j.jmps.2008.10.003,A unified potential-based cohesive model of mixed-mode fracture,"формулы потенциала PPR, правило разгрузки; подтверждение DOI"
+13,10.3390/ma19010081,Analyses of Stress-State-Dependent Ductile Damage and Fracture Behavior of Zirconium,"табл. 2–3: параметры MBW (D1–D4, c-параметры), η и θ_L каждого образца, εf; кривая упрочнения Zr"
+14,10.1007/s11661-000-0010-9,Anisotropic behavior and rupture of hydrided ZIRCALOY-4 sheets,"коэффициенты анизотропии (Hill/обобщённый), закон упрочнения, параметры GT (q1,q2,f0,fc,fN) по H"
+28,10.1016/j.actamat.2023.119356,On the effects of transformation strain induced by hydride precipitation,"принятый тензор деформации превращения (компоненты), упругие постоянные гидрида, величины остаточных напряжений у вершины"
+27,10.1039/c5dt03403e,Mechanical properties of zirconium alloys and zirconium hydrides predicted from DFPT,"таблица Cij, B, G, E, ν для γ, δ, ε гидридов"
+30,10.1016/j.scriptamat.2019.08.006,The effect of δ-hydride on the micromechanical deformation of Zircaloy-4 (in situ HR-EBSD),"величины остаточных напряжений у границы (МПа), плотность ГНД, принятая дилатация 17,2 %"
+29,10.1016/j.actamat.2015.03.037,In situ micropillar deformation of hydrides in Zircaloy-4,"кривые напряжение–деформация столбов с гидридом и без, напряжение течения"
+14,10.1007/s11661-000-0010-9,Anisotropic behavior and rupture of hydrided ZIRCALOY-4 sheets,"коэффициенты Hill, параметры GTN, кривые для надрезанных образцов при разных H"
+15,10.1007/s11661-998-0087-0,Behavior and rupture of hydrided ZIRCALOY-4 tubes and sheets,"параметры модифицированной модели Гурсона, зависимость пластичности от H"
+29,10.1016/j.actamat.2015.03.037,In situ micropillar deformation of hydrides in Zircaloy-4,"кривые напряжение–деформация столбов с гидридами, критические сдвиговые напряжения, деформация в гидриде"
+16,10.1016/j.cma.2007.11.027,An implicit/explicit integration scheme to increase computability of non-linear material and contact/friction problems,"подтвердить DOI на странице издателя; алгоритм IMPL-EX (экстраполяция внутренних переменных, формулы), правило адаптивного шага, касательная матрица"
+20,10.1002/nme.2447,A dissipation-based arc-length method for robust simulation of brittle and ductile failure,"формулы ограничения по диссипации для повреждения и пластичности, линеаризация, критерий переключения с силового управления"
+23,10.1002/(sici)1097-0207(19990910)46:1<131::aid-nme726>3.0.co;2-j,A finite element method for crack growth without remeshing,подтвердить точный DOI-суффикс на странице Wiley (3.0.co;2-j или 3.3.co;2-a)
+,10.1016/j.jnucmat.2006.11.008,Effect of radial hydrides on the axial and hoop mechanical properties of Zircaloy-4 cladding,"таблицы: H, доля радиальных гидридов, деформация разрушения при плоской деформации, T испытаний"
+,10.1080/00223131.2019.1676835,A study on macroscopic fuel cladding ductile-to-brittle transition at 300°C induced by radial hydrides,авторы; определение Flθ/A; порог хрупкости; таблица H/деформация (OA)
+,10.1080/00223131.2014.978829,Stress and temperature-dependent hydride reorientation of Zircaloy-4 cladding and its effect on the ductility degradation,"авторы, год; RCT деформация vs RHF, H, T (OA)"
+,10.1080/18811248.2005.9726364,Investigation of Hydride Rim Effect on Failure of Zircaloy-4 Cladding with Tube Burst Test,"авторы; толщина ободка, H, окружная деформация разрушения, T"
+,,Embrittlement and DBTT of High-Burnup PWR Fuel Cladding Alloys (ANL-13/16),"таблицы RCT: H, RHCF, offset/permanent strain, DBTT для Zry-4/ZIRLO/M5"
+30,10.1016/j.scriptamat.2019.08.006,The effect of δ-hydride on the micromechanical deformation of Zircaloy-4 (in situ HR-EBSD),"величины остаточных напряжений у границы (МПа), плотность ГНД, принятая дилатация"
+14,10.1007/s11661-000-0010-9,Anisotropic behavior and rupture of hydrided ZIRCALOY-4 sheets,"коэффициенты анизотропии, закон упрочнения, параметры GT (q1,q2,f0,fc,fN) по H"
+14,10.1007/s11661-000-0010-9,Anisotropic behavior and rupture of hydrided ZIRCALOY-4 sheets,"коэффициенты Hill, параметры GTN, кривые надрезанных образцов при разных H"
+15,10.1007/s11661-998-0087-0,Behavior and rupture of hydrided ZIRCALOY-4 tubes and sheets,параметры модифицированной модели Гурсона; пластичность в зависимости от H
+29,10.1016/j.actamat.2015.03.037,In situ micropillar deformation of hydrides in Zircaloy-4,кривые столбов с гидридами; критические сдвиговые напряжения; деформация в гидриде
+33,10.1007/978-1-4471-4195-2,Puls 2012 DHC book,"напряжение разрушения гидрида у вершины трещины, K_IH, критический размер гидрида — с условиями"
+35,10.1186/s10033-023-00925-2,Relations of Microstructural Attributes and Strength-Ductility of Zirconium Alloys with Hydrides,"таблица параметров CZM (прочность, энергия) гидрида, границы и матрицы; размеры гидридов; ref. 19 (Fang et al., ранняя работа)"
