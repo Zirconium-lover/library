@@ -1,0 +1,7 @@
+doi,title,what_to_extract
+10.1016/j.engfracmech.2006.08.025,An engineering solution for mesh size effects in the simulation of delamination using cohesive zone models,"формулы штрафной жёсткости (α≈50), длины зоны процесса, минимального числа элементов в зоне"
+10.1016/j.mechmat.2005.10.003,A damage model for the simulation of delamination in advanced composites under variable-mode loading,полная формулировка поверхности повреждения и касательной матрицы
+10.1016/j.jmps.2008.10.003,A unified potential-based cohesive model of mixed-mode fracture,"формулы потенциала PPR, правило разгрузки; подтверждение DOI"
+10.1007/bf02663302,A local criterion for cleavage fracture of a nuclear pressure vessel steel,"формула σ_w, значения m и σ_u, V0, способ калибровки"
+10.1016/0956-7151(95)90256-2,On the role of particle cracking in flow and fracture of metal matrix composites,"формулировка 1D закона повреждения, критерий неустойчивости"
+10.1016/s0022-5096(97)00038-0,Microstructural factors controlling the strength and ductility of particle-reinforced metal-matrix composites,"параметры Вейбулла частиц, схема расчёта доли разрушенных ячеек"
