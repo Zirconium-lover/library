@@ -7,7 +7,7 @@ COLS = ["id", "direction", "subtopics", "year", "title", "authors", "journal", "
         "doi_check", "access", "summary_ru", "useful_for", "values", "values_source", "priority",
         "overlap_reorient", "pdf_in_library", "url", "notes"]
 MULTI = {"direction", "subtopics", "pdf_in_library"}
-RANK = {"V2": 3, "V1": 2, "no-doi": 1, "": 0}
+RANK = {"PDF": 4, "V2": 3, "CAT": 3, "V1": 2, "no-doi": 1, "": 0}
 
 
 def ndoi(d):
