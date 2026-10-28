@@ -1,2 +1,4 @@
 doi,title,what_to_extract
 10.1016/j.compstruc.2012.06.006,Numerical aspects of the crack band approach,"подтвердить DOI; формулы ширины полосы (по площади, проекции, Oliver), рекомендации по интегрированию"
+10.1002/nme.5364,Localizing gradient damage model with decreasing interactions,"функция взаимодействия g(D), параметры R, η; схема реализации"
+10.1016/j.engfracmech.2018.01.022,An efficient FE-implementation of implicit gradient-enhanced damage models to simulate ductile failure,"схема реализации через тепловую аналогию (UMAT/UMATHT), касательные, значения ℓ"
