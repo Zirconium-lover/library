@@ -1,4 +1,5 @@
 id,doi,title,what_to_extract
+60,10.1016/j.compstruc.2012.06.006,Numerical aspects of the crack band approach,"подтвердить DOI; формулы ширины полосы (по площади, проекции, Oliver), рекомендации по интегрированию"
 7,10.1016/j.engfracmech.2006.08.025,An engineering solution for mesh size effects in the simulation of delamination using cohesive zone models,"формулы штрафной жёсткости (α≈50), длины зоны процесса, минимального числа элементов в зоне"
 6,10.1016/j.mechmat.2005.10.003,A damage model for the simulation of delamination in advanced composites under variable-mode loading,полная формулировка поверхности повреждения и касательной матрицы
 9,10.1016/j.jmps.2008.10.003,A unified potential-based cohesive model of mixed-mode fracture,"формулы потенциала PPR, правило разгрузки; подтверждение DOI"
@@ -20,6 +21,7 @@ id,doi,title,what_to_extract
 ,10.1080/18811248.2005.9726364,Investigation of Hydride Rim Effect on Failure of Zircaloy-4 Cladding with Tube Burst Test,"авторы; толщина ободка, H, окружная деформация разрушения, T"
 ,,Embrittlement and DBTT of High-Burnup PWR Fuel Cladding Alloys (ANL-13/16),"таблицы RCT: H, RHCF, offset/permanent strain, DBTT для Zry-4/ZIRLO/M5"
 30,10.1016/j.scriptamat.2019.08.006,The effect of δ-hydride on the micromechanical deformation of Zircaloy-4 (in situ HR-EBSD),"величины остаточных напряжений у границы (МПа), плотность ГНД, принятая дилатация"
+,,"Micromechanics, Microstructure and Formation of Zirconium Hydrides (Chan, DPhil Oxford 2022)","таблицы K_IC, E, нагрузки разрушения консолей с надрезом по границе Zr/гидрид (оценка прочности/G_c границы); ссылка с DOI на Chan, Roberts, Gong 2016 JNM"
 14,10.1007/s11661-000-0010-9,Anisotropic behavior and rupture of hydrided ZIRCALOY-4 sheets,"коэффициенты анизотропии, закон упрочнения, параметры GT (q1,q2,f0,fc,fN) по H"
 14,10.1007/s11661-000-0010-9,Anisotropic behavior and rupture of hydrided ZIRCALOY-4 sheets,"коэффициенты Hill, параметры GTN, кривые надрезанных образцов при разных H"
 15,10.1007/s11661-998-0087-0,Behavior and rupture of hydrided ZIRCALOY-4 tubes and sheets,параметры модифицированной модели Гурсона; пластичность в зависимости от H
