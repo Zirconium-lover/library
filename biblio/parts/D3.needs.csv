@@ -1,3 +1,5 @@
 doi,title,what_to_extract
 10.1186/s10033-023-00925-2,Relations of Microstructural Attributes and Strength-Ductility of Zirconium Alloys with Hydrides,"таблица параметров CZM (прочность, энергия) гидрида, границы и матрицы; размеры гидридов; ref. 19 (Fang et al., ранняя работа)"
 10.1007/s11661-000-0010-9,Anisotropic behavior and rupture of hydrided ZIRCALOY-4 sheets,"коэффициенты анизотропии, параметры GT (q1,q2,f0,fc,fN) в зависимости от H"
+10.1016/j.engfailanal.2021.105362,Determining failure properties of as-received and hydrided unirradiated Zircaloy-4 from ring compression tests,"параметры модели вязкого повреждения (εf, энергия разрушения) по содержанию H; кривые нагрузка–перемещение RCT"
+10.1016/j.commatsci.2021.110654,A microstructure-based modeling approach to predict the mechanical properties of Zr alloy with hydride precipitates,"свойства и модель повреждения гидрида, параметры CP матрицы, учёт остаточных напряжений"
